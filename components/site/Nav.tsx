@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Dictionary, Locale } from '@/lib/i18n'
+import { Mark } from './Mark'
 
 const SECTIONS = [
   { slug: '', key: 'home' },
@@ -16,9 +17,19 @@ export function Nav({ locale, dictionary }: { locale: Locale; dictionary: Dictio
 
   return (
     <header className="border-b border-shadow/15">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-baseline justify-between gap-x-8 gap-y-3 px-5 py-4">
-        <Link href={`/${locale}`} className="font-display text-xl leading-none">
-          {dictionary.meta.title}
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-5 py-4">
+        <Link
+          href={`/${locale}`}
+          className="group flex items-center gap-2.5 text-shadow"
+          aria-label={dictionary.meta.title}
+        >
+          <Mark size={34} className="shrink-0 transition group-hover:text-marker-ink" />
+          <span className="flex flex-col leading-none">
+            <span className="font-display text-xl leading-none">{dictionary.meta.title}</span>
+            <span className="mt-0.5 hidden text-[0.6875rem] tracking-[0.08em] text-shadow/70 sm:block">
+              {dictionary.meta.localName}
+            </span>
+          </span>
         </Link>
         <nav aria-label={dictionary.nav.home}>
           <ul className="flex flex-wrap items-baseline gap-x-5 gap-y-1 text-sm">
