@@ -244,7 +244,7 @@ function ObservationCard({
                   : 'border-shadow/25 hover:border-shadow'
               }`}
             >
-              {north ? '↑ utara / north' : '↓ selatan / south'}
+              {north ? `↑ ${dictionary.dates.north}` : `↓ ${dictionary.dates.south}`}
             </button>
           ))}
         </div>
