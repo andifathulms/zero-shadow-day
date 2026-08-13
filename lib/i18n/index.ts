@@ -158,6 +158,8 @@ const id = {
     southward: 'Kembali ke selatan',
     day: 'Hari ke',
     play: 'Jalankan setahun',
+    beyondNorth: 'di utara Indonesia',
+    beyondSouth: 'di selatan Indonesia',
   },
   method: {
     heading: 'Metode',
@@ -344,6 +346,8 @@ const en: Dictionary = {
     southward: 'Returning south',
     day: 'Day',
     play: 'Run the year',
+    beyondNorth: 'north of Indonesia',
+    beyondSouth: 'south of Indonesia',
   },
   method: {
     heading: 'Method',

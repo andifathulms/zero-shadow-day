@@ -94,6 +94,9 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
   const y = (lat: number) => height - ((lat - latMin) / (latMax - latMin)) * height
 
   const bandHalfWidth = 0.75
+  // Which edge the band has gone past, if it is outside the plotted latitudes.
+  const beyond: 'north' | 'south' | null =
+    decDeg > latMax ? 'north' : decDeg < latMin ? 'south' : null
 
   return (
     <div className="space-y-4">
@@ -114,25 +117,58 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
             </g>
           ))}
 
-          {/* the subsolar band: the sun's own path */}
-          <rect
-            x={0}
-            y={y(decDeg + bandHalfWidth)}
-            width={width}
-            height={Math.abs(y(decDeg - bandHalfWidth) - y(decDeg + bandHalfWidth))}
-            className="fill-sun/30"
-          />
-          <line
-            x1={0}
-            y1={y(decDeg)}
-            x2={width}
-            y2={y(decDeg)}
-            className="stroke-sun-ink"
-            strokeWidth={2}
-          />
-          <text x={width - 6} y={y(decDeg) - 6} textAnchor="end" className="fill-sun-ink font-mono text-[11px]">
-            {formatDeg(decDeg, 2)}
-          </text>
+          {/* The subsolar band: the sun's own path. For much of the year it
+              sits north or south of the whole country, and drawing nothing
+              would leave the map looking simply broken — so it is pinned to the
+              edge it has passed beyond, and says where it really is. */}
+          {beyond === null ? (
+            <>
+              <rect
+                x={0}
+                y={y(decDeg + bandHalfWidth)}
+                width={width}
+                height={Math.abs(y(decDeg - bandHalfWidth) - y(decDeg + bandHalfWidth))}
+                className="fill-sun/30"
+              />
+              <line
+                x1={0}
+                y1={y(decDeg)}
+                x2={width}
+                y2={y(decDeg)}
+                className="stroke-sun-ink"
+                strokeWidth={2}
+              />
+              <text
+                x={width - 6}
+                y={y(decDeg) - 6}
+                textAnchor="end"
+                className="fill-sun-ink font-mono text-[11px]"
+              >
+                {formatDeg(decDeg, 2)}
+              </text>
+            </>
+          ) : (
+            <>
+              <line
+                x1={0}
+                y1={beyond === 'north' ? 1 : height - 1}
+                x2={width}
+                y2={beyond === 'north' ? 1 : height - 1}
+                className="stroke-sun-ink"
+                strokeWidth={2}
+                strokeDasharray="7 6"
+              />
+              <text
+                x={width - 6}
+                y={beyond === 'north' ? 18 : height - 8}
+                textAnchor="end"
+                className="fill-sun-ink font-mono text-[11px]"
+              >
+                {formatDeg(decDeg, 2)} ·{' '}
+                {beyond === 'north' ? dictionary.sweep.beyondNorth : dictionary.sweep.beyondSouth}
+              </text>
+            </>
+          )}
 
           {marks.map(({ city, days }) => {
             const today = days.some((day) => Math.abs(day.index - dayIndex) <= 0)
