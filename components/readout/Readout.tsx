@@ -3,6 +3,7 @@ import {
   formatClock,
   formatClockSeconds,
   formatDate,
+  formatBearing,
   formatDeg,
   formatMinutes,
   formatRatio,
@@ -52,7 +53,7 @@ export function Readout({
         />
         <Row
           label={dictionary.readout.shadowBearing}
-          value={shadow.type === 'shadow' ? formatDeg(shadow.bearingDeg, 1) : '—'}
+          value={shadow.type === 'shadow' ? formatBearing(shadow.bearingDeg) : '—'}
         />
         <Row label={dictionary.readout.declination} value={formatSignedDeg(instant.decDeg)} />
         <Row

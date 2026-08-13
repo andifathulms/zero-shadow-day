@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { DEFAULT_CITY, type City, indonesianOffsetForLongitude, nearestCity } from '@/data/cities/indonesia'
+import { decodeView } from '@/lib/share'
 import type { Place } from '@/lib/zsd'
 
 /**
@@ -39,6 +40,19 @@ export function PlaceProvider({ children }: { children: React.ReactNode }) {
   const [place, setPlace] = useState<NamedPlace>(initial)
 
   useEffect(() => {
+    // A shared link wins over the remembered place: the reader followed it to
+    // see that place, not their own.
+    const shared = decodeView(window.location.search)
+    if (shared) {
+      setPlace({
+        latDeg: shared.latDeg,
+        lonDeg: shared.lonDeg,
+        offsetHours: shared.offsetHours,
+        label: shared.label ?? nearestCity(shared.latDeg, shared.lonDeg).city.name,
+        fromDevice: false,
+      })
+      return
+    }
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY)
       if (stored) setPlace(JSON.parse(stored) as NamedPlace)

@@ -15,6 +15,25 @@ export function formatSignedDeg(deg: number, digits = 2): string {
   return `${deg >= 0 ? '+' : '−'}${Math.abs(deg).toFixed(digits)}°`
 }
 
+/**
+ * A bearing, rounded *then* wrapped. Rounding first matters: a shadow falling
+ * due north computes as 359.9999°, which formats as "360.0°" if the wrap
+ * happens before the rounding — a compass bearing that does not exist.
+ */
+export function formatBearing(deg: number, digits = 1): string {
+  const factor = 10 ** digits
+  const rounded = Math.round(deg * factor) / factor
+  const wrapped = ((rounded % 360) + 360) % 360
+  return `${wrapped.toFixed(digits)}°`
+}
+
+/** The same wrap, as a number, for exports. */
+export function roundBearing(deg: number, digits = 2): number {
+  const factor = 10 ** digits
+  const rounded = Math.round(deg * factor) / factor
+  return ((rounded % 360) + 360) % 360
+}
+
 export function formatRatio(ratio: number, digits = 3): string {
   return ratio.toFixed(digits)
 }

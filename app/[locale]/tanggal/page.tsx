@@ -1,6 +1,7 @@
 import { DatesDetail } from '@/components/dates/DatesDetail'
 import { PlacePicker } from '@/components/place/PlacePicker'
 import { NoonAnywhere } from '@/components/readout/NoonAnywhere'
+import { ShareBar } from '@/components/share/ShareBar'
 import { type Locale, getDictionary } from '@/lib/i18n'
 
 export default function DatesPage({ params }: { params: { locale: Locale } }) {
@@ -16,6 +17,7 @@ export default function DatesPage({ params }: { params: { locale: Locale } }) {
       <PlacePicker dictionary={dictionary} locale={params.locale} />
       <DatesDetail dictionary={dictionary} />
       <NoonAnywhere dictionary={dictionary} />
+      <ShareBar dictionary={dictionary} />
     </div>
   )
 }

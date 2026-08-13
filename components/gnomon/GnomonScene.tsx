@@ -1,5 +1,5 @@
 import type { Instant } from '@/lib/day'
-import { formatRatio } from '@/lib/format'
+import { formatBearing, formatRatio } from '@/lib/format'
 import type { Dictionary } from '@/lib/i18n'
 
 /**
@@ -220,7 +220,7 @@ function scaleTo(tip: { east: number; north: number }, maxRatio: number) {
 function describe(instant: Instant, dictionary: Dictionary): string {
   switch (instant.shadow.type) {
     case 'shadow':
-      return `${dictionary.readout.shadowRatio}: ${formatRatio(instant.shadow.lengthRatio)} ${dictionary.readout.perHeight}, ${dictionary.readout.shadowBearing}: ${instant.shadow.bearingDeg.toFixed(1)}°`
+      return `${dictionary.readout.shadowRatio}: ${formatRatio(instant.shadow.lengthRatio)} ${dictionary.readout.perHeight}, ${dictionary.readout.shadowBearing}: ${formatBearing(instant.shadow.bearingDeg)}`
     case 'zenith':
       return dictionary.readout.zenith
     case 'no-shadow':

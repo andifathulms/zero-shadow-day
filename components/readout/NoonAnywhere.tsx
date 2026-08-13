@@ -5,6 +5,7 @@ import { usePlace } from '@/components/place/PlaceProvider'
 import { todayIn } from '@/lib/clock'
 import { instantAt } from '@/lib/day'
 import {
+  formatBearing,
   formatClockSeconds,
   formatDeg,
   formatMinutes,
@@ -80,7 +81,7 @@ export function NoonAnywhere({ dictionary }: { dictionary: Dictionary }) {
           label={dictionary.readout.shadowBearing}
           value={
             shadow.type === 'shadow'
-              ? `${formatDeg(shadow.bearingDeg, 1)} · ${compassPointId(shadow.bearingDeg)}`
+              ? `${formatBearing(shadow.bearingDeg)} · ${compassPointId(shadow.bearingDeg)}`
               : '—'
           }
         />

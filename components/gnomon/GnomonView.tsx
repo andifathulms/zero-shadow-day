@@ -6,13 +6,15 @@ import { useReducedMotion } from '@/components/hooks/useReducedMotion'
 import { Readout } from '@/components/readout/Readout'
 import { DateScrubber } from '@/components/scrubber/DateScrubber'
 import { TimeScrubber } from '@/components/scrubber/TimeScrubber'
-import { currentYearIn, todayIn } from '@/lib/clock'
+import { todayIn } from '@/lib/clock'
 import { civilDateFromOffset, dayTrack, instantAt, noonOfYear } from '@/lib/day'
 import { formatDate } from '@/lib/format'
 import type { Dictionary } from '@/lib/i18n'
 import { dayOfYear } from '@/lib/solar/julian'
 import { solarPosition } from '@/lib/solar/position'
 import { zeroShadowDays } from '@/lib/zsd'
+import { ShareBar } from '@/components/share/ShareBar'
+import { useSharedView } from '@/components/share/useSharedView'
 import { GnomonScene } from './GnomonScene'
 
 /** How many local hours pass per second of animation. A day in twelve seconds. */
@@ -34,13 +36,18 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
   const [localHours, setLocalHours] = useState(12)
   const [playing, setPlaying] = useState(false)
 
-  // Open on today at the place's own clock — a wall-clock reading, so it
-  // happens after mount and the exported HTML stays deterministic.
+  // Open on the shared date and time when the reader followed a link, and
+  // otherwise on today at the place's own clock. Both are resolved after mount:
+  // the wall clock so the exported HTML stays deterministic, the link because
+  // the query string is not known at build time.
+  const { view: shared, ready } = useSharedView()
   useEffect(() => {
-    const today = todayIn(place.offsetHours)
-    setYear(currentYearIn(place.offsetHours))
-    setDayIndex(dayOfYear(today) - 1)
-  }, [place.offsetHours])
+    if (!ready) return
+    const opening = shared?.date ?? todayIn(place.offsetHours)
+    setYear(opening.year)
+    setDayIndex(dayOfYear(opening) - 1)
+    if (shared?.localHours !== undefined) setLocalHours(shared.localHours)
+  }, [ready, shared, place.offsetHours])
 
   const date = useMemo(
     () => (year === null ? null : civilDateFromOffset(year, dayIndex)),
@@ -152,6 +159,9 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
         />
         <p className="mt-2 text-xs text-shadow/70">{dictionary.gnomon.markers}</p>
       </div>
+
+      {/* A link that reproduces exactly this place, date and time. */}
+      <ShareBar dictionary={dictionary} date={date} localHours={localHours} year={year} />
     </div>
   )
 }

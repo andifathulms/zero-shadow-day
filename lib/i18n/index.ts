@@ -154,6 +154,13 @@ const id = {
     privacyBody: 'Koordinat diselesaikan dan digunakan sepenuhnya di peramban. Tidak ada permintaan jaringan setelah muat pertama, tidak ada geocoding balik, tidak ada analitik atas koordinat.',
     disclaimer: 'Proyek pribadi untuk keperluan pendidikan. Bukan produk resmi lembaga mana pun.',
   },
+  share: {
+    copyLink: 'Salin tautan',
+    copied: 'Tersalin',
+    calendar: 'Unduh kalender (.ics)',
+    spreadsheet: 'Unduh tabel kulminasi (.csv)',
+    note: 'Berkas dibuat di peramban Anda. Tidak ada yang diunggah.',
+  },
   units: {
     minutes: 'menit',
     seconds: 'detik',
@@ -310,6 +317,13 @@ const en: Dictionary = {
     privacy: 'Location',
     privacyBody: 'Coordinates are resolved and used entirely in the browser. No network request after first load, no reverse geocoding, no analytics on coordinates.',
     disclaimer: 'A personal educational project. Not an official product of any institution.',
+  },
+  share: {
+    copyLink: 'Copy link',
+    copied: 'Copied',
+    calendar: 'Download calendar (.ics)',
+    spreadsheet: 'Download noon table (.csv)',
+    note: 'Files are generated in your browser. Nothing is uploaded.',
   },
   units: {
     minutes: 'minutes',
