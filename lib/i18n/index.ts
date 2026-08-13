@@ -188,6 +188,7 @@ const id = {
     sourceBody: 'BMKG menerbitkan pengumuman hari tanpa bayangan untuk kota-kota Indonesia setiap tahun, dan itulah rujukan resminya.',
     privacy: 'Lokasi',
     privacyBody: 'Koordinat diselesaikan dan digunakan sepenuhnya di peramban. Tidak ada permintaan jaringan setelah muat pertama, tidak ada geocoding balik, tidak ada analitik atas koordinat.',
+    verification: 'Verifikasi',
     disclaimer: 'Proyek pribadi untuk keperluan pendidikan. Bukan produk resmi lembaga mana pun.',
   },
   share: {
@@ -387,6 +388,7 @@ const en: Dictionary = {
     sourceBody: 'BMKG publishes official zero shadow day announcements for Indonesian cities each year, and is the authoritative reference.',
     privacy: 'Location',
     privacyBody: 'Coordinates are resolved and used entirely in the browser. No network request after first load, no reverse geocoding, no analytics on coordinates.',
+    verification: 'Verification',
     disclaimer: 'A personal educational project. Not an official product of any institution.',
   },
   share: {
