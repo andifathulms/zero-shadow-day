@@ -9,7 +9,7 @@ export default function CurvesPage({ params }: { params: { locale: Locale } }) {
   return (
     <div className="space-y-12">
       <header className="max-w-3xl">
-        <h1 className="font-display text-4xl">{dictionary.curves.heading}</h1>
+        <h1 className="font-display text-title">{dictionary.curves.heading}</h1>
       </header>
 
       <PlacePicker dictionary={dictionary} locale={params.locale} />

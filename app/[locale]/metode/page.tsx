@@ -21,7 +21,7 @@ export default function MethodPage({ params }: { params: { locale: Locale } }) {
   return (
     <div className="max-w-3xl space-y-10">
       <header>
-        <h1 className="font-display text-4xl">{dictionary.method.heading}</h1>
+        <h1 className="font-display text-title">{dictionary.method.heading}</h1>
       </header>
 
       {sections.map((section) => (

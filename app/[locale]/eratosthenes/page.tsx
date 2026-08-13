@@ -8,7 +8,7 @@ export default function EratosthenesPage({ params }: { params: { locale: Locale 
   return (
     <div className="space-y-10">
       <header className="max-w-3xl">
-        <h1 className="font-display text-4xl">{dictionary.eratosthenes.heading}</h1>
+        <h1 className="font-display text-title">{dictionary.eratosthenes.heading}</h1>
         <p className="mt-3 max-w-prose leading-relaxed">{dictionary.eratosthenes.lede}</p>
       </header>
 
