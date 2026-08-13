@@ -55,7 +55,10 @@ export default function HomePage({ params }: { params: { locale: Locale } }) {
         </ol>
       </section>
 
-      <section className="grid gap-8 lg:grid-cols-[22rem_minmax(0,1fr)] lg:items-start">
+      <section
+        id="tempat"
+        className="scroll-mt-8 grid gap-8 lg:grid-cols-[22rem_minmax(0,1fr)] lg:items-start"
+      >
         <PlacePicker dictionary={dictionary} locale={params.locale} />
         <DatesSummary
           dictionary={dictionary}

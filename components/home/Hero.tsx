@@ -82,6 +82,12 @@ export function Hero({ dictionary, locale }: { dictionary: Dictionary; locale: L
     [place, date, hours],
   )
 
+  // Indonesian-first (CLAUDE.md): lead with the Indonesian name on the id
+  // locale rather than always leading with the English product name.
+  const isId = locale === 'id'
+  const primaryName = isId ? dictionary.meta.localName : dictionary.meta.title
+  const secondaryName = isId ? dictionary.meta.title : dictionary.meta.localName
+
   return (
     <section className="relative isolate overflow-hidden rounded-xl bg-sky-night shadow-lift">
       <div className="absolute inset-0">
@@ -105,12 +111,8 @@ export function Hero({ dictionary, locale }: { dictionary: Dictionary; locale: L
 
       <div className="relative flex min-h-[clamp(26rem,72vh,42rem)] flex-col justify-end p-6 sm:p-10">
         <p className="label text-chalk/80">{dictionary.home.kicker}</p>
-        <h1 className="mt-3 max-w-[16ch] font-display text-hero text-chalk">
-          {dictionary.meta.title}
-        </h1>
-        <p className="mt-2 font-display text-2xl text-chalk/75 sm:text-3xl">
-          {dictionary.meta.localName}
-        </p>
+        <h1 className="mt-3 max-w-[16ch] font-display text-hero text-chalk">{primaryName}</h1>
+        <p className="mt-2 font-display text-2xl text-chalk/75 sm:text-3xl">{secondaryName}</p>
         <p className="mt-5 max-w-[46ch] text-lede text-chalk/90">{dictionary.home.plain}</p>
 
         <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
@@ -134,6 +136,14 @@ export function Hero({ dictionary, locale }: { dictionary: Dictionary; locale: L
           {next?.outside ? (
             <p className="max-w-prose text-sm text-chalk/85">{dictionary.dates.outsideTropics}</p>
           ) : null}
+          {next ? (
+            <Link
+              href={`/${locale}#tempat`}
+              className="text-sm text-chalk/80 underline decoration-chalk/40 underline-offset-4 hover:text-chalk"
+            >
+              {dictionary.home.changeLocation}
+            </Link>
+          ) : null}
         </div>
 
         {instant ? (
@@ -145,6 +155,16 @@ export function Hero({ dictionary, locale }: { dictionary: Dictionary; locale: L
               : ''}
           </p>
         ) : null}
+
+        <p className="mt-4 max-w-prose text-xs text-chalk/80">
+          {dictionary.method.disclaimer}{' '}
+          <Link
+            href={`/${locale}/metode`}
+            className="underline decoration-chalk/40 underline-offset-2 hover:text-chalk"
+          >
+            {dictionary.nav.method}
+          </Link>
+        </p>
       </div>
     </section>
   )
