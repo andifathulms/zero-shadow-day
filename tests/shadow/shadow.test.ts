@@ -98,6 +98,7 @@ describe('shadowFromSun — the discriminated result', () => {
   it('returns the zenith variant at exactly 90°, where direction is undefined', () => {
     const result = shadowFromSun(90, 180)
     expect(result.type).toBe('zenith')
+    if (result.type !== 'zenith') throw new Error('unreachable')
     expect(result.lengthRatio).toBe(0)
     expect(result).not.toHaveProperty('bearingDeg')
   })

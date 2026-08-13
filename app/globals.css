@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bleached text-shadow font-sans antialiased;
+  }
+
+  /* Times, angles and ratios update continuously as the date is dragged and
+     must not reflow: tabular figures everywhere they appear. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-normal;
+  }
+
+  ::selection {
+    @apply bg-sun/30;
+  }
+
+  :focus-visible {
+    outline: 2px solid #2e2a24;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* The printed column of values beside the shadow — an observatory notice,
+     not a dashboard. */
+  .rule {
+    @apply border-t border-shadow/20;
+  }
+
+  .label {
+    @apply text-[0.6875rem] uppercase tracking-[0.14em] text-shadow/55;
+  }
+
+  .value {
+    @apply font-mono tabular text-[0.95rem] text-shadow;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
