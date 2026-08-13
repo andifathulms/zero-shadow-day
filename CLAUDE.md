@@ -148,4 +148,16 @@ The site states plainly that it is a personal educational project, gives the alg
 
 ## Current state
 
-M0 — not yet scaffolded. Next: the solar position engine — declination, Equation of Time, solar noon — verified against published values. **No shadow or UI work until `pnpm test:solar` passes.**
+M0–M5 built, M6 partly. 130 tests pass; `pnpm test:solar` passes.
+
+- **M0** `lib/solar` — NOAA/Meeus ch. 25 position, Equation of Time, solar noon, altitude and azimuth. Asserted against published equinox and solstice instants, the EoT's extrema and zero crossings, and Meeus' worked Julian Day examples.
+- **M1** `lib/shadow` written independently of `lib/solar`, with a test asserting the absence of any solar import; `lib/zsd` finds the days by minimising the culmination shadow, reports a window derived from the sun's semi-diameter, and refuses outside the tropics.
+- **M2** the gnomon, date scrubber and readout column.
+- **M3** shadow-tip hyperbolas and the analemma.
+- **M4** `lib/eratosthenes` with the round trip, plus the partner finder, measurement flow and error breakdown.
+- **M5** the sweep across the archipelago.
+- **M6** partly: the method page, solar noon anywhere, and the Pages deployment. **Not yet done: sharing, export, and an accessibility pass.**
+
+Two additions to the layout above: `lib/day/` composes solar and shadow into the tracks the views read, so nothing is computed in a component; `lib/clock/` is the only place a `Date` is allowed, and the numerical core never sees it.
+
+`data/cities/indonesia.ts` carries city-centre coordinates to about a kilometre. The zero shadow day fixtures in `tests/zsd/` cover Jakarta and Pontianak against published dates — **worth extending from BMKG's annual release**, and if a fixture ever disagrees, the engine is wrong.
