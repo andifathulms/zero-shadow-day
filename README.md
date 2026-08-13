@@ -17,6 +17,8 @@ See [PRD.md](PRD.md) for scope and [CLAUDE.md](CLAUDE.md) for how to work in the
 | **Sapuan** | The subsolar band crossing the archipelago, each city marking on its day. |
 | **Metode** | The algorithm, its accuracy, and what is neglected. |
 
+Any view can be shared as a link that reproduces the exact place, date and time, and both dates export to a calendar file or the year's culminations to a spreadsheet — all built in the browser, nothing uploaded.
+
 ## Getting started
 
 ```bash
@@ -55,6 +57,10 @@ The engine is asserted against published values, not against itself:
 - the Eratosthenes round-trip recovers the radius its synthetic observations were generated from.
 
 **"Zero" has a width.** The sun's disc is about half a degree across, so a real shadow shrinks to a minimum over a couple of minutes rather than vanishing. Every result carries a window, derived from the sun's apparent semi-diameter on the day, and the residual shadow is never reported as zero.
+
+## Live
+
+https://andifathulms.github.io/zero-shadow-day/
 
 ## Privacy
 

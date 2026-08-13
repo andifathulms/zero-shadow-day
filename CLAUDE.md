@@ -156,8 +156,10 @@ M0–M5 built, M6 partly. 130 tests pass; `pnpm test:solar` passes.
 - **M3** shadow-tip hyperbolas and the analemma.
 - **M4** `lib/eratosthenes` with the round trip, plus the partner finder, measurement flow and error breakdown.
 - **M5** the sweep across the archipelago.
-- **M6** partly: the method page, solar noon anywhere, and the Pages deployment. **Not yet done: sharing, export, and an accessibility pass.**
+- **M6** the method page, solar noon anywhere, the Pages deployment, shareable links, calendar and spreadsheet export, and the accessibility pass. Contrast ratios are asserted in `tests/a11y/`, so a lightened tone fails the suite.
 
-Two additions to the layout above: `lib/day/` composes solar and shadow into the tracks the views read, so nothing is computed in a component; `lib/clock/` is the only place a `Date` is allowed, and the numerical core never sees it.
+Additions to the layout above: `lib/day/` composes solar and shadow into the tracks the views read, so nothing is computed in a component; `lib/clock/` is the only place a `Date` is allowed, and the numerical core never sees it; `lib/share/` and `lib/export/` build links and files in the browser.
+
+**Two accent tones were added to the PRD palette.** Sun ochre is 2.4:1 on bleached ground, below the 3:1 a meaningful graphic needs, so `sun-ink` and `marker-ink` carry data lines and small text while the originals keep the washes, fills and display sizes.
 
 `data/cities/indonesia.ts` carries city-centre coordinates to about a kilometre. The zero shadow day fixtures in `tests/zsd/` cover Jakarta and Pontianak against published dates — **worth extending from BMKG's annual release**, and if a fixture ever disagrees, the engine is wrong.
