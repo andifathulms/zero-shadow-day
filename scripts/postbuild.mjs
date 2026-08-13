@@ -6,8 +6,10 @@
  */
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import { buildManifest } from '../lib/brand/manifest.ts'
 
 const out = join(process.cwd(), 'out')
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '/zero-shadow-day'
 await writeFile(join(out, '.nojekyll'), '')
 console.log('postbuild: wrote out/.nojekyll')
 
@@ -43,3 +45,12 @@ if (rewritten === 0) {
   process.exit(1)
 }
 console.log(`postbuild: set lang="en" on ${rewritten} exported page(s)`)
+
+/**
+ * The manifest, with every path under the basePath the site is served from.
+ * Written here rather than by `app/manifest.ts`, whose generated <link> ignores
+ * the basePath — see lib/brand/manifest.ts.
+ */
+const manifest = buildManifest(basePath)
+await writeFile(join(out, 'manifest.webmanifest'), `${JSON.stringify(manifest, null, 2)}\n`)
+console.log(`postbuild: wrote out/manifest.webmanifest for ${basePath || '/'}`)

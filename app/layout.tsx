@@ -29,10 +29,60 @@ const mono = Chivo_Mono({
   display: 'swap',
 })
 
+/**
+ * The site is served from a repository path on GitHub Pages. Next prefixes the
+ * icon links it generates from file convention, but not the manifest link — so
+ * that one is written out with the basePath by hand. Without it the link points
+ * at the domain root, 404s, and installing to a home screen fails silently.
+ */
+const BASE_PATH =
+  process.env.NODE_ENV === 'production'
+    ? (process.env.NEXT_PUBLIC_BASE_PATH ?? '/zero-shadow-day')
+    : ''
+
+const DESCRIPTION =
+  'Dua kali setahun matahari berdiri tepat di atas kepala dan benda tegak berhenti berbayang. Dihitung dari lintang, bujur, dan tanggal — tanpa data luar.'
+
+/**
+ * `app/icon.svg`, `app/apple-icon.png` and `app/opengraph-image.png` are picked
+ * up by file convention, so the tags for them are not written by hand here.
+ * What is written here is what convention does not cover: the social card's
+ * text, and the iOS bits that decide how an installed copy behaves.
+ */
 export const metadata: Metadata = {
   title: 'Zero Shadow Day — Hari Tanpa Bayangan',
-  description:
-    'Dua kali setahun matahari berdiri tepat di atas kepala dan benda tegak berhenti berbayang. Dihitung dari lintang, bujur, dan tanggal — tanpa data luar.',
+  description: DESCRIPTION,
+  manifest: `${BASE_PATH}/manifest.webmanifest`,
+  applicationName: 'Zero Shadow Day',
+  authors: [{ name: 'Andi Fathul Mukminin', url: 'https://andifathulms.github.io/en/' }],
+  keywords: [
+    'hari tanpa bayangan',
+    'kulminasi utama',
+    'zero shadow day',
+    'gnomon',
+    'Eratosthenes',
+    'Indonesia',
+  ],
+  openGraph: {
+    type: 'website',
+    siteName: 'Zero Shadow Day',
+    title: 'Zero Shadow Day — Hari Tanpa Bayangan',
+    description: DESCRIPTION,
+    locale: 'id_ID',
+    alternateLocale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Zero Shadow Day — Hari Tanpa Bayangan',
+    description: DESCRIPTION,
+  },
+  appleWebApp: {
+    capable: true,
+    title: 'Zero Shadow Day',
+    // The ink tile, so the status bar matches the icon it launched from.
+    statusBarStyle: 'black-translucent',
+  },
+  formatDetection: { telephone: false },
 }
 
 export const viewport: Viewport = {
