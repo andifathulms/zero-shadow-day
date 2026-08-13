@@ -5,3 +5,7 @@ out/
 next-env.d.ts
 .DS_Store
 .env*
+
+# Brand design source-of-truth, kept out of the repo. The subset the app
+# actually serves is copied into app/ and public/brand/ and is committed.
+exports/
