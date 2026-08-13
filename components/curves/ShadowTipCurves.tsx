@@ -117,7 +117,7 @@ export function ShadowTipCurves({ dictionary }: { dictionary: Dictionary }) {
         ))}
 
         <circle cx={centre} cy={centre} r={4} className="fill-shadow" />
-        <text x={centre} y={16} textAnchor="middle" className="fill-shadow/45 font-mono text-[11px]">
+        <text x={centre} y={16} textAnchor="middle" className="fill-shadow/70 font-mono text-[11px]">
           U
         </text>
       </svg>

@@ -85,7 +85,7 @@ export function GnomonScene({
               x={footX + ring * SCALE - 4}
               y={footY - 6}
               textAnchor="end"
-              className="fill-shadow/40 font-mono text-[10px]"
+              className="fill-shadow/70 font-mono text-[10px]"
             >
               {ring}×
             </text>
@@ -113,14 +113,14 @@ export function GnomonScene({
           x={footX}
           y={footY - MAX_RATIO * SCALE * FORESHORTEN - 8}
           textAnchor="middle"
-          className="fill-shadow/45 font-mono text-[11px]"
+          className="fill-shadow/70 font-mono text-[11px]"
         >
           U
         </text>
         <text
           x={footX + MAX_RATIO * SCALE + 10}
           y={footY + 4}
-          className="fill-shadow/45 font-mono text-[11px]"
+          className="fill-shadow/70 font-mono text-[11px]"
         >
           T
         </text>
@@ -128,14 +128,14 @@ export function GnomonScene({
           x={footX}
           y={footY + MAX_RATIO * SCALE * FORESHORTEN + 16}
           textAnchor="middle"
-          className="fill-shadow/45 font-mono text-[11px]"
+          className="fill-shadow/70 font-mono text-[11px]"
         >
           S
         </text>
         <text
           x={footX - MAX_RATIO * SCALE - 18}
           y={footY + 4}
-          className="fill-shadow/45 font-mono text-[11px]"
+          className="fill-shadow/70 font-mono text-[11px]"
         >
           B
         </text>
@@ -167,7 +167,7 @@ export function GnomonScene({
             x={width - 12}
             y={height - 12}
             textAnchor="end"
-            className="fill-shadow/45 font-mono text-[11px]"
+            className="fill-shadow/70 font-mono text-[11px]"
           >
             &gt; {MAX_RATIO.toFixed(1)} ×
           </text>
@@ -178,7 +178,7 @@ export function GnomonScene({
             x={width - 12}
             y={height - 12}
             textAnchor="end"
-            className="fill-shadow/45 font-mono text-[11px]"
+            className="fill-shadow/70 font-mono text-[11px]"
           >
             {dictionary.readout.noShadow}
           </text>

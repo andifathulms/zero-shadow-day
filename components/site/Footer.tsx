@@ -4,7 +4,7 @@ import type { Dictionary, Locale } from '@/lib/i18n'
 export function Footer({ locale, dictionary }: { locale: Locale; dictionary: Dictionary }) {
   return (
     <footer className="mt-16 border-t border-shadow/15">
-      <div className="mx-auto max-w-6xl px-5 py-8 text-xs leading-relaxed text-shadow/60">
+      <div className="mx-auto max-w-6xl px-5 py-8 text-xs leading-relaxed text-shadow/70">
         <p className="max-w-prose">{dictionary.method.disclaimer}</p>
         <p className="mt-2 max-w-prose">{dictionary.place.privacy}</p>
         <p className="mt-2">

@@ -42,7 +42,7 @@ export default function MethodPage({ params }: { params: { locale: Locale } }) {
           <li>outside tropics · structured no-result, both hemispheres</li>
           <li>Eratosthenes · round trip recovers the generating radius</li>
         </ul>
-        <p className="mt-4 max-w-prose text-xs leading-relaxed text-shadow/60">
+        <p className="mt-4 max-w-prose text-xs leading-relaxed text-shadow/70">
           {dictionary.method.disclaimer}
         </p>
       </section>

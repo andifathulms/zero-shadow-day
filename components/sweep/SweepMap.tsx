@@ -76,7 +76,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
           {[0].map((lat) => (
             <g key={lat}>
               <line x1={0} y1={y(lat)} x2={width} y2={y(lat)} className="stroke-shadow/25" strokeDasharray="4 4" />
-              <text x={6} y={y(lat) - 5} className="fill-shadow/50 font-mono text-[10px]">
+              <text x={6} y={y(lat) - 5} className="fill-shadow/70 font-mono text-[10px]">
                 0°
               </text>
             </g>
@@ -90,8 +90,8 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
             height={Math.abs(y(decDeg - bandHalfWidth) - y(decDeg + bandHalfWidth))}
             className="fill-sun/30"
           />
-          <line x1={0} y1={y(decDeg)} x2={width} y2={y(decDeg)} className="stroke-sun" strokeWidth={2} />
-          <text x={width - 6} y={y(decDeg) - 6} textAnchor="end" className="fill-sun font-mono text-[11px]">
+          <line x1={0} y1={y(decDeg)} x2={width} y2={y(decDeg)} className="stroke-sun-ink" strokeWidth={2} />
+          <text x={width - 6} y={y(decDeg) - 6} textAnchor="end" className="fill-sun-ink font-mono text-[11px]">
             {formatDeg(decDeg, 2)}
           </text>
 

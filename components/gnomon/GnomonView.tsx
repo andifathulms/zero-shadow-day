@@ -150,7 +150,7 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
           markedDays={markedDays}
           date={date}
         />
-        <p className="mt-2 text-xs text-shadow/55">{dictionary.gnomon.markers}</p>
+        <p className="mt-2 text-xs text-shadow/70">{dictionary.gnomon.markers}</p>
       </div>
     </div>
   )

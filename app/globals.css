@@ -45,8 +45,11 @@
     @apply border-t border-shadow/20;
   }
 
+  /* 70% of the shadow tone on bleached ground is 4.9:1, and 4.7:1 on the
+     concrete surfaces — above the 4.5:1 that 11px uppercase text needs.
+     Anything lighter fails: 55% measured 3.25:1. */
   .label {
-    @apply text-[0.6875rem] uppercase tracking-[0.14em] text-shadow/55;
+    @apply text-[0.6875rem] uppercase tracking-[0.14em] text-shadow/70;
   }
 
   .value {

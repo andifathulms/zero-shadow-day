@@ -82,7 +82,7 @@ export function DatesSummary({
           </li>
         ))}
       </ul>
-      <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow/60">
+      <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow/70">
         {dictionary.dates.windowNote}
       </p>
       {href ? (

@@ -58,7 +58,7 @@ export function TimeScrubber({
           />
         ) : null}
         <div
-          className="absolute top-0 h-3 w-px bg-sun"
+          className="absolute top-0 h-3 w-px bg-sun-ink"
           style={{ left: percent(noonLocalHours) }}
           aria-hidden
         />
@@ -78,15 +78,15 @@ export function TimeScrubber({
         className="w-full accent-shadow"
         aria-valuetext={formatClock(localHours)}
       />
-      <div className="flex justify-between font-mono tabular text-[11px] text-shadow/50">
+      <div className="flex justify-between font-mono tabular text-[11px] text-shadow/70">
         <span>00:00</span>
         <span>{sunriseHours === null ? '—' : formatClock(sunriseHours)}</span>
-        <span className="text-sun">{formatClock(noonLocalHours)}</span>
+        <span className="text-sun-ink">{formatClock(noonLocalHours)}</span>
         <span>{sunsetHours === null ? '—' : formatClock(sunsetHours)}</span>
         <span>24:00</span>
       </div>
       {reducedMotion ? (
-        <p className="mt-2 text-xs text-shadow/55">{dictionary.gnomon.reducedMotion}</p>
+        <p className="mt-2 text-xs text-shadow/70">{dictionary.gnomon.reducedMotion}</p>
       ) : null}
     </div>
   )

@@ -120,7 +120,7 @@ export function DateScrubber({
         className="w-full accent-marker"
         aria-valuetext={formatDate(date, dictionary)}
       />
-      <div className="mt-1 flex justify-between font-mono tabular text-[11px] text-shadow/50">
+      <div className="mt-1 flex justify-between font-mono tabular text-[11px] text-shadow/70">
         {monthTicks(year).map((tick) => (
           <span key={tick.index}>{(dictionary.months[tick.month] ?? '').slice(0, 3)}</span>
         ))}

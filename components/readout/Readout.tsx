@@ -61,7 +61,7 @@ export function Readout({
         />
       </dl>
       {shadow.type === 'no-shadow' ? (
-        <p className="mt-3 text-xs text-shadow/55">{dictionary.readout.noShadow}</p>
+        <p className="mt-3 text-xs text-shadow/70">{dictionary.readout.noShadow}</p>
       ) : null}
     </div>
   )

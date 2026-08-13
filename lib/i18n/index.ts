@@ -26,6 +26,7 @@ const id = {
     eratosthenes: 'Eratosthenes',
     sweep: 'Sapuan',
     method: 'Metode',
+    skipToContent: 'Lompat ke isi',
   },
   home: {
     lede: 'Dua kali setahun, di mana pun di Indonesia, matahari berdiri tepat di atas kepala pada saat kulminasi — dan benda tegak berhenti memiliki bayangan.',
@@ -182,6 +183,7 @@ const en: Dictionary = {
     eratosthenes: 'Eratosthenes',
     sweep: 'Sweep',
     method: 'Method',
+    skipToContent: 'Skip to content',
   },
   home: {
     lede: 'Twice a year, anywhere in Indonesia, the sun stands directly overhead at culmination — and vertical things stop casting shadows.',

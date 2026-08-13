@@ -121,13 +121,13 @@ export function PlacePicker({
       </div>
 
       {status === 'denied' ? (
-        <p className="mt-2 text-sm text-marker">{dictionary.place.denied}</p>
+        <p className="mt-2 text-sm text-marker-ink">{dictionary.place.denied}</p>
       ) : null}
       {status === 'unsupported' ? (
-        <p className="mt-2 text-sm text-marker">{dictionary.place.unsupported}</p>
+        <p className="mt-2 text-sm text-marker-ink">{dictionary.place.unsupported}</p>
       ) : null}
 
-      <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow/60">
+      <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow/70">
         {dictionary.place.privacy}
       </p>
     </section>

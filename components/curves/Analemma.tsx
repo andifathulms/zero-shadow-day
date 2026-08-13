@@ -34,7 +34,7 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
 
   if (visible.length === 0) {
     return (
-      <p className="py-10 text-sm text-shadow/60">
+      <p className="py-10 text-sm text-shadow/70">
         {dictionary.readout.noShadow} — {formatClock(clockHours)}
       </p>
     )
@@ -93,7 +93,7 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
           role="img"
           aria-label={dictionary.curves.analemmaLede}
         >
-          <path d={path} className="fill-none stroke-sun" strokeWidth={2} />
+          <path d={path} className="fill-none stroke-sun-ink" strokeWidth={2} />
           {unwrapped
             .filter((point) => point.date.day === 1)
             .map((point) => (
@@ -102,7 +102,7 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
                 cx={x(point.az)}
                 cy={y(point.altDeg)}
                 r={2.5}
-                className="fill-sun"
+                className="fill-sun-ink"
               />
             ))}
           {solsticeMarks.map((point) => (
@@ -117,14 +117,14 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
               </text>
             </g>
           ))}
-          <text x={pad} y={height - 12} className="fill-shadow/50 font-mono text-[11px]">
+          <text x={pad} y={height - 12} className="fill-shadow/70 font-mono text-[11px]">
             {dictionary.readout.azimuth}: {formatDeg(azMin + mean, 0)} → {formatDeg(azMax + mean, 0)}
           </text>
-          <text x={pad} y={22} className="fill-shadow/50 font-mono text-[11px]">
+          <text x={pad} y={22} className="fill-shadow/70 font-mono text-[11px]">
             {dictionary.readout.altitude}: {formatDeg(altMax, 0)}
           </text>
         </svg>
-        <figcaption className="mt-3 font-mono tabular text-xs text-shadow/60">
+        <figcaption className="mt-3 font-mono tabular text-xs text-shadow/70">
           {dictionary.readout.eot}: {formatMinutes(Math.min(...eot))} …{' '}
           {formatMinutes(Math.max(...eot))} {dictionary.units.minutes}
         </figcaption>

@@ -138,7 +138,7 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
             </div>
           ) : null}
         </dl>
-        <p className="mt-2 font-mono tabular text-xs text-shadow/60">
+        <p className="mt-2 font-mono tabular text-xs text-shadow/70">
           {formatDate(date, dictionary)}
         </p>
       </section>
@@ -172,7 +172,7 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
           className="mt-1 w-48 border border-shadow/25 bg-bleached px-2 py-1.5 font-mono tabular"
         />
         {/* Stated plainly: the pre-filled distance already assumes the answer. */}
-        <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow/60">
+        <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow/70">
           {dictionary.eratosthenes.distanceNote}
         </p>
       </section>
