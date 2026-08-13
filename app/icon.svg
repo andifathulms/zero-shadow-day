@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Bleached ground, one stick, one hard shadow. -->
+  <rect width="32" height="32" fill="#EDE9DF"/>
+  <circle cx="22" cy="9" r="4" fill="#C98A21"/>
+  <polygon points="15,22 17,22 7,25" fill="#2E2A24"/>
+  <rect x="15" y="10" width="2" height="12" fill="#2E2A24"/>
+</svg>

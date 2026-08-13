@@ -37,7 +37,11 @@ async function resolveFile(pathname) {
 }
 
 const server = createServer(async (req, res) => {
-  const url = new URL(req.url ?? '/', `http://localhost:${PORT}`)
+  const requested = new URL(req.url ?? '/', `http://localhost:${PORT}`)
+  // Next names route-group chunks after the dynamic segment, so paths contain
+  // literal brackets and arrive percent-encoded. A static host decodes them;
+  // so must this.
+  const url = { pathname: decodeURIComponent(requested.pathname) }
   if (url.pathname === '/') {
     res.writeHead(302, { location: `${BASE_PATH}/` })
     res.end()

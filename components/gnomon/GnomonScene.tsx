@@ -14,12 +14,12 @@ import type { Dictionary } from '@/lib/i18n'
  * The shadow is the readout. Nothing here computes it; it arrives in `instant`.
  */
 
-const FORESHORTEN = 0.52
-/** Screen units per gnomon height. */
-const SCALE = 46
+const FORESHORTEN = 0.5
+/** Screen units per gnomon height. One scale for the stick and the ground alike. */
+const SCALE = 68
 const GNOMON_HEIGHT = 1
 /** Past this many gnomon heights the shadow leaves the plot, near sunrise and sunset. */
-const MAX_RATIO = 7.5
+const MAX_RATIO = 5
 
 export interface GnomonSceneProps {
   instant: Instant
@@ -31,12 +31,14 @@ export interface GnomonSceneProps {
 export function GnomonScene({
   instant,
   dictionary,
-  rings = [1, 2, 3, 5, 7],
+  rings = [1, 2, 3, 4, 5],
 }: GnomonSceneProps) {
-  const width = 720
-  const height = 420
+  const width = 760
+  const height = 460
   const footX = width / 2
-  const footY = height * 0.62
+  // High enough that the southern reach of the ground plane, and its label,
+  // stay inside the frame.
+  const footY = height * 0.55
 
   const project = (east: number, north: number) => ({
     x: footX + east * SCALE,
@@ -66,17 +68,28 @@ export function GnomonScene({
         {/* the ground */}
         <rect x={0} y={0} width={width} height={height} className="fill-concrete/40" />
 
-        {/* rings at whole gnomon heights, so the shadow can be read off the ground */}
+        {/* rings at whole gnomon heights, so the shadow can be read off the
+            ground as a multiple of the stick — the length is the data */}
         {rings.map((ring) => (
-          <ellipse
-            key={ring}
-            cx={footX}
-            cy={footY}
-            rx={ring * SCALE}
-            ry={ring * SCALE * FORESHORTEN}
-            className="fill-none stroke-shadow/12"
-            strokeWidth={1}
-          />
+          <g key={ring}>
+            <ellipse
+              cx={footX}
+              cy={footY}
+              rx={ring * SCALE}
+              ry={ring * SCALE * FORESHORTEN}
+              className="fill-none stroke-shadow/25"
+              strokeWidth={1}
+              strokeDasharray="2 5"
+            />
+            <text
+              x={footX + ring * SCALE - 4}
+              y={footY - 6}
+              textAnchor="end"
+              className="fill-shadow/40 font-mono text-[10px]"
+            >
+              {ring}×
+            </text>
+          </g>
         ))}
 
         {/* cardinal directions: the shadow's bearing is meant to be read */}
@@ -139,10 +152,10 @@ export function GnomonScene({
           x2={stickTop.x}
           y2={stickTop.y}
           className="stroke-shadow"
-          strokeWidth={5}
+          strokeWidth={7}
           strokeLinecap="butt"
         />
-        <ellipse cx={footX} cy={footY} rx={4} ry={2.4} className="fill-shadow" />
+        <ellipse cx={footX} cy={footY} rx={5} ry={2.8} className="fill-shadow" />
 
         {/* the zenith case: the shadow has collapsed under the stick */}
         {shadow.type === 'zenith' ? (
@@ -187,7 +200,7 @@ function ShadowShape({
   const dx = tip.x - foot.x
   const dy = tip.y - foot.y
   const length = Math.hypot(dx, dy) || 1
-  const halfWidth = 3.2
+  const halfWidth = 4.5
   const nx = (-dy / length) * halfWidth
   const ny = (dx / length) * halfWidth
 
