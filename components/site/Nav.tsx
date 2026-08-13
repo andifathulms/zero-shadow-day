@@ -14,6 +14,23 @@ const SECTIONS = [
 
 export function Nav({ locale, dictionary }: { locale: Locale; dictionary: Dictionary }) {
   const other: Locale = locale === 'id' ? 'en' : 'id'
+  // Indonesian-first (CLAUDE.md): the wordmark leads with the Indonesian name
+  // on the id locale rather than always leading with the English product name.
+  const isId = locale === 'id'
+  const primaryName = isId ? dictionary.meta.localName : dictionary.meta.title
+  const secondaryName = isId ? dictionary.meta.title : dictionary.meta.localName
+
+  // A one-line hint per section, read by screen readers and shown as a native
+  // tooltip, so single-word nav labels like "Kurva" or "Sapuan" aren't opaque.
+  const hints: Record<(typeof SECTIONS)[number]['key'], string> = {
+    home: dictionary.nav.home,
+    gnomon: dictionary.home.exploreGnomon,
+    dates: dictionary.home.exploreDates,
+    curves: dictionary.home.exploreCurves,
+    eratosthenes: dictionary.home.exploreEratosthenes,
+    sweep: dictionary.home.exploreSweep,
+    method: dictionary.nav.methodHint,
+  }
 
   return (
     <header className="border-b border-shadow/15">
@@ -25,9 +42,9 @@ export function Nav({ locale, dictionary }: { locale: Locale; dictionary: Dictio
         >
           <Mark size={34} className="shrink-0 transition group-hover:text-marker-ink" />
           <span className="flex flex-col leading-none">
-            <span className="font-display text-xl leading-none">{dictionary.meta.title}</span>
+            <span className="font-display text-xl leading-none">{primaryName}</span>
             <span className="mt-0.5 hidden text-[0.6875rem] tracking-[0.08em] text-shadow/70 sm:block">
-              {dictionary.meta.localName}
+              {secondaryName}
             </span>
           </span>
         </Link>
@@ -37,9 +54,11 @@ export function Nav({ locale, dictionary }: { locale: Locale; dictionary: Dictio
               <li key={section.slug}>
                 <Link
                   href={`/${locale}/${section.slug}`}
+                  title={hints[section.key]}
                   className="border-b border-transparent pb-0.5 hover:border-shadow"
                 >
                   {dictionary.nav[section.key]}
+                  <span className="sr-only"> — {hints[section.key]}</span>
                 </Link>
               </li>
             ))}
