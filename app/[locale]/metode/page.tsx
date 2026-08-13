@@ -37,7 +37,8 @@ export default function MethodPage({ params }: { params: { locale: Locale } }) {
           <li>declination @ equinox · |δ| &lt; 0.01°</li>
           <li>declination @ solstice · |δ| = ε ± 0.001°</li>
           <li>equation of time · 4 extrema, 4 zero crossings</li>
-          <li>zero shadow day · published dates ± 1 d</li>
+          <li>BMKG · 38 ibukota provinsi × 2 tabel · tanggal ± 1 hari</li>
+          <li>BMKG · waktu kulminasi · &lt; 5 detik</li>
           <li>tropic edge · converged, single date</li>
           <li>outside tropics · structured no-result, both hemispheres</li>
           <li>Eratosthenes · round trip recovers the generating radius</li>

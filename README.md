@@ -51,7 +51,7 @@ The engine is asserted against published values, not against itself:
 
 - declination is zero at the published equinox instants and equals the obliquity at the solstices;
 - the equation of time's four extrema and four zero crossings land on their published values and dates;
-- computed zero shadow days agree with published Indonesian dates within a day;
+- computed zero shadow days agree with BMKG's published tables — 38 provincial capitals across two publications, at BMKG's own coordinates: 75 of 76 dates exact, all within a day, culmination times under five seconds;
 - at the tropics the two dates converge into one, and outside them the app returns a structured no-result naming the limit — asserted 0.001° either side of the boundary, in both hemispheres;
 - shadow geometry is derived independently of the solar engine, so neither can validate the other's errors;
 - the Eratosthenes round-trip recovers the radius its synthetic observations were generated from.

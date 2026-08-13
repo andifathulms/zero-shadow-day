@@ -162,4 +162,13 @@ Additions to the layout above: `lib/day/` composes solar and shadow into the tra
 
 **Two accent tones were added to the PRD palette.** Sun ochre is 2.4:1 on bleached ground, below the 3:1 a meaningful graphic needs, so `sun-ink` and `marker-ink` carry data lines and small text while the originals keep the washes, fills and display sizes.
 
-`data/cities/indonesia.ts` carries city-centre coordinates to about a kilometre. The zero shadow day fixtures in `tests/zsd/` cover Jakarta and Pontianak against published dates — **worth extending from BMKG's annual release**, and if a fixture ever disagrees, the engine is wrong.
+`data/cities/indonesia.ts` carries city-centre coordinates to about a kilometre.
+
+**The ZSD fixtures are BMKG's own tables**, transcribed in `tests/zsd/fixtures/bmkg.ts`: Kulminasi Utama I 2026 and Kulminasi Utama II 2025, 38 provincial capitals each, at BMKG's coordinates and with culmination times to the second. 75 of the 76 dates match exactly and all 76 are within a day; the times match under five seconds.
+
+Two disagreements are documented and tested rather than tolerated:
+
+- **Pekanbaru 2026** — the app names 22 March against BMKG's 21st. The city is 0.53° from the equator, so the crossing falls between two culminations; the noon zenith is 0.284° on the 21st and 0.111° on the 22nd, and the app's rule is the smaller residual. Both are inside the one-day bar.
+- **Four rows of the 2025 second table** — Jayapura, Nabire, Wamena and Merauke carry their *first* culmination time. Their two published times differ by seconds where the Equation of Time demands 19–27 minutes, and Sorong and Manokwari in the same zone and table differ by exactly their EoT change. The test proves this from the EoT rather than assuming it, so the four are never silently skipped.
+
+If a fixture ever disagrees on a **date**, the engine is wrong.
