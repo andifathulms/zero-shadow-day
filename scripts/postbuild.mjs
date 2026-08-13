@@ -54,3 +54,19 @@ console.log(`postbuild: set lang="en" on ${rewritten} exported page(s)`)
 const manifest = buildManifest(basePath)
 await writeFile(join(out, 'manifest.webmanifest'), `${JSON.stringify(manifest, null, 2)}\n`)
 console.log(`postbuild: wrote out/manifest.webmanifest for ${basePath || '/'}`)
+
+/**
+ * Absolute URLs are easy to get wrong in a static export and impossible to spot
+ * by looking at the site: a social card pointing at localhost renders fine
+ * locally and breaks everywhere it is shared. So the export is checked.
+ */
+const leaked = []
+for await (const file of htmlFiles(out)) {
+  const html = await readFile(file, 'utf8')
+  if (html.includes('localhost')) leaked.push(file.replace(out, ''))
+}
+if (leaked.length > 0) {
+  console.error(`postbuild: localhost URLs survived into the export: ${leaked.join(', ')}`)
+  process.exit(1)
+}
+console.log('postbuild: no localhost URLs in the export')

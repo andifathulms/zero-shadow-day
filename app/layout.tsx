@@ -40,6 +40,18 @@ const BASE_PATH =
     ? (process.env.NEXT_PUBLIC_BASE_PATH ?? '/zero-shadow-day')
     : ''
 
+/**
+ * Absolute URLs for the social card. Without this Next falls back to
+ * http://localhost:3000, which every crawler faithfully reproduces — the
+ * preview then breaks everywhere the link is shared, and nothing in the build
+ * complains. `scripts/postbuild.mjs` fails the build if a localhost URL
+ * survives into the export.
+ */
+const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? 'https://andifathulms.github.io'
+// metadataBase is the origin alone: Next appends the basePath to asset paths
+// itself, so including it here too produces .../zero-shadow-day/zero-shadow-day/.
+const SITE_URL = `${SITE_ORIGIN}${BASE_PATH}/`
+
 const DESCRIPTION =
   'Dua kali setahun matahari berdiri tepat di atas kepala dan benda tegak berhenti berbayang. Dihitung dari lintang, bujur, dan tanggal — tanpa data luar.'
 
@@ -50,6 +62,7 @@ const DESCRIPTION =
  * text, and the iOS bits that decide how an installed copy behaves.
  */
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_ORIGIN),
   title: 'Zero Shadow Day — Hari Tanpa Bayangan',
   description: DESCRIPTION,
   manifest: `${BASE_PATH}/manifest.webmanifest`,
@@ -65,6 +78,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: 'website',
+    url: SITE_URL,
     siteName: 'Zero Shadow Day',
     title: 'Zero Shadow Day — Hari Tanpa Bayangan',
     description: DESCRIPTION,
