@@ -19,8 +19,10 @@ import { MINUTES_PER_DAY, solarNoon } from '@/lib/solar/noon'
 import { solarPosition } from '@/lib/solar/position'
 import { shadowLengthRatioFromZenith } from '@/lib/shadow'
 import type {
+  LongestShadowDay,
   OutsideTropics,
   Place,
+  ShadowDirectionSegment,
   ZeroShadowDay,
   ZeroShadowResult,
   ZeroShadowWindow,
@@ -157,14 +159,67 @@ function outsideTropics(
   candidates: readonly Candidate[],
 ): OutsideTropics {
   const hemisphere = place.latDeg > 0 ? 'north' : 'south'
+  const best = candidates[indexOfMinimumZenith(candidates)]!
   return {
     type: 'outside-tropics',
     latDeg: place.latDeg,
     year,
     limitDeg: hemisphere === 'north' ? limits.maxDeg : limits.minDeg,
     hemisphere,
-    minZenithDeg: candidates[indexOfMinimumZenith(candidates)]!.zenithDeg,
+    minZenithDeg: best.zenithDeg,
+    bestDate: best.date,
+    bestLocalNoonHours: best.localNoonHours,
   }
+}
+
+/**
+ * The day of the year with the longest noon shadow: the dual of
+ * `zeroShadowDays`, maximising rather than minimising the same culmination
+ * zenith distance. Meaningful at any latitude, tropics or not.
+ */
+export function longestShadowDay(place: Place, year: number): LongestShadowDay {
+  const candidates = noonCandidates(place, year)
+  let best = candidates[0]!
+  for (const candidate of candidates) {
+    if (candidate.zenithDeg > best.zenithDeg) best = candidate
+  }
+  return {
+    date: best.date,
+    jdCulmination: best.jdCulmination,
+    localNoonHours: best.localNoonHours,
+    maxZenithDeg: best.zenithDeg,
+    maxShadowRatio: shadowLengthRatioFromZenith(best.zenithDeg),
+  }
+}
+
+/**
+ * Which way the noon shadow points, as consecutive runs of days. Inside the
+ * tropics this flips at each zero shadow day (dec − lat changes sign);
+ * outside the tropics dec − lat never changes sign, so the whole year is one
+ * segment — the same fact `home.flip` states in prose, read here as data.
+ */
+export function shadowDirectionTimeline(place: Place, year: number): ShadowDirectionSegment[] {
+  const candidates = noonCandidates(place, year)
+  const segments: ShadowDirectionSegment[] = []
+  let current: { direction: 'north' | 'south'; startDate: Candidate['date']; endDate: Candidate['date'] } | null =
+    null
+
+  for (const candidate of candidates) {
+    // At the exact instant of a crossing the direction is momentarily moot;
+    // at daily resolution this essentially never lands on a sampled day.
+    if (candidate.signedDeg === 0) continue
+    // North of the subsolar latitude (dec < lat) the sun is to the south and
+    // the shadow falls north — the same convention as lib/eratosthenes.
+    const direction: 'north' | 'south' = candidate.signedDeg < 0 ? 'north' : 'south'
+    if (current && current.direction === direction) {
+      current = { direction, startDate: current.startDate, endDate: candidate.date }
+    } else {
+      if (current) segments.push(current)
+      current = { direction, startDate: candidate.date, endDate: candidate.date }
+    }
+  }
+  if (current) segments.push(current)
+  return segments
 }
 
 /** Fill in the shadow residual and the window for a chosen candidate day. */

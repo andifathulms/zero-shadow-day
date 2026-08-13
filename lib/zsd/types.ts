@@ -65,6 +65,34 @@ export interface OutsideTropics {
   readonly hemisphere: 'north' | 'south'
   /** How far short the Sun falls of the zenith at its best, degrees. */
   readonly minZenithDeg: number
+  /** The day of the year the Sun makes that closest approach — never a wall, a graded fact. */
+  readonly bestDate: CivilDate
+  readonly bestLocalNoonHours: number
 }
 
 export type ZeroShadowResult = ZeroShadowDaysFound | OutsideTropics
+
+/**
+ * The day of the year with the longest noon shadow — the dual of the zero
+ * shadow day, found by the same search with the comparison reversed.
+ */
+export interface LongestShadowDay {
+  readonly date: CivilDate
+  readonly jdCulmination: number
+  readonly localNoonHours: number
+  /** Zenith distance of the Sun's centre at culmination that day, degrees. */
+  readonly maxZenithDeg: number
+  readonly maxShadowRatio: number
+}
+
+/**
+ * A run of consecutive days across which the noon shadow points the same way.
+ * Inside the tropics this flips at each zero shadow day; outside the tropics
+ * it never flips (CLAUDE.md invariant 5's search, read for direction instead
+ * of minimum).
+ */
+export interface ShadowDirectionSegment {
+  readonly direction: 'north' | 'south'
+  readonly startDate: CivilDate
+  readonly endDate: CivilDate
+}

@@ -2,7 +2,12 @@ import { describe, expect, it } from 'vitest'
 import { OBLIQUITY_J2000_DEG } from '@/lib/solar/position'
 import { dayOfYear, julianDay } from '@/lib/solar/julian'
 import { shadowLengthRatioFromZenith } from '@/lib/shadow'
-import { declinationLimits, zeroShadowDays } from '@/lib/zsd'
+import {
+  declinationLimits,
+  longestShadowDay,
+  shadowDirectionTimeline,
+  zeroShadowDays,
+} from '@/lib/zsd'
 import type { Place, ZeroShadowDaysFound } from '@/lib/zsd'
 
 const found = (place: Place, year: number): ZeroShadowDaysFound => {
@@ -108,6 +113,7 @@ describe('boundaries — where a formula-based approach silently breaks', () => 
     expect(result.hemisphere).toBe('north')
     expect(result.limitDeg).toBeCloseTo(limits.maxDeg, 9)
     expect(result.minZenithDeg).toBeGreaterThan(0)
+    expect(result.bestDate.year).toBe(2024)
   })
 
   it('refuses in both directions and names the limit', () => {
@@ -142,6 +148,99 @@ describe('boundaries — where a formula-based approach silently breaks', () => 
     expect(zeroShadowDays({ latDeg: limits.minDeg - 0.001, lonDeg: 105, offsetHours: 7 }, 2024).type).toBe(
       'outside-tropics',
     )
+  })
+})
+
+describe('the longest shadow, the dual of the shortest', () => {
+  it('is the June solstice for places south of the equator', () => {
+    const kupang = longestShadowDay({ latDeg: -10.1772, lonDeg: 123.607, offsetHours: 8 }, 2024)
+    expect(kupang.date.month).toBe(6)
+    expect(daysApart(kupang.date, { year: 2024, month: 6, day: 21 })).toBeLessThanOrEqual(2)
+  })
+
+  it('is the December solstice for places north of the equator', () => {
+    const aceh = longestShadowDay({ latDeg: 5.5483, lonDeg: 95.3238, offsetHours: 7 }, 2024)
+    expect(aceh.date.month).toBe(12)
+    expect(daysApart(aceh.date, { year: 2024, month: 12, day: 21 })).toBeLessThanOrEqual(2)
+  })
+
+  it('the shadow ratio matches the reported zenith distance', () => {
+    const jakarta = longestShadowDay({ latDeg: -6.2088, lonDeg: 106.8456, offsetHours: 7 }, 2024)
+    expect(jakarta.maxShadowRatio).toBeCloseTo(shadowLengthRatioFromZenith(jakarta.maxZenithDeg), 12)
+    expect(jakarta.maxZenithDeg).toBeGreaterThan(0)
+  })
+
+  it('is longer than the shortest shadow at the same place', () => {
+    const place = { latDeg: -6.2088, lonDeg: 106.8456, offsetHours: 7 }
+    const longest = longestShadowDay(place, 2024)
+    const shortest = found(place, 2024)
+    for (const day of shortest.days) {
+      expect(longest.maxZenithDeg).toBeGreaterThan(day.minZenithDeg)
+    }
+  })
+
+  it('determinism', () => {
+    const place = { latDeg: -6.2088, lonDeg: 106.8456, offsetHours: 7 }
+    expect(JSON.stringify(longestShadowDay(place, 2024))).toBe(
+      JSON.stringify(longestShadowDay(place, 2024)),
+    )
+  })
+})
+
+describe('the outside-tropics no-result names its best day', () => {
+  it('names a date and a culmination time, not just a residual', () => {
+    const result = zeroShadowDays({ latDeg: 35.6762, lonDeg: 139.6503, offsetHours: 9 }, 2024)
+    expect(result.type).toBe('outside-tropics')
+    if (result.type !== 'outside-tropics') throw new Error('unreachable')
+    expect(result.bestDate.year).toBe(2024)
+    expect(result.bestLocalNoonHours).toBeGreaterThan(0)
+    expect(result.bestLocalNoonHours).toBeLessThan(24)
+  })
+
+  it('the best day is the June solstice north of the tropics, December south of them', () => {
+    const tokyo = zeroShadowDays({ latDeg: 35.6762, lonDeg: 139.6503, offsetHours: 9 }, 2024)
+    const sydney = zeroShadowDays({ latDeg: -33.8688, lonDeg: 151.2093, offsetHours: 10 }, 2024)
+    if (tokyo.type !== 'outside-tropics' || sydney.type !== 'outside-tropics') {
+      throw new Error('unreachable')
+    }
+    expect(tokyo.bestDate.month).toBe(6)
+    expect(sydney.bestDate.month).toBe(12)
+  })
+})
+
+describe('the shadow direction timeline', () => {
+  it('flips exactly at the zero shadow days, inside the tropics', () => {
+    const place = { latDeg: -6.2088, lonDeg: 106.8456, offsetHours: 7 }
+    const segments = shadowDirectionTimeline(place, 2024)
+    const zsd = found(place, 2024)
+    expect(segments).toHaveLength(3)
+    expect(segments[0]!.direction).toBe('north')
+    expect(segments[1]!.direction).toBe('south')
+    expect(segments[2]!.direction).toBe('north')
+    expect(daysApart(segments[0]!.endDate, zsd.days[0]!.date)).toBeLessThanOrEqual(1)
+    expect(daysApart(segments[1]!.startDate, zsd.days[0]!.date)).toBeLessThanOrEqual(1)
+    expect(daysApart(segments[1]!.endDate, zsd.days[1]!.date)).toBeLessThanOrEqual(1)
+    expect(daysApart(segments[2]!.startDate, zsd.days[1]!.date)).toBeLessThanOrEqual(1)
+  })
+
+  it('never flips outside the tropics', () => {
+    const tokyo = shadowDirectionTimeline({ latDeg: 35.6762, lonDeg: 139.6503, offsetHours: 9 }, 2024)
+    expect(tokyo).toHaveLength(1)
+    expect(tokyo[0]!.direction).toBe('north')
+
+    const sydney = shadowDirectionTimeline(
+      { latDeg: -33.8688, lonDeg: 151.2093, offsetHours: 10 },
+      2024,
+    )
+    expect(sydney).toHaveLength(1)
+    expect(sydney[0]!.direction).toBe('south')
+  })
+
+  it('covers the whole year with no gaps', () => {
+    const place = { latDeg: -6.2088, lonDeg: 106.8456, offsetHours: 7 }
+    const segments = shadowDirectionTimeline(place, 2024)
+    expect(segments[0]!.startDate).toEqual({ year: 2024, month: 1, day: 1 })
+    expect(segments.at(-1)!.endDate).toEqual({ year: 2024, month: 12, day: 31 })
   })
 })
 
