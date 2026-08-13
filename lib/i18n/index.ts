@@ -124,6 +124,8 @@ const id = {
     errorHeading: 'Dari mana galatnya',
     errorNote: 'Selisih antara pengukuran halaman sekolah dan angka sebenarnya justru pelajarannya, bukan hal yang perlu disembunyikan.',
     compute: 'Hitung',
+    distance: 'Jarak utara–selatan antara kedua tempat',
+    distanceNote: 'Angka awal ini dihitung dari jari-jari bumi yang sudah diterima — jadi memakainya berarti mengandaikan jawaban yang sedang dicari. Eratosthenes memperoleh jaraknya dari juru ukur. Ganti dengan jarak dari peta atau odometer agar pengukurannya berdiri sendiri.',
     sameMeridian: 'Kedua tempat tidak berada pada bujur yang sama; metode Eratosthenes mengandaikan demikian. Selisih bujur {gap}° menambah galat.',
   },
   sweep: {
@@ -278,6 +280,8 @@ const en: Dictionary = {
     errorHeading: 'Where the error comes from',
     errorNote: 'The gap between a schoolyard measurement and the true figure is itself the lesson, not an embarrassment to hide.',
     compute: 'Compute',
+    distance: 'North–south distance between the two places',
+    distanceNote: 'This starting figure is computed from the accepted Earth radius — so using it assumes the very answer being sought. Eratosthenes had his distance from surveyors. Replace it with a distance from a map or an odometer to make the measurement stand on its own.',
     sameMeridian: 'The two places are not on the same meridian, which Eratosthenes’ method assumes. A {gap}° difference in longitude adds error.',
   },
   sweep: {
