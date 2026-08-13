@@ -119,6 +119,7 @@ const id = {
     equinox: 'Ekuinoks — garis lurus',
     solstice: 'Solstis',
     atClock: 'Pada pukul',
+    analemmaNote: 'Dilihat dari bawah, menengadah: pusat lingkaran adalah titik tepat di atas kepala. Pada jam ini, sepanjang tahun matahari paling dekat {gap} dari titik itu.',
   },
   eratosthenes: {
     heading: 'Mengukur Bumi',
@@ -302,6 +303,7 @@ const en: Dictionary = {
     equinox: 'Equinox — a straight line',
     solstice: 'Solstice',
     atClock: 'At clock time',
+    analemmaNote: 'Seen from below, looking up: the centre of the rings is the point straight overhead. At this clock time, the sun’s closest approach to it all year is {gap}.',
   },
   eratosthenes: {
     heading: 'Measure the Earth',

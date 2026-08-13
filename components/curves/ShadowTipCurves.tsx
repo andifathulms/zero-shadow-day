@@ -73,7 +73,7 @@ export function ShadowTipCurves({ dictionary }: { dictionary: Dictionary }) {
     <figure>
       <svg
         viewBox={`0 0 ${size} ${size}`}
-        className="mx-auto h-auto w-full max-w-[520px] bg-concrete/25"
+        className="mx-auto h-auto w-full max-w-[520px] rounded-lg bg-chalk shadow-lift"
         role="img"
         aria-label={dictionary.curves.tipLede}
       >

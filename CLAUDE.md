@@ -63,6 +63,7 @@ lib/
     altitude.ts             # sun altitude and azimuth
     julian.ts               # JD conversion
   shadow/                   # length + bearing from altitude/azimuth. Independent of lib/solar.
+  scene/                    # 3D projection + a sky driven by solar altitude. No engine, no dependency.
   zsd/                      # search: minimise noon shadow over the year
   eratosthenes/             # circumference derivation + error analysis
 data/
@@ -95,9 +96,13 @@ tests/
 
 10. **The shadow is the readout.** Its length and bearing are the data. Never render it as decoration beside a separate numeric display, and never scale it for visual effect in a way that breaks the length-to-altitude relationship.
 
+    The 3D scene keeps this: `lib/scene` works in units of gnomon heights, so a shadow's length in world space *is* its ratio to the stick, and one camera transform moves every point alike. A test measures the drawn shadow at three altitudes and asserts the on-screen ratios come out 2:1:0.5.
+
 11. **Angles in degrees named `*Deg`; times in fractional days or seconds named accordingly; shadow expressed as a ratio to gnomon height named `*Ratio`.** Convert once, at the boundary.
 
-12. **Vermilion marks the zero shadow day and nothing else. Sun ochre is the sun's own path.** The shadow tone is the darkest thing on the page because it is the subject. See PRD §9.
+12. **Vermilion marks the zero shadow day and nothing else. Sun ochre is the sun's own path.** The shadow tone is the darkest thing on the page because it is the subject.
+
+    **PRD §9's flat bleached-concrete palette is superseded** by owner decision: the site now carries a real sky — deep blue through sunrise orange to night — with a hero that plays a whole day, and a hand-rolled 3D scene. The two rules above survived that change because they carry meaning rather than taste, and both are asserted in `tests/a11y/`. `sun-ink` and `marker-ink` exist because ochre at 2.4:1 cannot carry a data line.
 
 13. **Zero network requests at runtime.** No font CDN, no analytics, no geocoding service.
 

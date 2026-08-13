@@ -10,6 +10,13 @@ import type { Dictionary } from '@/lib/i18n'
 /**
  * The analemma: the sun photographed at the same clock time all year.
  *
+ * Plotted looking straight up — the zenith at the centre, distance from the
+ * centre the angle from overhead, direction the compass bearing. Altitude and
+ * azimuth as plain x and y cannot draw this in the tropics: at noon here the
+ * sun passes within a degree of the zenith, where the azimuth swings through
+ * the whole circle within a couple of days and the figure tears itself apart.
+ * Looking up is also what the photograph actually looks like.
+ *
  * Sun ochre, because this is the sun's own path (CLAUDE.md invariant 12). The
  * figure-eight is the equation of time made visible — the same quantity that
  * shifts culmination away from 12:00 on the dates page.
@@ -27,108 +34,157 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
 
   if (year === null || points === null) return <div className="min-h-[26rem]" aria-hidden />
 
-  const visible = points.filter((point) => point.altDeg > -6)
-  const width = 520
-  const height = 420
-  const pad = 40
+  const visible = points.filter((point) => point.altDeg > 0)
+  const size = 460
+  const centre = size / 2
 
   if (visible.length === 0) {
     return (
-      <p className="py-10 text-sm text-shadow/70">
-        {dictionary.readout.noShadow} — {formatClock(clockHours)}
-      </p>
+      <div>
+        <ClockControl dictionary={dictionary} value={clockHours} onChange={setClockHours} />
+        <p className="mt-6 text-sm text-shadow/70">
+          {dictionary.readout.noShadow} — {formatClock(clockHours)}
+        </p>
+      </div>
     )
   }
 
-  // Azimuth is unwrapped about the mean so a figure crossing due north does not
-  // tear at the 0/360 seam.
-  const mean = visible.reduce((sum, point) => sum + point.azDeg, 0) / visible.length
-  const unwrapped = visible.map((point) => ({
-    ...point,
-    az: point.azDeg - mean > 180 ? point.azDeg - 360 : point.azDeg - mean < -180 ? point.azDeg + 360 : point.azDeg,
-  }))
+  // Zenith distance drives the radius, so the centre of the plot is straight up.
+  const maxZenith = Math.max(...visible.map((point) => 90 - point.altDeg), 4)
+  const radius = (centre - 34) / maxZenith
+  const place2d = (altDeg: number, azDeg: number) => {
+    const zenith = 90 - altDeg
+    const bearing = (azDeg * Math.PI) / 180
+    return {
+      x: centre + zenith * radius * Math.sin(bearing),
+      // North at the top of the plot, as on a map.
+      y: centre - zenith * radius * Math.cos(bearing),
+    }
+  }
 
-  const azMin = Math.min(...unwrapped.map((point) => point.az))
-  const azMax = Math.max(...unwrapped.map((point) => point.az))
-  const altMin = Math.min(...unwrapped.map((point) => point.altDeg))
-  const altMax = Math.max(...unwrapped.map((point) => point.altDeg))
-
-  const x = (az: number) => pad + ((az - azMin) / Math.max(azMax - azMin, 1e-6)) * (width - 2 * pad)
-  const y = (alt: number) =>
-    height - pad - ((alt - altMin) / Math.max(altMax - altMin, 1e-6)) * (height - 2 * pad)
-
-  const path = unwrapped
-    .map((point, index) => `${index === 0 ? 'M' : 'L'}${x(point.az).toFixed(1)},${y(point.altDeg).toFixed(1)}`)
+  const path = visible
+    .map((point, index) => {
+      const { x, y } = place2d(point.altDeg, point.azDeg)
+      return `${index === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`
+    })
     .join(' ')
 
-  const solsticeMarks = unwrapped.filter(
-    (point) => (point.date.month === 6 && point.date.day === 21) || (point.date.month === 12 && point.date.day === 21),
+  const marks = visible.filter(
+    (point) =>
+      (point.date.month === 6 && point.date.day === 21) ||
+      (point.date.month === 12 && point.date.day === 21),
   )
-
   const eot = points.map((point) => point.eotMinutes)
+  const closest = Math.min(...visible.map((point) => 90 - point.altDeg))
 
   return (
     <div>
-      <div className="flex flex-wrap items-baseline gap-4">
-        <label className="label" htmlFor="analemma-clock">
-          {dictionary.curves.atClock}
-        </label>
-        <input
-          id="analemma-clock"
-          type="range"
-          min={5}
-          max={19}
-          step={0.5}
-          value={clockHours}
-          onChange={(event) => setClockHours(Number(event.target.value))}
-          className="w-56 accent-sun"
-        />
-        <output className="font-mono tabular text-lg">{formatClock(clockHours)}</output>
-      </div>
+      <ClockControl dictionary={dictionary} value={clockHours} onChange={setClockHours} />
 
       <figure className="mt-4">
         <svg
-          viewBox={`0 0 ${width} ${height}`}
-          className="mx-auto h-auto w-full max-w-[520px] bg-sky/40"
+          viewBox={`0 0 ${size} ${size}`}
+          className="mx-auto h-auto w-full max-w-[460px] rounded-lg bg-sky/40 shadow-lift"
           role="img"
           aria-label={dictionary.curves.analemmaLede}
         >
-          <path d={path} className="fill-none stroke-sun-ink" strokeWidth={2} />
-          {unwrapped
-            .filter((point) => point.date.day === 1)
-            .map((point) => (
-              <circle
-                key={`${point.date.month}`}
-                cx={x(point.az)}
-                cy={y(point.altDeg)}
-                r={2.5}
-                className="fill-sun-ink"
-              />
+          {/* Rings of equal angle from overhead, every ten degrees. */}
+          {[10, 20, 30, 40, 50, 60]
+            .filter((ring) => ring <= maxZenith + 8)
+            .map((ring) => (
+              <g key={ring}>
+                <circle
+                  cx={centre}
+                  cy={centre}
+                  r={ring * radius}
+                  className="fill-none stroke-shadow/20"
+                />
+                <text
+                  x={centre + 4}
+                  y={centre - ring * radius - 3}
+                  className="fill-shadow/70 font-mono text-[10px]"
+                >
+                  {ring}°
+                </text>
+              </g>
             ))}
-          {solsticeMarks.map((point) => (
-            <g key={`solstice-${point.date.month}`}>
-              <circle cx={x(point.az)} cy={y(point.altDeg)} r={4} className="fill-shadow" />
-              <text
-                x={x(point.az) + 8}
-                y={y(point.altDeg) + 4}
-                className="fill-shadow/70 font-mono text-[10px]"
-              >
-                {dictionary.months[point.date.month - 1]}
-              </text>
-            </g>
-          ))}
-          <text x={pad} y={height - 12} className="fill-shadow/70 font-mono text-[11px]">
-            {dictionary.readout.azimuth}: {formatDeg(azMin + mean, 0)} → {formatDeg(azMax + mean, 0)}
-          </text>
-          <text x={pad} y={22} className="fill-shadow/70 font-mono text-[11px]">
-            {dictionary.readout.altitude}: {formatDeg(altMax, 0)}
+
+          <line x1={centre} y1={16} x2={centre} y2={size - 16} className="stroke-shadow/20" />
+          <line x1={16} y1={centre} x2={size - 16} y2={centre} className="stroke-shadow/20" />
+
+          <path d={path} className="fill-none stroke-sun-ink" strokeWidth={2.5} />
+
+          {visible
+            .filter((point) => point.date.day === 1)
+            .map((point) => {
+              const { x, y } = place2d(point.altDeg, point.azDeg)
+              return <circle key={point.date.month} cx={x} cy={y} r={2.5} className="fill-sun-ink" />
+            })}
+
+          {/* The zenith: where the figure crosses it, the shadow is gone. */}
+          <circle cx={centre} cy={centre} r={3.5} className="fill-marker" />
+
+          {marks.map((point) => {
+            const { x, y } = place2d(point.altDeg, point.azDeg)
+            return (
+              <g key={point.date.month}>
+                <circle cx={x} cy={y} r={4} className="fill-shadow" />
+                <text x={x + 8} y={y + 4} className="fill-shadow/70 font-mono text-[10px]">
+                  {dictionary.months[point.date.month - 1]}
+                </text>
+              </g>
+            )
+          })}
+
+          <text
+            x={centre}
+            y={14}
+            textAnchor="middle"
+            className="fill-shadow/70 font-mono text-[11px]"
+          >
+            {dictionary.compass.north}
           </text>
         </svg>
-        <figcaption className="mt-3 font-mono tabular text-xs text-shadow/70">
-          {dictionary.readout.eot}: {formatMinutes(Math.min(...eot))} …{' '}
-          {formatMinutes(Math.max(...eot))} {dictionary.units.minutes}
+
+        <figcaption className="mt-3 space-y-1 text-xs leading-relaxed text-shadow/70">
+          <p className="font-mono tabular">
+            {dictionary.readout.eot}: {formatMinutes(Math.min(...eot))} …{' '}
+            {formatMinutes(Math.max(...eot))} {dictionary.units.minutes}
+          </p>
+          <p className="max-w-prose">
+            {dictionary.curves.analemmaNote.replace('{gap}', formatDeg(closest, 1))}
+          </p>
         </figcaption>
       </figure>
+    </div>
+  )
+}
+
+function ClockControl({
+  dictionary,
+  value,
+  onChange,
+}: {
+  dictionary: Dictionary
+  value: number
+  onChange: (hours: number) => void
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <label className="label" htmlFor="analemma-clock">
+        {dictionary.curves.atClock}
+      </label>
+      <input
+        id="analemma-clock"
+        type="range"
+        min={5}
+        max={19}
+        step={0.5}
+        value={value}
+        onChange={(event) => onChange(Number(event.target.value))}
+        className="w-56 accent-sun-ink"
+      />
+      <output className="font-mono tabular text-lg">{formatClock(value)}</output>
     </div>
   )
 }

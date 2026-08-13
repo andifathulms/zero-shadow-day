@@ -31,7 +31,7 @@ export default function MethodPage({ params }: { params: { locale: Locale } }) {
         </section>
       ))}
 
-      <section className="border border-shadow/20 bg-concrete/20 p-5">
+      <section className="panel">
         <h2 className="label">Verification</h2>
         <ul className="mt-3 space-y-1.5 font-mono tabular text-sm">
           <li>declination @ equinox · |δ| &lt; 0.01°</li>

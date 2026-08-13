@@ -68,7 +68,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
       <figure>
         <svg
           viewBox={`0 0 ${width} ${height}`}
-          className="h-auto w-full bg-sky/30"
+          className="h-auto w-full rounded-lg bg-sky/25 shadow-lift"
           role="img"
           aria-label={`${dictionary.sweep.lede} ${formatDate(date, dictionary)}`}
         >
