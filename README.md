@@ -1,4 +1,6 @@
-# Hari Tanpa Bayangan — Zero Shadow Day
+# Zero Shadow Day
+
+*Hari Tanpa Bayangan* — the phrase BMKG uses, kept as the Indonesian subtitle.
 
 Twice a year the sun stands directly overhead and vertical things stop casting shadows. It only happens in the tropics, it happens everywhere in Indonesia, and almost nobody here knows it.
 
