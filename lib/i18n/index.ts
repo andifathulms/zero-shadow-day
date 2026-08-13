@@ -76,6 +76,7 @@ const id = {
     scrubTime: 'Geser waktu',
     markers: 'Kedua hari tanpa bayangan ditandai di bawah.',
     reducedMotion: 'Gerak dikurangi: waktu melangkah per jam.',
+    drag: 'Seret untuk memutar pandangan — atau gunakan tombol panah.',
   },
   dates: {
     heading: 'Dua tanggal Anda',
@@ -161,6 +162,7 @@ const id = {
     spreadsheet: 'Unduh tabel kulminasi (.csv)',
     note: 'Berkas dibuat di peramban Anda. Tidak ada yang diunggah.',
   },
+  compass: { north: 'U', east: 'T', south: 'S', west: 'B' },
   units: {
     minutes: 'menit',
     seconds: 'detik',
@@ -240,6 +242,7 @@ const en: Dictionary = {
     scrubTime: 'Drag the time',
     markers: 'Both zero shadow days are marked below.',
     reducedMotion: 'Reduced motion: time steps by the hour.',
+    drag: 'Drag to turn the view — or use the arrow keys.',
   },
   dates: {
     heading: 'Your two dates',
@@ -325,6 +328,7 @@ const en: Dictionary = {
     spreadsheet: 'Download noon table (.csv)',
     note: 'Files are generated in your browser. Nothing is uploaded.',
   },
+  compass: { north: 'N', east: 'E', south: 'S', west: 'W' },
   units: {
     minutes: 'minutes',
     seconds: 'seconds',

@@ -48,6 +48,7 @@ function over(foreground: Rgb, background: Rgb, alpha: number): Rgb {
 const bleached = hex(colors.bleached!)
 const shadow = hex(colors.shadow!)
 const concrete20 = over(hex(colors.concrete!), bleached, 0.2)
+const chalk = hex(colors.chalk!)
 const concrete25 = over(hex(colors.concrete!), bleached, 0.25)
 const sky40 = over(hex(colors.sky!), bleached, 0.4)
 
@@ -61,6 +62,7 @@ describe('body and readout text', () => {
       ['bleached', bleached],
       ['concrete/20', concrete20],
       ['concrete/25', concrete25],
+      ['chalk', chalk],
     ] as const) {
       expect(contrast(over(shadow, background, 0.7), background), name).toBeGreaterThanOrEqual(4.5)
     }
@@ -106,9 +108,23 @@ describe('the two accents', () => {
   })
 })
 
+describe('the sky tones', () => {
+  it('deep sky and palm carry white text, for gradient overlays', () => {
+    expect(contrast(hex(colors['sky-deep']!), hex(colors.chalk!))).toBeGreaterThanOrEqual(4.5)
+    expect(contrast(hex(colors.palm!), hex(colors.chalk!))).toBeGreaterThanOrEqual(4.5)
+  })
+
+  it('night sky is dark enough for the ground to read against it', () => {
+    expect(luminance(hex(colors['sky-night']!))).toBeLessThan(0.05)
+  })
+})
+
 describe('the shadow is the darkest thing on the page', () => {
   it('nothing in the palette is darker than the shadow tone', () => {
-    const tones = ['bleached', 'concrete', 'sun', 'marker', 'sky', 'sun-ink', 'marker-ink']
+    const tones = [
+      'bleached', 'concrete', 'chalk', 'sun', 'marker', 'sky', 'sky-deep',
+      'sun-ink', 'marker-ink', 'palm',
+    ]
     for (const tone of tones) {
       expect(luminance(hex(colors[tone]!)), tone).toBeGreaterThan(luminance(shadow))
     }

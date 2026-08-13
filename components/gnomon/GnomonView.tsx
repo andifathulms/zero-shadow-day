@@ -7,15 +7,16 @@ import { Readout } from '@/components/readout/Readout'
 import { DateScrubber } from '@/components/scrubber/DateScrubber'
 import { TimeScrubber } from '@/components/scrubber/TimeScrubber'
 import { todayIn } from '@/lib/clock'
-import { civilDateFromOffset, dayTrack, instantAt, noonOfYear } from '@/lib/day'
+import { type Instant, civilDateFromOffset, dayTrack, instantAt, noonOfYear } from '@/lib/day'
 import { formatDate } from '@/lib/format'
 import type { Dictionary } from '@/lib/i18n'
 import { dayOfYear } from '@/lib/solar/julian'
 import { solarPosition } from '@/lib/solar/position'
 import { zeroShadowDays } from '@/lib/zsd'
+import { formatBearing, formatDeg, formatRatio } from '@/lib/format'
 import { ShareBar } from '@/components/share/ShareBar'
 import { useSharedView } from '@/components/share/useSharedView'
-import { GnomonScene } from './GnomonScene'
+import { SkyScene } from '@/components/scene/SkyScene'
 
 /** How many local hours pass per second of animation. A day in twelve seconds. */
 const HOURS_PER_SECOND = 2
@@ -115,7 +116,15 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
     <div className="space-y-8">
       <div className="grid gap-8 lg:grid-cols-[1fr_16rem]">
         <div>
-          <GnomonScene instant={instant} dictionary={dictionary} />
+          <SkyScene
+            instant={instant}
+            daySamples={track.samples}
+            labels={dictionary.compass}
+            ariaLabel={sceneDescription(instant, dictionary)}
+            height={480}
+            className="rounded-lg shadow-lift"
+          />
+          <p className="mt-2 text-xs text-shadow/70">{dictionary.gnomon.drag}</p>
           <p className="mt-3 font-display text-2xl">
             {formatDate(date, dictionary)}
             {markedDays.includes(dayIndex) ? (
@@ -164,4 +173,20 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
       <ShareBar dictionary={dictionary} date={date} localHours={localHours} year={year} />
     </div>
   )
+}
+
+/** What the scene shows, for a reader who cannot see it. */
+function sceneDescription(instant: Instant, dictionary: Dictionary): string {
+  switch (instant.shadow.type) {
+    case 'shadow':
+      return `${dictionary.readout.altitude} ${formatDeg(instant.altDeg)}. ${dictionary.readout.shadowRatio} ${formatRatio(instant.shadow.lengthRatio)} ${dictionary.readout.perHeight}, ${dictionary.readout.shadowBearing} ${formatBearing(instant.shadow.bearingDeg)}.`
+    case 'zenith':
+      return dictionary.readout.zenith
+    case 'no-shadow':
+      return dictionary.readout.noShadow
+    default: {
+      const never: never = instant.shadow
+      return never
+    }
+  }
 }

@@ -206,6 +206,13 @@ describe('the sky is driven by the sun, not by the clock', () => {
     expect(shadowQuality(70).opacity).toBeGreaterThan(shadowQuality(10).opacity)
     expect(shadowQuality(70).blur).toBeLessThan(shadowQuality(5).blur)
   })
+
+  it('a long low-sun shadow stays clearly visible, being the point of that hour', () => {
+    // Softness must not become invisibility: at 5° the shadow is seven times
+    // the stick and should read as the strongest mark on the ground.
+    expect(shadowQuality(5).opacity).toBeGreaterThan(0.4)
+    expect(shadowQuality(5).blur).toBeLessThan(6)
+  })
 })
 
 describe('the picture is deterministic too', () => {

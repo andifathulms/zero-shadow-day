@@ -103,9 +103,13 @@ export function skyFor(altDeg: number): SkyPalette {
  */
 export function shadowQuality(altDeg: number): { opacity: number; blur: number } {
   if (altDeg <= 0) return { opacity: 0, blur: 0 }
+  // A low sun gives a long, soft shadow — but a soft shadow is still a visible
+  // one. Spreading a faint fill over a wide blur made the longest shadows of
+  // the day disappear entirely, which is the opposite of the truth: they are
+  // the most striking thing on the ground at that hour.
   return {
-    opacity: 0.18 + 0.72 * ramp(altDeg, 0, 32),
-    blur: 14 - 12 * ramp(altDeg, 2, 45),
+    opacity: 0.42 + 0.46 * ramp(altDeg, 0, 34),
+    blur: 5.5 - 5 * ramp(altDeg, 2, 45),
   }
 }
 
