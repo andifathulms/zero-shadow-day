@@ -108,6 +108,9 @@ export function Hero({ dictionary, locale }: { dictionary: Dictionary; locale: L
         <h1 className="mt-3 max-w-[16ch] font-display text-hero text-chalk">
           {dictionary.meta.title}
         </h1>
+        <p className="mt-2 font-display text-2xl text-chalk/75 sm:text-3xl">
+          {dictionary.meta.localName}
+        </p>
         <p className="mt-5 max-w-[46ch] text-lede text-chalk/90">{dictionary.home.plain}</p>
 
         <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">

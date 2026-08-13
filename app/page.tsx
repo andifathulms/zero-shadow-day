@@ -7,7 +7,7 @@ import { DEFAULT_LOCALE, LOCALES, getDictionary } from '@/lib/i18n'
  * links behind it — which is also what a visitor without scripting gets.
  */
 export const metadata = {
-  title: 'Hari Tanpa Bayangan',
+  title: 'Zero Shadow Day',
 }
 
 export default function RootPage() {
@@ -20,7 +20,8 @@ export default function RootPage() {
         <meta httpEquiv="refresh" content={`0; url=./${DEFAULT_LOCALE}/`} />
       </head>
       <div className="mx-auto max-w-2xl px-5 py-24">
-        <h1 className="font-display text-4xl">{dictionary.meta.title}</h1>
+        <h1 className="font-display text-title">{dictionary.meta.title}</h1>
+        <p className="mt-1 font-display text-2xl text-shadow/70">{dictionary.meta.localName}</p>
         <p className="mt-4 max-w-prose leading-relaxed">{dictionary.meta.tagline}</p>
         <ul className="mt-8 flex gap-6">
           {LOCALES.map((locale) => (

@@ -80,7 +80,7 @@ export function buildIcs(options: IcsOptions): string {
   const lines: string[] = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Hari Tanpa Bayangan//Zero Shadow Day//ID',
+    'PRODID:-//Zero Shadow Day//Hari Tanpa Bayangan//ID',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
   ]

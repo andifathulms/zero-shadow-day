@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { INDONESIAN_CITIES } from '@/data/cities/indonesia'
 import { usePlace } from '@/components/place/PlaceProvider'
+import { useReducedMotion } from '@/components/hooks/useReducedMotion'
 import { todayIn } from '@/lib/clock'
 import { civilDateFromOffset } from '@/lib/day'
 import { formatDate, formatDeg } from '@/lib/format'
@@ -24,12 +25,43 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
   const { place } = usePlace()
   const [year, setYear] = useState<number | null>(null)
   const [dayIndex, setDayIndex] = useState(0)
+  const [playing, setPlaying] = useState(false)
+  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
     const today = todayIn(place.offsetHours)
     setYear(today.year)
     setDayIndex(dayOfYear(today) - 1)
   }, [place.offsetHours])
+
+  // The year in half a minute, so the band can be watched crossing the country
+  // rather than dragged across it. Reduced motion steps a week at a time.
+  const frame = useRef<number>()
+  const started = useRef<number>()
+  useEffect(() => {
+    if (!playing || year === null) return undefined
+    const total = daysInYear(year)
+
+    if (reducedMotion) {
+      const timer = window.setInterval(() => {
+        setDayIndex((current) => (current + 7) % total)
+      }, 500)
+      return () => window.clearInterval(timer)
+    }
+
+    const step = (time: number) => {
+      if (started.current === undefined) started.current = time - (dayIndex / total) * 30000
+      setDayIndex(Math.floor((((time - started.current) / 30000) % 1) * total))
+      frame.current = window.requestAnimationFrame(step)
+    }
+    frame.current = window.requestAnimationFrame(step)
+    return () => {
+      if (frame.current !== undefined) window.cancelAnimationFrame(frame.current)
+      started.current = undefined
+    }
+    // dayIndex is read once to resume from where it stopped, not tracked.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playing, reducedMotion, year])
 
   // Each city's two days, once per year rather than once per frame.
   const marks = useMemo(() => {
@@ -90,7 +122,14 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
             height={Math.abs(y(decDeg - bandHalfWidth) - y(decDeg + bandHalfWidth))}
             className="fill-sun/30"
           />
-          <line x1={0} y1={y(decDeg)} x2={width} y2={y(decDeg)} className="stroke-sun-ink" strokeWidth={2} />
+          <line
+            x1={0}
+            y1={y(decDeg)}
+            x2={width}
+            y2={y(decDeg)}
+            className="stroke-sun-ink"
+            strokeWidth={2}
+          />
           <text x={width - 6} y={y(decDeg) - 6} textAnchor="end" className="fill-sun-ink font-mono text-[11px]">
             {formatDeg(decDeg, 2)}
           </text>
@@ -122,11 +161,21 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
       </figure>
 
       <div>
-        <div className="flex items-baseline justify-between">
-          <span className="label">
-            {decDeg >= 0 ? dictionary.sweep.northward : dictionary.sweep.southward}
-          </span>
-          <output className="font-mono tabular">{formatDate(date, dictionary)}</output>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={() => setPlaying((value) => !value)}
+              aria-pressed={playing}
+              className="rounded-full border border-shadow/40 px-4 py-2 text-sm transition hover:bg-shadow hover:text-chalk"
+            >
+              {playing ? dictionary.gnomon.pause : dictionary.sweep.play}
+            </button>
+            <span className="label">
+              {decDeg >= 0 ? dictionary.sweep.northward : dictionary.sweep.southward}
+            </span>
+          </div>
+          <output className="font-mono tabular text-lg">{formatDate(date, dictionary)}</output>
         </div>
         <input
           type="range"

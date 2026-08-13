@@ -15,7 +15,10 @@ export function isLocale(value: string): value is Locale {
 
 const id = {
   meta: {
-    title: 'Hari Tanpa Bayangan',
+    title: 'Zero Shadow Day',
+    // The phrase BMKG uses, and what people search for in Indonesian. Kept
+    // beside the product name rather than replaced by it.
+    localName: 'Hari Tanpa Bayangan',
     tagline: 'Dua kali setahun matahari tepat di atas kepala dan benda tegak berhenti berbayang.',
   },
   nav: {
@@ -154,6 +157,7 @@ const id = {
     northward: 'Menuju utara',
     southward: 'Kembali ke selatan',
     day: 'Hari ke',
+    play: 'Jalankan setahun',
   },
   method: {
     heading: 'Metode',
@@ -200,6 +204,7 @@ type Dictionary = typeof id
 const en: Dictionary = {
   meta: {
     title: 'Zero Shadow Day',
+    localName: 'Hari Tanpa Bayangan',
     tagline: 'Twice a year the sun stands directly overhead and vertical things stop casting shadows.',
   },
   nav: {
@@ -338,6 +343,7 @@ const en: Dictionary = {
     northward: 'Heading north',
     southward: 'Returning south',
     day: 'Day',
+    play: 'Run the year',
   },
   method: {
     heading: 'Method',

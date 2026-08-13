@@ -30,18 +30,27 @@ const mono = Chivo_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Hari Tanpa Bayangan — Zero Shadow Day',
+  title: 'Zero Shadow Day — Hari Tanpa Bayangan',
   description:
     'Dua kali setahun matahari berdiri tepat di atas kepala dan benda tegak berhenti berbayang. Dihitung dari lintang, bujur, dan tanggal — tanpa data luar.',
 }
 
 export const viewport: Viewport = {
-  themeColor: '#EDE9DF',
+  themeColor: '#FBF4E4',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+      <head>
+        {/* Scroll-reveal starts hidden and is shown by an observer. Without
+            scripting nothing would ever show it, so the pending state is
+            cancelled outright. */}
+        <noscript>
+          {/* eslint-disable-next-line react/no-danger */}
+          <style dangerouslySetInnerHTML={{ __html: '.reveal-pending{opacity:1!important}' }} />
+        </noscript>
+      </head>
       <body>{children}</body>
     </html>
   )
