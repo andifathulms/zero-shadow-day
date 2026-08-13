@@ -153,7 +153,7 @@ function DirectionTimeline({
 }) {
   return (
     <section className="panel">
-      <p className="label">{dictionary.dates.directionHeading}</p>
+      <h2 className="label">{dictionary.dates.directionHeading}</h2>
       <p className="mt-1 max-w-prose text-sm leading-relaxed text-shadow/70">
         {segments.length > 1 ? dictionary.dates.directionLede : dictionary.dates.directionLedeOutside}
       </p>
