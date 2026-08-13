@@ -18,7 +18,7 @@ export function SkyScene({
   daySamples,
   labels,
   interactive = true,
-  height = 460,
+  height = 460 as number | string,
   className = '',
   ariaLabel,
 }: {
@@ -26,7 +26,7 @@ export function SkyScene({
   daySamples: readonly Instant[]
   labels: { north: string; east: string; south: string; west: string }
   interactive?: boolean
-  height?: number
+  height?: number | string
   className?: string
   ariaLabel: string
 }) {

@@ -101,9 +101,9 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
               <button
                 type="button"
                 onClick={() => setPartner(city)}
-                className={`w-full border p-3 text-left ${
+                className={`w-full rounded-lg border p-3 text-left transition ${
                   partner?.name === city.name
-                    ? 'border-shadow bg-shadow text-bleached'
+                    ? 'border-shadow bg-shadow text-chalk'
                     : 'border-shadow/25 hover:border-shadow'
                 }`}
               >
@@ -169,7 +169,7 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
           inputMode="decimal"
           value={distanceKm}
           onChange={(event) => setDistanceKm(event.target.value)}
-          className="mt-1 w-48 border border-shadow/25 bg-bleached px-2 py-1.5 font-mono tabular"
+          className="mt-1 w-48 rounded-md border border-shadow/25 bg-bleached px-3 py-2 font-mono tabular"
         />
         {/* Stated plainly: the pre-filled distance already assumes the answer. */}
         <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow/70">
@@ -219,7 +219,7 @@ function ObservationCard({
   onChange: (entry: Entry) => void
 }) {
   return (
-    <article className="border border-shadow/20 bg-concrete/20 p-5">
+    <article className="panel">
       <h3 className="font-display text-xl">{heading}</h3>
       <div className="mt-4 space-y-3">
         <Field
@@ -238,9 +238,9 @@ function ObservationCard({
               key={String(north)}
               type="button"
               onClick={() => onChange({ ...entry, pointsNorth: north })}
-              className={`border px-3 py-1.5 text-sm ${
+              className={`rounded-full border px-4 py-2 text-sm transition ${
                 entry.pointsNorth === north
-                  ? 'border-shadow bg-shadow text-bleached'
+                  ? 'border-shadow bg-shadow text-chalk'
                   : 'border-shadow/25 hover:border-shadow'
               }`}
             >
@@ -269,7 +269,7 @@ function Field({
         inputMode="decimal"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full border border-shadow/25 bg-bleached px-2 py-1.5 font-mono tabular"
+        className="mt-1 w-full rounded-md border border-shadow/25 bg-bleached px-3 py-2 font-mono tabular"
       />
     </label>
   )
@@ -284,7 +284,7 @@ function ResultPanel({
 }) {
   if (result.type === 'insufficient-separation') {
     return (
-      <section className="border border-marker/40 bg-marker/5 p-5">
+      <section className="panel border-marker/40 bg-marker/5">
         <p className="max-w-prose leading-relaxed">
           Δφ = {formatDeg(result.separationDeg, 3)} &lt; {result.minimumDeg}°.{' '}
           {dictionary.eratosthenes.partnerNote}
@@ -294,7 +294,7 @@ function ResultPanel({
   }
 
   return (
-    <section className="border-l-2 border-marker bg-concrete/20 p-5">
+    <section className="panel border-l-4 border-l-marker">
       <h2 className="font-display text-2xl">{dictionary.eratosthenes.circumference}</h2>
       <p className="mt-2 font-mono tabular text-4xl text-marker">
         {result.circumferenceKm.toFixed(0)} {dictionary.units.km}

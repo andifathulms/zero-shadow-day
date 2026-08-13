@@ -51,14 +51,14 @@ export function NoonAnywhere({ dictionary }: { dictionary: Dictionary }) {
   const shadow = instant.shadow
 
   return (
-    <section className="border border-shadow/20 bg-concrete/20 p-5">
+    <section className="panel">
       <div className="flex flex-wrap items-baseline justify-between gap-4">
         <h2 className="font-display text-2xl">{dictionary.readout.culmination}</h2>
         <input
           type="date"
           value={iso}
           onChange={(event) => setIso(event.target.value)}
-          className="border border-shadow/25 bg-bleached px-2 py-1.5 font-mono tabular text-sm"
+          className="rounded-md border border-shadow/25 bg-bleached px-3 py-2 font-mono tabular text-sm"
           aria-label={dictionary.readout.date}
         />
       </div>

@@ -38,7 +38,7 @@ export function TimeScrubber({
         <button
           type="button"
           onClick={onTogglePlay}
-          className="border border-shadow/40 px-3 py-1.5 text-sm hover:bg-shadow hover:text-bleached"
+          className="rounded-full border border-shadow/40 px-4 py-2 text-sm transition hover:bg-shadow hover:text-chalk"
           aria-pressed={playing}
         >
           {playing ? dictionary.gnomon.pause : dictionary.gnomon.play}

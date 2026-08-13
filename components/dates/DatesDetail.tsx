@@ -44,9 +44,9 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
               key={option}
               type="button"
               onClick={() => setYear(option)}
-              className={`border px-3 py-1 font-mono tabular text-sm ${
+              className={`rounded-full border px-4 py-1.5 font-mono tabular text-sm transition ${
                 option === year
-                  ? 'border-shadow bg-shadow text-bleached'
+                  ? 'border-shadow bg-shadow text-chalk'
                   : 'border-shadow/30 hover:border-shadow'
               }`}
             >
@@ -57,7 +57,7 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
       </div>
 
       {result.type === 'outside-tropics' ? (
-        <section className="border border-marker/40 bg-marker/5 p-6">
+        <section className="panel border-marker/40 bg-marker/5">
           <p className="font-display text-2xl text-marker">{dictionary.dates.outsideTropics}</p>
           <p className="mt-3 max-w-prose leading-relaxed">
             {dictionary.dates.outsideExplain
@@ -110,7 +110,7 @@ function DayCard({
   const noon = solarNoon(julianDay(day.date), lonDeg, offsetHours)
 
   return (
-    <article className="border-l-2 border-marker bg-concrete/20 p-5">
+    <article className="panel border-l-4 border-l-marker">
       <p className="label">{label}</p>
       <h2 className="mt-1 font-display text-3xl text-marker">
         {formatDate(day.date, dictionary)}

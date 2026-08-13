@@ -49,17 +49,17 @@ export function PlacePicker({
   }
 
   return (
-    <section className="border border-shadow/15 bg-concrete/25 p-4 sm:p-5">
+    <section className="panel">
       <h2 className="label mb-3">{dictionary.place.heading}</h2>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4">
         <div>
           <label htmlFor={cityId} className="label block">
             {dictionary.place.city}
           </label>
           <select
             id={cityId}
-            className="mt-1 w-full border border-shadow/25 bg-bleached px-2 py-1.5 font-sans text-sm"
+            className="mt-1 w-full rounded-md border border-shadow/25 bg-bleached px-2 py-2 font-sans text-sm"
             value={place.fromDevice ? '' : place.label}
             onChange={(event) => {
               const city = INDONESIAN_CITIES.find((entry) => entry.name === event.target.value)
@@ -77,7 +77,7 @@ export function PlacePicker({
 
         <form onSubmit={applyTyped}>
           <span className="label block">{dictionary.place.coordinates}</span>
-          <div className="mt-1 flex gap-2">
+          <div className="mt-1 grid grid-cols-[1fr_1fr_auto] gap-2">
             <input
               id={latId}
               aria-label={dictionary.place.latitude}
@@ -85,7 +85,7 @@ export function PlacePicker({
               placeholder={dictionary.place.latitude}
               value={latInput}
               onChange={(event) => setLatInput(event.target.value)}
-              className="w-full border border-shadow/25 bg-bleached px-2 py-1.5 font-mono tabular text-sm"
+              className="w-full min-w-0 rounded-md border border-shadow/25 bg-bleached px-2 py-2 font-mono tabular text-sm"
             />
             <input
               id={lonId}
@@ -94,11 +94,11 @@ export function PlacePicker({
               placeholder={dictionary.place.longitude}
               value={lonInput}
               onChange={(event) => setLonInput(event.target.value)}
-              className="w-full border border-shadow/25 bg-bleached px-2 py-1.5 font-mono tabular text-sm"
+              className="w-full min-w-0 rounded-md border border-shadow/25 bg-bleached px-2 py-2 font-mono tabular text-sm"
             />
             <button
               type="submit"
-              className="shrink-0 border border-shadow/40 px-3 py-1.5 text-sm hover:bg-shadow hover:text-bleached"
+              className="shrink-0 rounded-md border border-shadow/40 px-3 text-sm transition hover:bg-shadow hover:text-chalk"
             >
               ↵
             </button>
@@ -110,7 +110,7 @@ export function PlacePicker({
         <button
           type="button"
           onClick={locate}
-          className="border border-shadow/40 px-3 py-1.5 text-sm hover:bg-shadow hover:text-bleached"
+          className="rounded-full border border-shadow/40 px-4 py-2 text-sm transition hover:bg-shadow hover:text-chalk"
         >
           {status === 'locating' ? dictionary.place.locating : dictionary.place.locate}
         </button>

@@ -36,7 +36,7 @@ export function DatesSummary({
 
   if (result.type === 'outside-tropics') {
     return (
-      <section className="border border-marker/40 bg-marker/5 p-5">
+      <section className="panel border-marker/40 bg-marker/5">
         <p className="font-display text-xl text-marker">{dictionary.dates.outsideTropics}</p>
         <p className="mt-2 max-w-prose text-sm leading-relaxed">
           {dictionary.dates.outsideExplain
@@ -54,7 +54,7 @@ export function DatesSummary({
       </h2>
       <ul className="mt-3 grid gap-4 sm:grid-cols-2">
         {result.days.map((day, index) => (
-          <li key={day.jdCulmination} className="border-l-2 border-marker bg-concrete/20 p-4">
+          <li key={day.jdCulmination} className="panel border-l-4 border-l-marker">
             <p className="label">
               {result.converged
                 ? dictionary.dates.only

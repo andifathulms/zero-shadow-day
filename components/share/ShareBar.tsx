@@ -104,7 +104,7 @@ export function ShareBar({
 }
 
 const buttonClass =
-  'border border-shadow/40 px-3 py-1.5 text-sm hover:bg-shadow hover:text-bleached'
+  'rounded-full border border-shadow/40 px-4 py-2 text-sm transition hover:bg-shadow hover:text-chalk'
 
 /** DTSTAMP in iCalendar's basic UTC format. A wall-clock reading, so it lives here. */
 function icsStamp(now: Date): string {
