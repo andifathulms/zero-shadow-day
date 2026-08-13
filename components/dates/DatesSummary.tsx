@@ -43,6 +43,11 @@ export function DatesSummary({
             .replace('{gap}', result.minZenithDeg.toFixed(2))
             .replace('{limit}', Math.abs(result.limitDeg).toFixed(2))}
         </p>
+        <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow/70">
+          {dictionary.dates.bestDay
+            .replace('{date}', formatDate(result.bestDate, dictionary))
+            .replace('{time}', formatClock(result.bestLocalNoonHours))}
+        </p>
       </section>
     )
   }

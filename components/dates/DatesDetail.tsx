@@ -7,6 +7,7 @@ import {
   formatClock,
   formatClockSeconds,
   formatDate,
+  formatDateShort,
   formatDeg,
   formatDuration,
   formatMinutes,
@@ -15,8 +16,8 @@ import {
 import type { Dictionary } from '@/lib/i18n'
 import { julianDay } from '@/lib/solar/julian'
 import { solarNoon } from '@/lib/solar/noon'
-import { zeroShadowDays } from '@/lib/zsd'
-import type { ZeroShadowDay } from '@/lib/zsd'
+import { longestShadowDay, shadowDirectionTimeline, zeroShadowDays } from '@/lib/zsd'
+import type { LongestShadowDay, ShadowDirectionSegment, ZeroShadowDay } from '@/lib/zsd'
 
 /**
  * Both dates in full, with the clock-versus-sun offset broken into its two
@@ -31,8 +32,20 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
     () => (year === null ? null : zeroShadowDays(place, year)),
     [place, year],
   )
+  // The dual of the search above, and the same search read for direction
+  // instead of minimum — both meaningful at any latitude, tropics or not.
+  const longest = useMemo(
+    () => (year === null ? null : longestShadowDay(place, year)),
+    [place, year],
+  )
+  const segments = useMemo(
+    () => (year === null ? null : shadowDirectionTimeline(place, year)),
+    [place, year],
+  )
 
-  if (year === null || result === null) return <div className="min-h-[24rem]" aria-hidden />
+  if (year === null || result === null || longest === null || segments === null) {
+    return <div className="min-h-[24rem]" aria-hidden />
+  }
 
   return (
     <div className="space-y-8">
@@ -64,6 +77,11 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
               .replace('{gap}', result.minZenithDeg.toFixed(2))
               .replace('{limit}', Math.abs(result.limitDeg).toFixed(2))}
           </p>
+          <p className="mt-2 max-w-prose text-sm leading-relaxed text-shadow/80">
+            {dictionary.dates.bestDay
+              .replace('{date}', formatDate(result.bestDate, dictionary))
+              .replace('{time}', formatClock(result.bestLocalNoonHours))}
+          </p>
         </section>
       ) : (
         <div className="grid gap-6 lg:grid-cols-2">
@@ -89,7 +107,82 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
       <p className="max-w-prose text-sm leading-relaxed text-shadow/70">
         {dictionary.dates.windowNote}
       </p>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <LongestShadowCard dictionary={dictionary} day={longest} />
+        <DirectionTimeline dictionary={dictionary} segments={segments} />
+      </div>
     </div>
+  )
+}
+
+/** The dual of the day cards above: the noon shadow's longest day, not its shortest. */
+function LongestShadowCard({
+  dictionary,
+  day,
+}: {
+  dictionary: Dictionary
+  day: LongestShadowDay
+}) {
+  return (
+    <article className="panel">
+      <p className="label">{dictionary.dates.longestHeading}</p>
+      <h2 className="mt-1 font-display text-2xl">{formatDate(day.date, dictionary)}</h2>
+      <p className="mt-1 max-w-prose text-sm leading-relaxed text-shadow/70">
+        {dictionary.dates.longestLede}
+      </p>
+      <dl className="mt-4">
+        <Row label={dictionary.readout.culmination} value={formatClockSeconds(day.localNoonHours)} />
+        <Row
+          label={dictionary.readout.shadowRatio}
+          value={`${formatRatio(day.maxShadowRatio)} ${dictionary.readout.perHeight}`}
+        />
+        <Row label={dictionary.eratosthenes.zenithAngle} value={formatDeg(day.maxZenithDeg, 2)} />
+      </dl>
+    </article>
+  )
+}
+
+/** Which way the noon shadow points, as a run of date ranges — the flip made visible. */
+function DirectionTimeline({
+  dictionary,
+  segments,
+}: {
+  dictionary: Dictionary
+  segments: readonly ShadowDirectionSegment[]
+}) {
+  return (
+    <section className="panel">
+      <p className="label">{dictionary.dates.directionHeading}</p>
+      <p className="mt-1 max-w-prose text-sm leading-relaxed text-shadow/70">
+        {segments.length > 1 ? dictionary.dates.directionLede : dictionary.dates.directionLedeOutside}
+      </p>
+      <ul className="mt-4 space-y-2">
+        {segments.map((segment) => (
+          <li
+            key={`${segment.direction}-${segment.startDate.month}-${segment.startDate.day}`}
+            className="flex items-center gap-3 text-sm"
+          >
+            <span
+              className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                segment.direction === 'north' ? 'bg-sky-deep' : 'bg-palm'
+              }`}
+              aria-hidden
+            />
+            <span className="value">
+              {formatDateShort(segment.startDate, dictionary)} –{' '}
+              {formatDateShort(segment.endDate, dictionary)}
+            </span>
+            <span className="text-shadow/80">
+              {dictionary.dates.pointsTo.replace(
+                '{direction}',
+                segment.direction === 'north' ? dictionary.dates.north : dictionary.dates.south,
+              )}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }
 
