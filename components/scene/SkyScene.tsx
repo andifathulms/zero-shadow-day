@@ -21,6 +21,7 @@ export function SkyScene({
   height = 460 as number | string,
   className = '',
   ariaLabel,
+  describedById,
 }: {
   instant: Instant
   daySamples: readonly Instant[]
@@ -29,6 +30,8 @@ export function SkyScene({
   height?: number | string
   className?: string
   ariaLabel: string
+  /** id of a nearby element explaining that this graphic is drag/arrow-key operable. */
+  describedById?: string
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   // Until the reader takes hold of it, the camera follows the sun round the
@@ -95,6 +98,7 @@ export function SkyScene({
       ref={canvasRef}
       role="img"
       aria-label={ariaLabel}
+      aria-describedby={describedById}
       tabIndex={interactive ? 0 : -1}
       style={{ height, touchAction: interactive ? 'pan-y' : undefined }}
       className={`w-full select-none ${interactive ? 'cursor-grab active:cursor-grabbing' : ''} ${className}`}

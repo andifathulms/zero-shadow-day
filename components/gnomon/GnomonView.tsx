@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { usePlace } from '@/components/place/PlaceProvider'
 import { useReducedMotion } from '@/components/hooks/useReducedMotion'
 import { Readout } from '@/components/readout/Readout'
@@ -31,6 +31,7 @@ const HOURS_PER_SECOND = 2
 export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
   const { place } = usePlace()
   const reducedMotion = useReducedMotion()
+  const dragHintId = useId()
 
   const [year, setYear] = useState<number | null>(null)
   const [dayIndex, setDayIndex] = useState(0)
@@ -121,10 +122,13 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
             daySamples={track.samples}
             labels={dictionary.compass}
             ariaLabel={sceneDescription(instant, dictionary)}
+            describedById={dragHintId}
             height={480}
             className="rounded-lg shadow-lift"
           />
-          <p className="mt-2 text-xs text-shadow/70">{dictionary.gnomon.drag}</p>
+          <p id={dragHintId} className="mt-2 text-xs text-shadow/70">
+            {dictionary.gnomon.drag}
+          </p>
           <p className="mt-3 font-display text-2xl">
             {formatDate(date, dictionary)}
             {markedDays.includes(dayIndex) ? (
