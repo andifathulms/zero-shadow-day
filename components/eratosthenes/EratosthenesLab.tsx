@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { usePlace } from '@/components/place/PlaceProvider'
+import { ReadoutRow } from '@/components/readout/ReadoutRow'
 import { INDONESIAN_CITIES, type City } from '@/data/cities/indonesia'
 import { todayIn } from '@/lib/clock'
 import {
@@ -29,6 +30,9 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
   const [partner, setPartner] = useState<City | null>(null)
   const [entries, setEntries] = useState<{ a: Entry; b: Entry } | null>(null)
   const [distanceKm, setDistanceKm] = useState<string>('')
+  // Six ranked candidates is more than a reader should weigh at once; the top
+  // three cover almost every case, and the rest stay a tap away.
+  const [showAllPartners, setShowAllPartners] = useState(false)
 
   useEffect(() => setDate(todayIn(place.offsetHours)), [place.offsetHours])
 
@@ -95,8 +99,11 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
         <p className="mt-2 max-w-prose text-sm leading-relaxed text-shadow/70">
           {dictionary.eratosthenes.partnerNote}
         </p>
+        <p className="mt-1 max-w-prose text-xs leading-relaxed text-shadow/60">
+          {dictionary.eratosthenes.partnerLegend}
+        </p>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {partners.map(({ city, rating }) => (
+          {(showAllPartners ? partners : partners.slice(0, 3)).map(({ city, rating }) => (
             <li key={city.name}>
               <button
                 type="button"
@@ -117,6 +124,15 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
             </li>
           ))}
         </ul>
+        {!showAllPartners && partners.length > 3 ? (
+          <button
+            type="button"
+            onClick={() => setShowAllPartners(true)}
+            className="mt-3 text-sm underline decoration-shadow/40 underline-offset-2 hover:text-shadow"
+          >
+            {dictionary.eratosthenes.showMorePartners}
+          </button>
+        ) : null}
       </section>
 
       <section>
@@ -227,11 +243,15 @@ function ObservationCard({
           label={dictionary.eratosthenes.gnomonHeight}
           value={entry.gnomonHeight}
           onChange={(value) => onChange({ ...entry, gnomonHeight: value })}
+          invalid={!isPositiveNumber(entry.gnomonHeight)}
+          invalidMessage={dictionary.eratosthenes.invalidNumber}
         />
         <Field
           label={dictionary.eratosthenes.shadowLength}
           value={entry.shadowLength}
           onChange={(value) => onChange({ ...entry, shadowLength: value })}
+          invalid={!isNonNegativeNumber(entry.shadowLength)}
+          invalidMessage={dictionary.eratosthenes.invalidNumber}
         />
         <div className="flex gap-2">
           {[true, false].map((north) => (
@@ -255,14 +275,28 @@ function ObservationCard({
   )
 }
 
+function isPositiveNumber(raw: string): boolean {
+  const value = Number.parseFloat(raw)
+  return Number.isFinite(value) && value > 0
+}
+
+function isNonNegativeNumber(raw: string): boolean {
+  const value = Number.parseFloat(raw)
+  return Number.isFinite(value) && value >= 0
+}
+
 function Field({
   label,
   value,
   onChange,
+  invalid = false,
+  invalidMessage,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
+  invalid?: boolean
+  invalidMessage?: string
 }) {
   return (
     <label className="block">
@@ -271,8 +305,14 @@ function Field({
         inputMode="decimal"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full rounded-md border border-shadow/25 bg-bleached px-3 py-2 font-mono tabular"
+        aria-invalid={invalid}
+        className={`mt-1 w-full rounded-md border bg-bleached px-3 py-2 font-mono tabular ${
+          invalid ? 'border-marker-ink' : 'border-shadow/25'
+        }`}
       />
+      {invalid && invalidMessage ? (
+        <span className="mt-1 block text-xs text-marker-ink">{invalidMessage}</span>
+      ) : null}
     </label>
   )
 }
@@ -286,9 +326,11 @@ function ResultPanel({
 }) {
   if (result.type === 'insufficient-separation') {
     return (
-      <section className="panel border-marker/40 bg-marker/5">
+      <section className="panel">
         <p className="max-w-prose leading-relaxed">
-          Δφ = {formatDeg(result.separationDeg, 3)} &lt; {result.minimumDeg}°.{' '}
+          {dictionary.eratosthenes.separationTooSmall
+            .replace('{separation}', formatDeg(result.separationDeg, 3))
+            .replace('{minimum}', String(result.minimumDeg))}{' '}
           {dictionary.eratosthenes.partnerNote}
         </p>
       </section>
@@ -306,18 +348,18 @@ function ResultPanel({
       </p>
 
       <dl className="mt-5 grid gap-x-8 sm:grid-cols-2">
-        <Row label={dictionary.eratosthenes.zenithAngle + ' A'} value={formatDeg(result.signedADeg, 3)} />
-        <Row label={dictionary.eratosthenes.zenithAngle + ' B'} value={formatDeg(result.signedBDeg, 3)} />
-        <Row label={dictionary.eratosthenes.separation} value={formatDeg(result.separationDeg, 3)} />
-        <Row
+        <ReadoutRow label={dictionary.eratosthenes.zenithAngle + ' A'} value={formatDeg(result.signedADeg, 3)} />
+        <ReadoutRow label={dictionary.eratosthenes.zenithAngle + ' B'} value={formatDeg(result.signedBDeg, 3)} />
+        <ReadoutRow label={dictionary.eratosthenes.separation} value={formatDeg(result.separationDeg, 3)} />
+        <ReadoutRow
           label={dictionary.eratosthenes.radius}
           value={`${result.radiusKm.toFixed(0)} ${dictionary.units.km}`}
         />
-        <Row
+        <ReadoutRow
           label={dictionary.eratosthenes.accepted}
           value={`${ACCEPTED_CIRCUMFERENCE_KM.toFixed(0)} ${dictionary.units.km}`}
         />
-        <Row
+        <ReadoutRow
           label={dictionary.eratosthenes.error}
           value={`${result.errorKm >= 0 ? '+' : '−'}${Math.abs(result.errorKm).toFixed(0)} ${dictionary.units.km} · ${result.errorPercent.toFixed(2)} %`}
           emphasis
@@ -341,22 +383,5 @@ function ResultPanel({
         <li className="text-shadow/70">{dictionary.eratosthenes.errorNote}</li>
       </ul>
     </section>
-  )
-}
-
-function Row({
-  label,
-  value,
-  emphasis = false,
-}: {
-  label: string
-  value: string
-  emphasis?: boolean
-}) {
-  return (
-    <div className="rule flex items-baseline justify-between gap-4 py-1.5">
-      <dt className="label">{label}</dt>
-      <dd className={emphasis ? 'value text-[1.05rem]' : 'value'}>{value}</dd>
-    </div>
   )
 }
