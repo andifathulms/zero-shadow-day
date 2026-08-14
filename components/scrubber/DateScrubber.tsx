@@ -122,7 +122,11 @@ export function DateScrubber({
       />
       <div className="mt-1 flex justify-between font-mono tabular text-[11px] text-shadow/70">
         {monthTicks(year).map((tick) => (
-          <span key={tick.index}>{(dictionary.months[tick.month] ?? '').slice(0, 3)}</span>
+          // min-w-0 lets a flex item shrink past its content size: without it,
+          // 12 unwrapped labels floor the row wider than a 320px viewport.
+          <span key={tick.index} className="min-w-0 truncate">
+            {(dictionary.months[tick.month] ?? '').slice(0, 3)}
+          </span>
         ))}
       </div>
     </div>
