@@ -32,7 +32,7 @@ export function Readout({
   const shadow = instant.shadow
 
   return (
-    <div className="min-w-[15rem]">
+    <div>
       <h2 className="label">{dictionary.readout.heading}</h2>
       <dl className="mt-3 space-y-0">
         <Row label={dictionary.readout.date} value={formatDate(date, dictionary)} />
