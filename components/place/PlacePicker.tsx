@@ -98,6 +98,7 @@ export function PlacePicker({
             />
             <button
               type="submit"
+              aria-label={dictionary.place.apply}
               className="shrink-0 rounded-md border border-shadow/40 px-3 text-sm transition hover:bg-shadow hover:text-chalk"
             >
               ↵

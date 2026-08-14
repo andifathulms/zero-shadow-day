@@ -73,6 +73,7 @@ const id = {
     privacy: 'Koordinat tidak pernah meninggalkan perangkat Anda. Tidak ada permintaan jaringan, tidak ada geocoding balik, tidak ada analitik.',
     near: 'dekat',
     search: 'Cari kota',
+    apply: 'Terapkan koordinat',
   },
   readout: {
     heading: 'Bacaan',
@@ -273,6 +274,7 @@ const en: Dictionary = {
     privacy: 'Coordinates never leave your device. No network request, no reverse geocoding, no analytics.',
     near: 'near',
     search: 'Search cities',
+    apply: 'Apply coordinates',
   },
   readout: {
     heading: 'Readout',
