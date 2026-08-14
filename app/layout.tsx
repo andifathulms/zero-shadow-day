@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Chivo_Mono, Instrument_Sans, Instrument_Serif } from 'next/font/google'
+import { BASE_PATH, SITE_ORIGIN, SITE_URL } from '@/lib/site'
 import './globals.css'
 
 /**
@@ -34,37 +35,19 @@ const mono = Chivo_Mono({
   display: 'swap',
 })
 
-/**
- * The site is served from a repository path on GitHub Pages. Next prefixes the
- * icon links it generates from file convention, but not the manifest link — so
- * that one is written out with the basePath by hand. Without it the link points
- * at the domain root, 404s, and installing to a home screen fails silently.
- */
-const BASE_PATH =
-  process.env.NODE_ENV === 'production'
-    ? (process.env.NEXT_PUBLIC_BASE_PATH ?? '/zero-shadow-day')
-    : ''
-
-/**
- * Absolute URLs for the social card. Without this Next falls back to
- * http://localhost:3000, which every crawler faithfully reproduces — the
- * preview then breaks everywhere the link is shared, and nothing in the build
- * complains. `scripts/postbuild.mjs` fails the build if a localhost URL
- * survives into the export.
- */
-const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? 'https://andifathulms.github.io'
-// metadataBase is the origin alone: Next appends the basePath to asset paths
-// itself, so including it here too produces .../zero-shadow-day/zero-shadow-day/.
-const SITE_URL = `${SITE_ORIGIN}${BASE_PATH}/`
-
 const DESCRIPTION =
   'Dua kali setahun matahari berdiri tepat di atas kepala dan benda tegak berhenti berbayang. Dihitung dari lintang, bujur, dan tanggal — tanpa data luar.'
 
 /**
+ * The root layout's own metadata is a generic fallback — every real route
+ * page under app/[locale] now exports its own generateMetadata with a
+ * title, description and canonical URL specific to that page (lib/site's
+ * pageMetadata), which overrides this per Next's metadata merging. What's
+ * left here is what genuinely doesn't vary by page: the manifest link, the
+ * keywords, the iOS install behaviour.
+ *
  * `app/icon.svg`, `app/apple-icon.png` and `app/opengraph-image.png` are picked
  * up by file convention, so the tags for them are not written by hand here.
- * What is written here is what convention does not cover: the social card's
- * text, and the iOS bits that decide how an installed copy behaves.
  */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),

@@ -1,7 +1,19 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GnomonView } from '@/components/gnomon/GnomonView'
 import { PlacePicker } from '@/components/place/PlacePicker'
 import { type Locale, getDictionary } from '@/lib/i18n'
+import { pageMetadata } from '@/lib/site'
+
+export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
+  const dictionary = getDictionary(params.locale)
+  return pageMetadata({
+    locale: params.locale,
+    slug: 'bayangan',
+    title: `${dictionary.gnomon.heading} — ${dictionary.meta.title}`,
+    description: dictionary.gnomon.lede,
+  })
+}
 
 export default function GnomonPage({ params }: { params: { locale: Locale } }) {
   const dictionary = getDictionary(params.locale)

@@ -1,4 +1,18 @@
+import type { Metadata } from 'next'
 import { type Locale, getDictionary } from '@/lib/i18n'
+import { pageMetadata } from '@/lib/site'
+
+export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
+  const dictionary = getDictionary(params.locale)
+  return pageMetadata({
+    locale: params.locale,
+    slug: 'metode',
+    title: `${dictionary.method.heading} — ${dictionary.meta.title}`,
+    // No single method.lede; algorithmBody is the page's own first section,
+    // and the most concrete one-sentence summary of what the page covers.
+    description: dictionary.method.algorithmBody,
+  })
+}
 
 /**
  * Method disclosure (PRD §5.8): which algorithm, its stated accuracy, how the

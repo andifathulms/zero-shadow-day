@@ -1,9 +1,23 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { DatesSummary } from '@/components/dates/DatesSummary'
 import { Hero } from '@/components/home/Hero'
 import { Reveal } from '@/components/motion/Reveal'
 import { PlacePicker } from '@/components/place/PlacePicker'
 import { type Locale, getDictionary } from '@/lib/i18n'
+import { pageMetadata } from '@/lib/site'
+
+export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
+  const dictionary = getDictionary(params.locale)
+  const isId = params.locale === 'id'
+  return pageMetadata({
+    locale: params.locale,
+    title: isId
+      ? `${dictionary.meta.localName} — ${dictionary.meta.title}`
+      : `${dictionary.meta.title} — ${dictionary.meta.localName}`,
+    description: dictionary.home.plain,
+  })
+}
 
 export default function HomePage({ params }: { params: { locale: Locale } }) {
   const dictionary = getDictionary(params.locale)
