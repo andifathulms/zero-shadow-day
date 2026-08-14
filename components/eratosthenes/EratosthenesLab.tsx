@@ -80,7 +80,7 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
   }, [entries, predicted, distanceKm])
 
   if (date === null || predicted === null || entries === null) {
-    return <div className="min-h-[30rem]" aria-hidden />
+    return <div className="skeleton min-h-[30rem]" aria-hidden />
   }
 
   const noonA = solarNoon(julianDay(date), place.lonDeg, place.offsetHours)

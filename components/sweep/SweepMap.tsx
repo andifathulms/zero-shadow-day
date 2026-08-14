@@ -78,7 +78,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
     })
   }, [year])
 
-  if (year === null || marks === null) return <div className="min-h-[28rem]" aria-hidden />
+  if (year === null || marks === null) return <div className="skeleton min-h-[28rem]" aria-hidden />
 
   const total = daysInYear(year)
   const date = civilDateFromOffset(year, dayIndex)

@@ -46,7 +46,7 @@ export function ShadowTipCurves({ dictionary }: { dictionary: Dictionary }) {
     })
   }, [place, year])
 
-  if (year === null || family === null) return <div className="min-h-[26rem]" aria-hidden />
+  if (year === null || family === null) return <div className="skeleton min-h-[26rem]" aria-hidden />
 
   const extent = 4
   const size = 520

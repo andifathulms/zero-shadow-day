@@ -32,7 +32,7 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
     [place, year, clockHours],
   )
 
-  if (year === null || points === null) return <div className="min-h-[26rem]" aria-hidden />
+  if (year === null || points === null) return <div className="skeleton min-h-[26rem]" aria-hidden />
 
   const visible = points.filter((point) => point.altDeg > 0)
   const size = 460

@@ -45,7 +45,7 @@ export function NoonAnywhere({ dictionary }: { dictionary: Dictionary }) {
     return { noon, instant }
   }, [place, date])
 
-  if (!values) return <div className="min-h-[12rem]" aria-hidden />
+  if (!values) return <div className="skeleton min-h-[12rem]" aria-hidden />
 
   const { noon, instant } = values
   const shadow = instant.shadow

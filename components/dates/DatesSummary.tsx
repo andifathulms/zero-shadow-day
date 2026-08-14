@@ -32,7 +32,7 @@ export function DatesSummary({
     [place, year],
   )
 
-  if (!result) return <div className="min-h-[7rem]" aria-hidden />
+  if (!result) return <div className="skeleton min-h-[7rem]" aria-hidden />
 
   if (result.type === 'outside-tropics') {
     return (

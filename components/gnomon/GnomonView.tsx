@@ -110,7 +110,7 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
   }, [playing, reducedMotion])
 
   if (year === null || date === null || track === null || instant === null || noonTrack === null) {
-    return <div className="min-h-[32rem]" aria-hidden />
+    return <div className="skeleton min-h-[32rem]" aria-hidden />
   }
 
   return (

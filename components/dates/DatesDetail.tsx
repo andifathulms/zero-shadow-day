@@ -44,7 +44,7 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
   )
 
   if (year === null || result === null || longest === null || segments === null) {
-    return <div className="min-h-[24rem]" aria-hidden />
+    return <div className="skeleton min-h-[24rem]" aria-hidden />
   }
 
   return (
