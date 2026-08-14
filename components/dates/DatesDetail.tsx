@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { usePlace } from '@/components/place/PlaceProvider'
+import { ReadoutRow } from '@/components/readout/ReadoutRow'
 import { currentYearIn } from '@/lib/clock'
 import {
   formatClock,
@@ -73,8 +74,8 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
       <p className="max-w-prose text-sm leading-relaxed text-shadow/70">{dictionary.dates.howFound}</p>
 
       {result.type === 'outside-tropics' ? (
-        <section className="panel border-marker/40 bg-marker/5">
-          <p className="font-display text-2xl text-marker">{dictionary.dates.outsideTropics}</p>
+        <section className="panel">
+          <p className="font-display text-2xl">{dictionary.dates.outsideTropics}</p>
           <p className="mt-3 max-w-prose leading-relaxed">
             {dictionary.dates.outsideExplain
               .replace('{gap}', result.minZenithDeg.toFixed(2))
@@ -135,12 +136,12 @@ function LongestShadowCard({
         {dictionary.dates.longestLede}
       </p>
       <dl className="mt-4">
-        <Row label={dictionary.readout.culmination} value={formatClockSeconds(day.localNoonHours)} />
-        <Row
+        <ReadoutRow label={dictionary.readout.culmination} value={formatClockSeconds(day.localNoonHours)} />
+        <ReadoutRow
           label={dictionary.readout.shadowRatio}
           value={`${formatRatio(day.maxShadowRatio)} ${dictionary.readout.perHeight}`}
         />
-        <Row label={dictionary.eratosthenes.zenithAngle} value={formatDeg(day.maxZenithDeg, 2)} />
+        <ReadoutRow label={dictionary.eratosthenes.zenithAngle} value={formatDeg(day.maxZenithDeg, 2)} />
       </dl>
     </article>
   )
@@ -213,8 +214,8 @@ function DayCard({
       </h2>
 
       <dl className="mt-4">
-        <Row label={dictionary.readout.culmination} value={formatClockSeconds(day.localNoonHours)} />
-        <Row
+        <ReadoutRow label={dictionary.readout.culmination} value={formatClockSeconds(day.localNoonHours)} />
+        <ReadoutRow
           label={dictionary.dates.window}
           value={
             day.window
@@ -222,28 +223,28 @@ function DayCard({
               : '—'
           }
         />
-        <Row
+        <ReadoutRow
           label={dictionary.units.seconds}
           value={day.window ? formatDuration(day.window.durationSeconds, dictionary) : '—'}
         />
-        <Row
+        <ReadoutRow
           label={dictionary.dates.residual}
           value={`${formatRatio(day.minShadowRatio)} ${dictionary.readout.perHeight}`}
         />
-        <Row label={dictionary.eratosthenes.zenithAngle} value={formatDeg(day.minZenithDeg, 3)} />
+        <ReadoutRow label={dictionary.eratosthenes.zenithAngle} value={formatDeg(day.minZenithDeg, 3)} />
       </dl>
 
       <h3 className="label mt-6">{dictionary.dates.breakdown}</h3>
       <dl className="mt-2">
-        <Row
+        <ReadoutRow
           label={dictionary.dates.fromLongitude}
           value={`${formatMinutes(noon.longitudeOffsetMinutes)} ${dictionary.units.minutes}`}
         />
-        <Row
+        <ReadoutRow
           label={dictionary.dates.fromEot}
           value={`${formatMinutes(noon.eotOffsetMinutes)} ${dictionary.units.minutes}`}
         />
-        <Row
+        <ReadoutRow
           label={dictionary.dates.total}
           value={`${formatMinutes(noon.offsetMinutes)} ${dictionary.units.minutes} ${
             noon.offsetMinutes >= 0 ? dictionary.units.later : dictionary.units.earlier
@@ -252,22 +253,5 @@ function DayCard({
         />
       </dl>
     </article>
-  )
-}
-
-function Row({
-  label,
-  value,
-  emphasis = false,
-}: {
-  label: string
-  value: string
-  emphasis?: boolean
-}) {
-  return (
-    <div className="rule flex items-baseline justify-between gap-4 py-1.5">
-      <dt className="label">{label}</dt>
-      <dd className={emphasis ? 'value text-[1.05rem]' : 'value'}>{value}</dd>
-    </div>
   )
 }
