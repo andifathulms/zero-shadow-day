@@ -111,10 +111,12 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
           role="img"
           aria-label={`${dictionary.sweep.lede} ${formatDate(date, dictionary)}`}
         >
-          {/* A hand-simplified silhouette (data/geography/indonesia.ts), so a
+          {/* The real archipelago outline (data/geography/indonesia.ts), so a
               city dot reads as "on Sumatra" at a glance instead of floating on
-              a blank field. Illustrative, not a coastline anyone should
-              measure — the dots and the band are still the only data here. */}
+              a blank field — simplified at authoring time from a public-domain
+              dataset, bundled statically, never fetched (see that file's own
+              comment). Still illustrative at this scale, not a coastline
+              anyone should measure — the dots and the band are the data. */}
           <g aria-hidden>
             {INDONESIA_ISLANDS.map((island, index) => (
               <polygon
