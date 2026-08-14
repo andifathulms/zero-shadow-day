@@ -18,7 +18,9 @@ export function PlacePicker({
   locale: Locale
 }) {
   const { place, setCity, setCoordinates, setFromDevice } = usePlace()
-  const [status, setStatus] = useState<'idle' | 'locating' | 'denied' | 'unsupported'>('idle')
+  const [status, setStatus] = useState<'idle' | 'locating' | 'denied' | 'unsupported' | 'invalid'>(
+    'idle',
+  )
   const [latInput, setLatInput] = useState('')
   const [lonInput, setLonInput] = useState('')
   const cityId = useId()
@@ -45,7 +47,17 @@ export function PlacePicker({
     event.preventDefault()
     const latDeg = Number.parseFloat(latInput)
     const lonDeg = Number.parseFloat(lonInput)
-    if (Number.isFinite(latDeg) && Number.isFinite(lonDeg)) setCoordinates(latDeg, lonDeg)
+    const valid =
+      Number.isFinite(latDeg) &&
+      Number.isFinite(lonDeg) &&
+      Math.abs(latDeg) <= 90 &&
+      Math.abs(lonDeg) <= 180
+    if (valid) {
+      setCoordinates(latDeg, lonDeg)
+      setStatus('idle')
+    } else {
+      setStatus('invalid')
+    }
   }
 
   return (
@@ -84,8 +96,14 @@ export function PlacePicker({
               inputMode="decimal"
               placeholder={dictionary.place.latitude}
               value={latInput}
-              onChange={(event) => setLatInput(event.target.value)}
-              className="w-full min-w-0 rounded-md border border-shadow/25 bg-bleached px-2 py-2 font-mono tabular text-sm"
+              onChange={(event) => {
+                setLatInput(event.target.value)
+                if (status === 'invalid') setStatus('idle')
+              }}
+              aria-invalid={status === 'invalid'}
+              className={`w-full min-w-0 rounded-md border bg-bleached px-2 py-2 font-mono tabular text-sm ${
+                status === 'invalid' ? 'border-marker-ink' : 'border-shadow/25'
+              }`}
             />
             <input
               id={lonId}
@@ -93,8 +111,14 @@ export function PlacePicker({
               inputMode="decimal"
               placeholder={dictionary.place.longitude}
               value={lonInput}
-              onChange={(event) => setLonInput(event.target.value)}
-              className="w-full min-w-0 rounded-md border border-shadow/25 bg-bleached px-2 py-2 font-mono tabular text-sm"
+              onChange={(event) => {
+                setLonInput(event.target.value)
+                if (status === 'invalid') setStatus('idle')
+              }}
+              aria-invalid={status === 'invalid'}
+              className={`w-full min-w-0 rounded-md border bg-bleached px-2 py-2 font-mono tabular text-sm ${
+                status === 'invalid' ? 'border-marker-ink' : 'border-shadow/25'
+              }`}
             />
             <button
               type="submit"
@@ -126,6 +150,9 @@ export function PlacePicker({
       ) : null}
       {status === 'unsupported' ? (
         <p className="mt-2 text-sm text-marker-ink">{dictionary.place.unsupported}</p>
+      ) : null}
+      {status === 'invalid' ? (
+        <p className="mt-2 text-sm text-marker-ink">{dictionary.place.invalidCoordinates}</p>
       ) : null}
 
       <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow/70">
