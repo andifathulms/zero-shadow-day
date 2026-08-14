@@ -301,6 +301,9 @@ function ResultPanel({
       <p className="mt-2 font-mono tabular text-4xl text-marker">
         {result.circumferenceKm.toFixed(0)} {dictionary.units.km}
       </p>
+      <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow/70">
+        {dictionary.eratosthenes.formula}
+      </p>
 
       <dl className="mt-5 grid gap-x-8 sm:grid-cols-2">
         <Row label={dictionary.eratosthenes.zenithAngle + ' A'} value={formatDeg(result.signedADeg, 3)} />
