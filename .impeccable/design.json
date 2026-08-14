@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-14T00:00:00Z",
+  "title": "Design System: Zero Shadow Day",
+  "extensions": {
+    "colorMeta": {
+      "bleached": {
+        "role": "neutral",
+        "displayName": "Bleached Paper",
+        "canonical": "#FBF4E4",
+        "tonalRamp": ["#43310a", "#7c5c12", "#b2841a", "#dfa82a", "#e8c064", "#f0d599", "#f6e6c1", "#fcf6e9"]
+      },
+      "concrete": {
+        "role": "neutral",
+        "displayName": "Concrete",
+        "canonical": "#E8DCC4",
+        "tonalRamp": ["#372c15", "#675228", "#937539", "#ba974f", "#cdb37f", "#decdab", "#ebe1cc", "#f8f4ed"]
+      },
+      "chalk": {
+        "role": "neutral",
+        "displayName": "Chalk",
+        "canonical": "#FFFDF7",
+        "tonalRamp": ["#4d3900", "#8f6b00", "#cc9900", "#ffc20a", "#ffd24d", "#ffe28a", "#ffedb8", "#fff9e5"]
+      },
+      "shadow": {
+        "role": "primary",
+        "displayName": "Shadow Ink",
+        "canonical": "#14110E",
+        "tonalRamp": ["#2d261f", "#54473b", "#786654", "#9a856f", "#b6a696", "#cfc4ba", "#e2dbd5", "#f4f2f0"]
+      },
+      "sun": {
+        "role": "secondary",
+        "displayName": "Sun Ochre",
+        "canonical": "#FFB627",
+        "tonalRamp": ["#4d3300", "#8f5f00", "#cc8700", "#ffac0a", "#ffc34d", "#ffd78a", "#ffe7b8", "#fff6e5"]
+      },
+      "sun-ink": {
+        "role": "secondary",
+        "displayName": "Sun Ink",
+        "canonical": "#8A5300",
+        "tonalRamp": ["#4d2e00", "#8f5600", "#cc7b00", "#ff9d0a", "#ffb84d", "#ffd08a", "#ffe3b8", "#fff5e5"]
+      },
+      "marker": {
+        "role": "tertiary",
+        "displayName": "Marker Vermilion",
+        "canonical": "#E2483D",
+        "tonalRamp": ["#430e0a", "#7c1a13", "#b1251b", "#df362a", "#e86d64", "#f09f99", "#f6c4c1", "#fceae9"]
+      },
+      "marker-ink": {
+        "role": "tertiary",
+        "displayName": "Marker Ink",
+        "canonical": "#A3271E",
+        "tonalRamp": ["#410f0c", "#791d16", "#ac2920", "#d93c30", "#e37168", "#eda19c", "#f4c6c3", "#fbebe9"]
+      },
+      "sky": {
+        "role": "neutral",
+        "displayName": "Sky Wash",
+        "canonical": "#BAE2F3",
+        "tonalRamp": ["#0b3141", "#155c7a", "#1e83ae", "#2ea7db", "#67bfe5", "#9bd5ee", "#c2e5f4", "#e9f6fb"]
+      },
+      "sky-deep": {
+        "role": "neutral",
+        "displayName": "Sky Deep",
+        "canonical": "#1668AA",
+        "tonalRamp": ["#092944", "#104d7e", "#176fb5", "#268fe3", "#61adeb", "#97c9f2", "#c0def7", "#e8f3fc"]
+      },
+      "sky-night": {
+        "role": "neutral",
+        "displayName": "Sky Night",
+        "canonical": "#0A1020",
+        "tonalRamp": ["#121d3a", "#22366d", "#314e9b", "#4467c5", "#7791d5", "#a6b6e3", "#c9d3ee", "#eceff9"]
+      },
+      "palm": {
+        "role": "secondary",
+        "displayName": "Palm Green",
+        "canonical": "#1F7A5A",
+        "tonalRamp": ["#0f3d2d", "#1d7254", "#29a378", "#3ccd9a", "#71dbb5", "#a1e7cf", "#c6f1e2", "#ebfaf4"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display / Hero", "purpose": "The site name on the homepage hero only." },
+      "headline": { "displayName": "Headline / Title", "purpose": "Section headings across every route." },
+      "lede": { "displayName": "Lede", "purpose": "The single intro paragraph under a hero or section headline." },
+      "body": { "displayName": "Body", "purpose": "Running prose, capped near 65-75ch." },
+      "label": { "displayName": "Label", "purpose": "Field labels, readout row labels, secondary wordmark line, locale switch." },
+      "mono": { "displayName": "Mono / Value", "purpose": "Every time, angle, ratio, and coordinate; tabular numerals so nothing reflows while dragging the scrubber." }
+    },
+    "shadows": [
+      { "name": "lift", "value": "0 1px 2px rgba(20,17,14,0.06), 0 12px 32px -12px rgba(20,17,14,0.28)", "purpose": "Ambient lift for chalk panels at rest and tool cards on hover." },
+      { "name": "sink", "value": "inset 0 1px 3px rgba(20,17,14,0.12)", "purpose": "Subtle inset for a recessed/pressed surface." }
+    ],
+    "motion": [
+      { "name": "rise", "value": "0.6s cubic-bezier(0.16, 1, 0.3, 1) both, translateY(12px)->none + opacity 0->1", "purpose": "Reveal-on-scroll for sections and list items; disabled under prefers-reduced-motion." },
+      { "name": "skeleton-sweep", "value": "1.8s ease-in-out infinite, translateX(-100%)->translateX(100%)", "purpose": "Loading placeholder sweep, traces the shape of pending content." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single highest-intent action per view, used on dark/hero grounds.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Masuk ke bayangan</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; background: #FFFDF7; color: #14110E; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; border-radius: 9999px; padding: 12px 24px; text-decoration: none; transition: background 0.2s; } .ds-btn-primary:hover { background: #FFB627; } .ds-btn-primary:focus-visible { outline: 2px solid #14110E; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outline pill for a lower-intent action like locating the device.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">Lokasi saya</button>",
+      "css": ".ds-btn-secondary { background: transparent; color: #14110E; border: 1px solid rgba(20,17,14,0.4); border-radius: 9999px; padding: 8px 16px; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 0.875rem; transition: background 0.2s, color 0.2s; } .ds-btn-secondary:hover { background: #14110E; color: #FFFDF7; } .ds-btn-secondary:focus-visible { outline: 2px solid #14110E; outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "A coordinate or search field: bordered, set into the paper ground, tabular mono for numeric entry.",
+      "html": "<input class=\"ds-input\" inputmode=\"decimal\" placeholder=\"Lintang\" />",
+      "css": ".ds-input { width: 100%; background: #FBF4E4; color: #14110E; border: 1px solid rgba(20,17,14,0.25); border-radius: 8px; padding: 8px 8px; font-family: 'Chivo Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 0.875rem; } .ds-input:focus-visible { outline: 2px solid #14110E; outline-offset: 2px; }"
+    },
+    {
+      "name": "Tool Card",
+      "kind": "card",
+      "refersTo": "card-tool",
+      "description": "A link card into one of the site's five modes; flat at rest, lifts and darkens its border on hover.",
+      "html": "<a class=\"ds-card-tool\" href=\"#\"><span class=\"ds-card-tool__row\">Bayangan <span aria-hidden>→</span></span><span class=\"ds-card-tool__body\">Tongkat dan bayangannya, sepanjang hari.</span></a>",
+      "css": ".ds-card-tool { display: flex; flex-direction: column; height: 100%; background: #FFFDF7; color: #14110E; border: 1px solid rgba(20,17,14,0.1); border-radius: 8px; padding: 24px; text-decoration: none; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; } .ds-card-tool:hover { transform: translateY(-4px); border-color: rgba(20,17,14,0.3); box-shadow: 0 1px 2px rgba(20,17,14,0.06), 0 12px 32px -12px rgba(20,17,14,0.28); } .ds-card-tool__row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-family: 'Instrument Serif', Georgia, serif; font-size: 1.5rem; } .ds-card-tool:hover .ds-card-tool__row { color: #A3271E; } .ds-card-tool__body { margin-top: 8px; line-height: 1.625; color: rgba(20,17,14,0.8); }"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "A raised surface for grouped controls or readouts, sitting above the paper ground with an ambient lift.",
+      "html": "<section class=\"ds-panel\"><h2 class=\"ds-panel__label\">Tempat</h2><p>Panel content.</p></section>",
+      "css": ".ds-panel { border-radius: 8px; border: 1px solid rgba(20,17,14,0.1); background: #FFFDF7; padding: 20px; box-shadow: 0 1px 2px rgba(20,17,14,0.06), 0 12px 32px -12px rgba(20,17,14,0.28); } .ds-panel__label { font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(20,17,14,0.7); margin-bottom: 12px; }"
+    },
+    {
+      "name": "Readout Row",
+      "kind": "custom",
+      "refersTo": "panel",
+      "description": "One line of the printed data column: a Label-scale field name against a tabular mono value, separated by a hairline top rule.",
+      "html": "<dl class=\"ds-readout-row\"><dt class=\"ds-readout-row__label\">Rasio bayangan</dt><dd class=\"ds-readout-row__value\">0.732×</dd></dl>",
+      "css": ".ds-readout-row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 6px 0; border-top: 1px solid rgba(20,17,14,0.1); } .ds-readout-row__label { font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(20,17,14,0.7); } .ds-readout-row__value { font-family: 'Chivo Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 0.95rem; color: #14110E; }"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "refersTo": "panel",
+      "description": "The site header: a two-line wordmark (serif primary name, tracked-caps secondary name) beside a flat text-link list.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav__mark\" href=\"#\"><span class=\"ds-nav__mark-primary\">Hari Tanpa Bayangan</span><span class=\"ds-nav__mark-secondary\">Zero Shadow Day</span></a><nav><a class=\"ds-nav__link\" href=\"#\">Bayangan</a> <a class=\"ds-nav__link\" href=\"#\">Tanggal</a></nav></header>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 16px 20px; border-bottom: 1px solid rgba(20,17,14,0.15); flex-wrap: wrap; } .ds-nav__mark { display: flex; flex-direction: column; line-height: 1; text-decoration: none; color: #14110E; } .ds-nav__mark-primary { font-family: 'Instrument Serif', Georgia, serif; font-size: 1.25rem; } .ds-nav__mark-secondary { margin-top: 2px; font-size: 0.6875rem; letter-spacing: 0.08em; color: rgba(20,17,14,0.7); } .ds-nav__link { border-bottom: 1px solid transparent; padding-bottom: 2px; color: #14110E; text-decoration: none; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 0.875rem; transition: border-color 0.2s; } .ds-nav__link:hover { border-color: #14110E; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Observatory Notice",
+    "overview": "The material world is hard tropical light on sun-bleached concrete: warm paper-toned ground, one crisp dark shadow, no softness anywhere except the sky itself. The page reads like a printed instrument notice — a serif masthead, a monospace column of continuously-updating figures, and a single subject (the shadow) that stays darker than everything else on the page because it is the data, not decoration beside it.\n\nOwner direction superseded the original flat, fully bleached-concrete-only palette to let the sky be a real sky — a hero that plays a whole day from deep blue through sunrise orange to true night, rendered by a hand-rolled 8 KB 3D scene rather than a flat wash. What survived that change, because they carry meaning rather than taste, are the two rules every other decision defers to: the shadow is the darkest thing on the page, and vermilion marks the zero shadow day and nothing else.\n\nAlmost everything at rest is flat — no drop shadows, no gradients on cards, no gloss. The one ambient shadow (lift) exists purely to lift a chalk-white panel a few pixels off the paper ground, and it appears at rest on panels and on hover for interactive cards, never as decoration.",
+    "keyCharacteristics": [
+      "Warm, sun-bleached paper ground with one uncompromisingly dark ink color — never a mid-gray",
+      "A real rendered sky (day-to-night gradient, 3D gnomon scene) sitting inside an otherwise flat, printed-page layout",
+      "Every time, angle, and ratio renders in tabular monospace so it never reflows while being dragged",
+      "Vermilion (marker) appears in exactly one role: the zero shadow day. Nowhere else.",
+      "Sun ochre marks the sun's own path and nothing structural; its low-contrast base hex never carries text or data lines — sun-ink/marker-ink do that instead"
+    ],
+    "rules": [
+      { "name": "The Darkest Ink Rule", "body": "Shadow Ink is the darkest color anywhere in the system. No future token, tint, or opacity value may be introduced that reads darker than #14110E — the shadow's visual primacy is the whole point of the product.", "section": "colors" },
+      { "name": "The One Accent Rule", "body": "Marker Vermilion marks the zero shadow day and nothing else — not a generic \"primary CTA\" color, not an error state, not a hover accent. If a new UI moment needs emphasis, reach for Shadow Ink at full opacity or Sun Ochre before reaching for vermilion.", "section": "colors" },
+      { "name": "The Tabular Everywhere Rule", "body": "Any angle, time, or shadow ratio renders with font-variant-numeric: tabular-nums (the .tabular utility). These values update continuously as the date scrubber moves; a non-tabular font would make the layout visibly shift on every frame.", "section": "typography" },
+      { "name": "The Serif-Is-Rare Rule", "body": "Instrument Serif appears only at h1/h2/h3 scale and the wordmark. It never sets body copy, labels, or UI chrome — its rarity is what keeps the \"observatory notice\" register from tipping into generic editorial.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Elevation is reserved for panels that are genuinely raised above the paper ground (chalk surfaces) or for a hover response on an interactive card. It is never applied to decorate a static block of text or a section wrapper.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep Shadow Ink (#14110E) the darkest value in any composition — no gray, no near-black, ever reads darker than the shadow itself.",
+      "Do use sun-ink / marker-ink instead of the base sun / marker hex whenever the color needs to carry text or a thin data line — the base hues are display-only fills that fail small-text contrast by design.",
+      "Do render every time/angle/ratio value in font-mono tabular so dragged values never reflow.",
+      "Do keep interactive surfaces flat at rest and reserve the lift shadow for genuine elevation change (panels above ground, cards on hover).",
+      "Do use full pill (rounded-full) shape for every button; it's the one consistent silhouette across the whole system."
+    ],
+    "donts": [
+      "Don't use Marker Vermilion for anything other than the zero shadow day itself — not a generic CTA, not a form error, not a \"new\" badge.",
+      "Don't set body text, labels, or UI chrome in Instrument Serif; it is reserved for display headings and the wordmark only.",
+      "Don't add a drop shadow to a static card or text block at rest — elevation communicates a state change (raised panel, hover), not decoration.",
+      "Don't introduce a gray or neutral tone darker than #14110E; every \"darker\" need should route through Shadow Ink at higher opacity instead of a new near-black token.",
+      "Don't scale or restyle the shadow/gnomon rendering for visual effect in a way that breaks the length-to-altitude ratio — it is the literal data, not an illustration (CLAUDE.md invariant 10)."
+    ]
+  }
+}
