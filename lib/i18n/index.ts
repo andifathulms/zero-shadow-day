@@ -13,6 +13,17 @@ export function isLocale(value: string): value is Locale {
   return (LOCALES as readonly string[]).includes(value)
 }
 
+/**
+ * The static params for the `[locale]` segment. `output: 'export'` requires
+ * this on every page under a dynamic segment, not only its layout — without
+ * it `next dev` 500s on each route even though `next build` (which reads the
+ * layout's copy) succeeds. Re-exported from every locale page under
+ * `app/[locale]` so the two never drift.
+ */
+export function localeStaticParams(): { locale: Locale }[] {
+  return LOCALES.map((locale) => ({ locale }))
+}
+
 const id = {
   meta: {
     title: 'Zero Shadow Day',
@@ -66,14 +77,13 @@ const id = {
     coordinates: 'Koordinat',
     latitude: 'Lintang',
     longitude: 'Bujur',
-    zone: 'Zona',
     locate: 'Gunakan lokasi saya',
     locating: 'Mencari…',
     denied: 'Izin lokasi ditolak. Silakan pilih kota atau ketik koordinat.',
     unsupported: 'Peramban ini tidak menyediakan geolokasi.',
+    invalidCoordinates: 'Lintang harus -90 sampai 90, bujur -180 sampai 180.',
     privacy: 'Koordinat tidak pernah meninggalkan perangkat Anda. Tidak ada permintaan jaringan, tidak ada geocoding balik, tidak ada analitik.',
     near: 'dekat',
-    search: 'Cari kota',
     apply: 'Terapkan koordinat',
   },
   readout: {
@@ -145,6 +155,10 @@ const id = {
     lede: 'Eratosthenes tahu matahari berdiri tepat di atas Syene, dan mengukur sudut bayangan di Alexandria pada hari yang sama. Dari dua angka ia mendapat keliling planet dengan galat beberapa persen. Percobaan itu dapat diulang dengan aplikasi ini.',
     partner: 'Cari pasangan pengamatan',
     partnerNote: 'Pilih tempat yang selisih lintangnya cukup besar. Semakin jauh, semakin kecil pengaruh galat pengukuran.',
+    partnerLegend: 'Δφ = selisih lintang, Δλ = selisih bujur — semakin besar Δφ dan semakin kecil Δλ, semakin akurat hasilnya.',
+    showMorePartners: 'Tampilkan pilihan lainnya',
+    invalidNumber: 'Masukkan angka yang sah.',
+    separationTooSmall: 'Selisih lintang Δφ = {separation}° masih di bawah {minimum}°.',
     instructions: 'Cara mengukur',
     step1: 'Tancapkan tongkat tegak lurus di tanah datar. Periksa ketegakannya dengan unting-unting, bukan dengan mata.',
     step2: 'Pada saat kulminasi — bukan pukul 12:00 — ukur panjang bayangannya.',
@@ -163,7 +177,6 @@ const id = {
     error: 'Galat',
     errorHeading: 'Dari mana galatnya',
     errorNote: 'Selisih antara pengukuran halaman sekolah dan angka sebenarnya justru pelajarannya, bukan hal yang perlu disembunyikan.',
-    compute: 'Hitung',
     distance: 'Jarak utara–selatan antara kedua tempat',
     distanceNote: 'Angka awal ini dihitung dari jari-jari bumi yang sudah diterima — jadi memakainya berarti mengandaikan jawaban yang sedang dicari. Eratosthenes memperoleh jaraknya dari juru ukur. Ganti dengan jarak dari peta atau odometer agar pengukurannya berdiri sendiri.',
     sameMeridian: 'Kedua tempat tidak berada pada bujur yang sama; metode Eratosthenes mengandaikan demikian. Selisih bujur {gap}° menambah galat.',
@@ -272,14 +285,13 @@ const en: Dictionary = {
     coordinates: 'Coordinates',
     latitude: 'Latitude',
     longitude: 'Longitude',
-    zone: 'Zone',
     locate: 'Use my location',
     locating: 'Locating…',
     denied: 'Location permission denied. Choose a city or type coordinates.',
     unsupported: 'This browser offers no geolocation.',
+    invalidCoordinates: 'Latitude must be -90 to 90, longitude -180 to 180.',
     privacy: 'Coordinates never leave your device. No network request, no reverse geocoding, no analytics.',
     near: 'near',
-    search: 'Search cities',
     apply: 'Apply coordinates',
   },
   readout: {
@@ -351,6 +363,10 @@ const en: Dictionary = {
     lede: 'Eratosthenes knew the sun stood overhead at Syene and measured the shadow angle at Alexandria on the same day. From two numbers he got the planet’s circumference to within a few percent. That experiment is reproducible with this app.',
     partner: 'Find a partner location',
     partnerNote: 'Pick a place well separated in latitude. The further apart, the less measurement error matters.',
+    partnerLegend: 'Δφ = latitude gap, Δλ = longitude gap — bigger Δφ and smaller Δλ both make the result more accurate.',
+    showMorePartners: 'Show more options',
+    invalidNumber: 'Enter a valid number.',
+    separationTooSmall: 'The latitude separation Δφ = {separation}° is still below {minimum}°.',
     instructions: 'How to measure',
     step1: 'Set a stick vertically in flat ground. Check it with a plumb line, not by eye.',
     step2: 'At culmination — not at 12:00 — measure the length of its shadow.',
@@ -369,7 +385,6 @@ const en: Dictionary = {
     error: 'Error',
     errorHeading: 'Where the error comes from',
     errorNote: 'The gap between a schoolyard measurement and the true figure is itself the lesson, not an embarrassment to hide.',
-    compute: 'Compute',
     distance: 'North–south distance between the two places',
     distanceNote: 'This starting figure is computed from the accepted Earth radius — so using it assumes the very answer being sought. Eratosthenes had his distance from surveyors. Replace it with a distance from a map or an odometer to make the measurement stand on its own.',
     sameMeridian: 'The two places are not on the same meridian, which Eratosthenes’ method assumes. A {gap}° difference in longitude adds error.',
