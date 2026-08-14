@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { usePlace } from '@/components/place/PlaceProvider'
+import { ReadoutRow } from '@/components/readout/ReadoutRow'
 import { todayIn } from '@/lib/clock'
 import { instantAt } from '@/lib/day'
 import {
@@ -58,15 +59,17 @@ export function NoonAnywhere({ dictionary }: { dictionary: Dictionary }) {
           type="date"
           value={iso}
           onChange={(event) => setIso(event.target.value)}
+          min="1800-01-01"
+          max="2100-12-31"
           className="rounded-md border border-shadow/25 bg-bleached px-3 py-2 font-mono tabular text-sm"
           aria-label={dictionary.readout.date}
         />
       </div>
 
       <dl className="mt-4 grid gap-x-10 sm:grid-cols-2">
-        <Row label={dictionary.readout.culmination} value={formatClockSeconds(noon.localHours)} />
-        <Row label={dictionary.readout.altitude} value={formatDeg(instant.altDeg)} />
-        <Row
+        <ReadoutRow label={dictionary.readout.culmination} value={formatClockSeconds(noon.localHours)} />
+        <ReadoutRow label={dictionary.readout.altitude} value={formatDeg(instant.altDeg)} />
+        <ReadoutRow
           label={dictionary.readout.shadowRatio}
           value={
             shadow.type === 'shadow'
@@ -77,7 +80,7 @@ export function NoonAnywhere({ dictionary }: { dictionary: Dictionary }) {
           }
           emphasis
         />
-        <Row
+        <ReadoutRow
           label={dictionary.readout.shadowBearing}
           value={
             shadow.type === 'shadow'
@@ -85,31 +88,14 @@ export function NoonAnywhere({ dictionary }: { dictionary: Dictionary }) {
               : '—'
           }
         />
-        <Row label={dictionary.readout.latitude} value={formatSignedDeg(place.latDeg)} />
-        <Row label={dictionary.readout.declination} value={formatSignedDeg(instant.decDeg)} />
-        <Row
+        <ReadoutRow label={dictionary.readout.latitude} value={formatSignedDeg(place.latDeg)} />
+        <ReadoutRow label={dictionary.readout.declination} value={formatSignedDeg(instant.decDeg)} />
+        <ReadoutRow
           label={dictionary.readout.eot}
           value={`${formatMinutes(noon.eotMinutes)} ${dictionary.units.minutes}`}
         />
       </dl>
     </section>
-  )
-}
-
-function Row({
-  label,
-  value,
-  emphasis = false,
-}: {
-  label: string
-  value: string
-  emphasis?: boolean
-}) {
-  return (
-    <div className="rule flex items-baseline justify-between gap-4 py-1.5">
-      <dt className="label">{label}</dt>
-      <dd className={emphasis ? 'value text-[1.05rem]' : 'value'}>{value}</dd>
-    </div>
   )
 }
 

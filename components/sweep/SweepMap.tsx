@@ -111,7 +111,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
           {[0].map((lat) => (
             <g key={lat}>
               <line x1={0} y1={y(lat)} x2={width} y2={y(lat)} className="stroke-shadow/25" strokeDasharray="4 4" />
-              <text x={6} y={y(lat) - 5} className="fill-shadow/70 font-mono text-[10px]">
+              <text x={6} y={y(lat) - 5} className="fill-shadow/70 font-mono text-[0.6875rem]">
                 0°
               </text>
             </g>

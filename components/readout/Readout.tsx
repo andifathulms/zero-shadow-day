@@ -1,3 +1,4 @@
+import { ReadoutRow } from '@/components/readout/ReadoutRow'
 import type { Instant } from '@/lib/day'
 import {
   formatClock,
@@ -38,12 +39,12 @@ export function Readout({
     <div>
       <h2 className="label">{dictionary.readout.heading}</h2>
       <dl className="mt-3 space-y-0">
-        <Row label={dictionary.readout.date} value={formatDate(date, dictionary)} />
-        <Row label={dictionary.readout.time} value={formatClockSeconds(instant.localHours)} />
-        <Row label={dictionary.readout.culmination} value={formatClock(noonLocalHours)} />
-        <Row label={dictionary.readout.altitude} value={formatDeg(instant.altDeg)} />
-        <Row label={dictionary.readout.azimuth} value={formatDeg(instant.azDeg, 1)} />
-        <Row
+        <ReadoutRow label={dictionary.readout.date} value={formatDate(date, dictionary)} />
+        <ReadoutRow label={dictionary.readout.time} value={formatClockSeconds(instant.localHours)} />
+        <ReadoutRow label={dictionary.readout.culmination} value={formatClock(noonLocalHours)} />
+        <ReadoutRow label={dictionary.readout.altitude} value={formatDeg(instant.altDeg)} />
+        <ReadoutRow label={dictionary.readout.azimuth} value={formatDeg(instant.azDeg, 1)} />
+        <ReadoutRow
           label={dictionary.readout.shadowRatio}
           value={
             shadow.type === 'shadow'
@@ -54,13 +55,13 @@ export function Readout({
           }
           emphasis={shadow.type === 'shadow' || shadow.type === 'zenith'}
         />
-        <Row
+        <ReadoutRow
           label={dictionary.readout.shadowBearing}
           value={shadow.type === 'shadow' ? formatBearing(shadow.bearingDeg) : '—'}
         />
-        <Row label={dictionary.readout.latitude} value={formatSignedDeg(latDeg)} />
-        <Row label={dictionary.readout.declination} value={formatSignedDeg(instant.decDeg)} />
-        <Row
+        <ReadoutRow label={dictionary.readout.latitude} value={formatSignedDeg(latDeg)} />
+        <ReadoutRow label={dictionary.readout.declination} value={formatSignedDeg(instant.decDeg)} />
+        <ReadoutRow
           label={dictionary.readout.eot}
           value={`${formatMinutes(eotMinutes)} ${dictionary.units.minutes}`}
         />
@@ -69,23 +70,6 @@ export function Readout({
       {shadow.type === 'no-shadow' ? (
         <p className="mt-1 text-xs text-shadow/70">{dictionary.readout.noShadow}</p>
       ) : null}
-    </div>
-  )
-}
-
-function Row({
-  label,
-  value,
-  emphasis = false,
-}: {
-  label: string
-  value: string
-  emphasis?: boolean
-}) {
-  return (
-    <div className="rule flex items-baseline justify-between gap-4 py-1.5">
-      <dt className="label">{label}</dt>
-      <dd className={emphasis ? 'value text-[1.05rem]' : 'value'}>{value}</dd>
     </div>
   )
 }

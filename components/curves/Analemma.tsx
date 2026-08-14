@@ -102,7 +102,7 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
                 <text
                   x={centre + 4}
                   y={centre - ring * radius - 3}
-                  className="fill-shadow/70 font-mono text-[10px]"
+                  className="fill-shadow/70 font-mono text-[0.6875rem]"
                 >
                   {ring}°
                 </text>
@@ -129,7 +129,7 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
             return (
               <g key={point.date.month}>
                 <circle cx={x} cy={y} r={4} className="fill-shadow" />
-                <text x={x + 8} y={y + 4} className="fill-shadow/70 font-mono text-[10px]">
+                <text x={x + 8} y={y + 4} className="fill-shadow/70 font-mono text-[0.6875rem]">
                   {dictionary.months[point.date.month - 1]}
                 </text>
               </g>
