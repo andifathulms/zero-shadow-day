@@ -109,7 +109,7 @@ export function Hero({ dictionary, locale }: { dictionary: Dictionary; locale: L
         aria-hidden
       />
 
-      <div className="relative flex min-h-[clamp(34rem,100dvh,58rem)] flex-col justify-end p-6 sm:p-10">
+      <div className="relative flex min-h-[clamp(30rem,calc(100dvh-9rem),52rem)] flex-col justify-end p-6 sm:p-10">
         <p className="label text-chalk/80">{dictionary.home.kicker}</p>
         <h1 className="mt-3 max-w-[16ch] font-display text-hero text-chalk">{primaryName}</h1>
         <p className="mt-2 font-display text-2xl text-chalk/75 sm:text-3xl">{secondaryName}</p>
