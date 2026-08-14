@@ -26,6 +26,7 @@ export function PlacePicker({
   const cityId = useId()
   const latId = useId()
   const lonId = useId()
+  const coordErrorId = useId()
 
   const locate = () => {
     if (typeof navigator === 'undefined' || !navigator.geolocation) {
@@ -101,6 +102,7 @@ export function PlacePicker({
                 if (status === 'invalid') setStatus('idle')
               }}
               aria-invalid={status === 'invalid'}
+              aria-describedby={status === 'invalid' ? coordErrorId : undefined}
               className={`w-full min-w-0 rounded-md border bg-bleached px-2 py-2 font-mono tabular text-sm ${
                 status === 'invalid' ? 'border-marker-ink' : 'border-shadow/25'
               }`}
@@ -116,6 +118,7 @@ export function PlacePicker({
                 if (status === 'invalid') setStatus('idle')
               }}
               aria-invalid={status === 'invalid'}
+              aria-describedby={status === 'invalid' ? coordErrorId : undefined}
               className={`w-full min-w-0 rounded-md border bg-bleached px-2 py-2 font-mono tabular text-sm ${
                 status === 'invalid' ? 'border-marker-ink' : 'border-shadow/25'
               }`}
@@ -146,13 +149,19 @@ export function PlacePicker({
       </div>
 
       {status === 'denied' ? (
-        <p className="mt-2 text-sm text-marker-ink">{dictionary.place.denied}</p>
+        <p role="status" className="mt-2 text-sm text-marker-ink">
+          {dictionary.place.denied}
+        </p>
       ) : null}
       {status === 'unsupported' ? (
-        <p className="mt-2 text-sm text-marker-ink">{dictionary.place.unsupported}</p>
+        <p role="status" className="mt-2 text-sm text-marker-ink">
+          {dictionary.place.unsupported}
+        </p>
       ) : null}
       {status === 'invalid' ? (
-        <p className="mt-2 text-sm text-marker-ink">{dictionary.place.invalidCoordinates}</p>
+        <p id={coordErrorId} role="status" className="mt-2 text-sm text-marker-ink">
+          {dictionary.place.invalidCoordinates}
+        </p>
       ) : null}
 
       <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow/70">

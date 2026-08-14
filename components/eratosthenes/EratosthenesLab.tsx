@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useId, useMemo, useState } from 'react'
 import { usePlace } from '@/components/place/PlaceProvider'
 import { ReadoutRow } from '@/components/readout/ReadoutRow'
 import { INDONESIAN_CITIES, type City } from '@/data/cities/indonesia'
@@ -298,6 +298,8 @@ function Field({
   invalid?: boolean
   invalidMessage?: string
 }) {
+  const errorId = useId()
+  const showError = invalid && Boolean(invalidMessage)
   return (
     <label className="block">
       <span className="label block">{label}</span>
@@ -306,12 +308,15 @@ function Field({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         aria-invalid={invalid}
+        aria-describedby={showError ? errorId : undefined}
         className={`mt-1 w-full rounded-md border bg-bleached px-3 py-2 font-mono tabular ${
           invalid ? 'border-marker-ink' : 'border-shadow/25'
         }`}
       />
-      {invalid && invalidMessage ? (
-        <span className="mt-1 block text-xs text-marker-ink">{invalidMessage}</span>
+      {showError ? (
+        <span id={errorId} className="mt-1 block text-xs text-marker-ink">
+          {invalidMessage}
+        </span>
       ) : null}
     </label>
   )
