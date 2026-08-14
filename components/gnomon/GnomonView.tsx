@@ -145,6 +145,7 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
           instant={instant}
           noonLocalHours={track.noonLocalHours}
           eotMinutes={solarPosition(instant.jd).eotMinutes}
+          latDeg={place.latDeg}
         />
       </div>
 

@@ -85,6 +85,7 @@ export function NoonAnywhere({ dictionary }: { dictionary: Dictionary }) {
               : '—'
           }
         />
+        <Row label={dictionary.readout.latitude} value={formatSignedDeg(place.latDeg)} />
         <Row label={dictionary.readout.declination} value={formatSignedDeg(instant.decDeg)} />
         <Row
           label={dictionary.readout.eot}

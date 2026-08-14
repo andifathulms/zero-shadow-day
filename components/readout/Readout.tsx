@@ -22,12 +22,15 @@ export function Readout({
   instant,
   noonLocalHours,
   eotMinutes,
+  latDeg,
 }: {
   dictionary: Dictionary
   date: CivilDate
   instant: Instant
   noonLocalHours: number
   eotMinutes: number
+  /** The place's own latitude, read beside declination — the whole mechanism is these two converging. */
+  latDeg: number
 }) {
   const shadow = instant.shadow
 
@@ -55,14 +58,16 @@ export function Readout({
           label={dictionary.readout.shadowBearing}
           value={shadow.type === 'shadow' ? formatBearing(shadow.bearingDeg) : '—'}
         />
+        <Row label={dictionary.readout.latitude} value={formatSignedDeg(latDeg)} />
         <Row label={dictionary.readout.declination} value={formatSignedDeg(instant.decDeg)} />
         <Row
           label={dictionary.readout.eot}
           value={`${formatMinutes(eotMinutes)} ${dictionary.units.minutes}`}
         />
       </dl>
+      <p className="mt-3 text-xs leading-relaxed text-shadow/70">{dictionary.readout.convergeHint}</p>
       {shadow.type === 'no-shadow' ? (
-        <p className="mt-3 text-xs text-shadow/70">{dictionary.readout.noShadow}</p>
+        <p className="mt-1 text-xs text-shadow/70">{dictionary.readout.noShadow}</p>
       ) : null}
     </div>
   )
