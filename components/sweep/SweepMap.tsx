@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { INDONESIAN_CITIES } from '@/data/cities/indonesia'
+import { INDONESIA_ISLANDS } from '@/data/geography/indonesia'
 import { usePlace } from '@/components/place/PlaceProvider'
 import { useReducedMotion } from '@/components/hooks/useReducedMotion'
 import { todayIn } from '@/lib/clock'
@@ -98,6 +99,9 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
   const beyond: 'north' | 'south' | null =
     decDeg > latMax ? 'north' : decDeg < latMin ? 'south' : null
 
+  const islandPoints = (island: ReadonlyArray<readonly [number, number]>) =>
+    island.map(([lon, lat]) => `${x(lon).toFixed(1)},${y(lat).toFixed(1)}`).join(' ')
+
   return (
     <div className="space-y-4">
       <figure>
@@ -107,6 +111,21 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
           role="img"
           aria-label={`${dictionary.sweep.lede} ${formatDate(date, dictionary)}`}
         >
+          {/* A hand-simplified silhouette (data/geography/indonesia.ts), so a
+              city dot reads as "on Sumatra" at a glance instead of floating on
+              a blank field. Illustrative, not a coastline anyone should
+              measure — the dots and the band are still the only data here. */}
+          <g aria-hidden>
+            {INDONESIA_ISLANDS.map((island, index) => (
+              <polygon
+                key={index}
+                points={islandPoints(island)}
+                className="fill-palm/[0.12] stroke-palm/25"
+                strokeWidth={0.75}
+              />
+            ))}
+          </g>
+
           {/* the equator and the two tropics, the only lines that matter here */}
           {[0].map((lat) => (
             <g key={lat}>
