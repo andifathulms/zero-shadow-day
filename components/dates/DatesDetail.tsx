@@ -70,6 +70,8 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
         </div>
       </div>
 
+      <p className="max-w-prose text-sm leading-relaxed text-shadow/70">{dictionary.dates.howFound}</p>
+
       {result.type === 'outside-tropics' ? (
         <section className="panel border-marker/40 bg-marker/5">
           <p className="font-display text-2xl text-marker">{dictionary.dates.outsideTropics}</p>

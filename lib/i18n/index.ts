@@ -106,6 +106,7 @@ const id = {
   dates: {
     heading: 'Dua tanggal Anda',
     lede: 'Kedua hari tanpa bayangan untuk tempat ini, beserta waktu kulminasinya.',
+    howFound: 'Cara menemukannya: deklinasi matahari dibandingkan dengan lintang Anda pada kulminasi setiap hari sepanjang tahun, lalu hari dengan selisih terkecil itulah yang diambil. "Sudut zenit" di bawah adalah selisih itu — mendekati nol berarti mendekati hari yang tepat.',
     first: 'Pertama',
     second: 'Kedua',
     only: 'Satu-satunya',
@@ -309,6 +310,7 @@ const en: Dictionary = {
   dates: {
     heading: 'Your two dates',
     lede: 'Both zero shadow days for this place, with the time of culmination for each.',
+    howFound: 'How these are found: the sun\'s declination is compared to your latitude at culmination on every day of the year, and the day with the smallest difference is kept. The "zenith angle" below is that difference — closer to zero means closer to the right day.',
     first: 'First',
     second: 'Second',
     only: 'The only one',
