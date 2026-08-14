@@ -221,6 +221,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
           onChange={(event) => setDayIndex(Number(event.target.value))}
           className="mt-2 w-full accent-sun"
           aria-label={dictionary.sweep.day}
+          aria-valuetext={formatDate(date, dictionary)}
         />
       </div>
 
