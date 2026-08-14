@@ -101,6 +101,7 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
               <button
                 type="button"
                 onClick={() => setPartner(city)}
+                aria-pressed={partner?.name === city.name}
                 className={`w-full rounded-lg border p-3 text-left transition ${
                   partner?.name === city.name
                     ? 'border-shadow bg-shadow text-chalk'
@@ -238,6 +239,7 @@ function ObservationCard({
               key={String(north)}
               type="button"
               onClick={() => onChange({ ...entry, pointsNorth: north })}
+              aria-pressed={entry.pointsNorth === north}
               className={`rounded-full border px-4 py-2 text-sm transition ${
                 entry.pointsNorth === north
                   ? 'border-shadow bg-shadow text-chalk'

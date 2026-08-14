@@ -57,6 +57,7 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
               key={option}
               type="button"
               onClick={() => setYear(option)}
+              aria-pressed={option === year}
               className={`rounded-full border px-4 py-1.5 font-mono tabular text-sm transition ${
                 option === year
                   ? 'border-shadow bg-shadow text-chalk'
