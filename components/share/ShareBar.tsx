@@ -92,6 +92,12 @@ export function ShareBar({
       <button type="button" onClick={copyLink} className={buttonClass}>
         {copied ? dictionary.share.copied : dictionary.share.copyLink}
       </button>
+      {/* The button's own label already flips visually; this reliably announces
+          the same confirmation regardless of which AT/browser combo is reading
+          it, since a focused element's name change isn't always caught. */}
+      <span role="status" className="sr-only">
+        {copied ? dictionary.share.copied : ''}
+      </span>
       <button type="button" onClick={downloadCalendar} className={buttonClass}>
         {dictionary.share.calendar}
       </button>
