@@ -171,7 +171,7 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
           markedDays={markedDays}
           date={date}
         />
-        <p className="mt-2 text-xs text-shadow/70">{dictionary.gnomon.markers}</p>
+        <p className="mt-2 text-xs leading-relaxed text-shadow/70">{dictionary.gnomon.curveCaption}</p>
       </div>
 
       {/* A link that reproduces exactly this place, date and time. */}

@@ -61,7 +61,7 @@ export function DateScrubber({
           viewBox={`0 0 ${width} ${height}`}
           className="h-24 w-full"
           role="img"
-          aria-label={dictionary.gnomon.markers}
+          aria-label={dictionary.gnomon.curveCaption}
         >
           <line x1={0} y1={mid} x2={width} y2={mid} className="stroke-shadow/25" strokeWidth={1} />
           {monthTicks(year).map((tick) => (
