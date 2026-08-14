@@ -153,6 +153,10 @@ export function Hero({ dictionary, locale }: { dictionary: Dictionary; locale: L
             {instant.shadow.type === 'shadow'
               ? ` · ${dictionary.readout.shadowRatio} ${instant.shadow.lengthRatio.toFixed(2)}×`
               : ''}
+            {' · '}
+            <Link href={`/${locale}#kenapa`} className="underline decoration-chalk/40 hover:text-chalk">
+              {dictionary.home.howLink}
+            </Link>
           </p>
         ) : null}
 

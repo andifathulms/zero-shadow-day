@@ -32,7 +32,7 @@ export default function HomePage({ params }: { params: { locale: Locale } }) {
     <div className="space-y-16">
       <Hero dictionary={dictionary} locale={params.locale} />
 
-      <section>
+      <section id="kenapa" className="scroll-mt-8">
         <h2 className="max-w-[20ch] font-display text-title">{dictionary.home.howHeading}</h2>
         <ol className="mt-8 grid gap-6 md:grid-cols-3">
           {steps.map((step, index) => (
