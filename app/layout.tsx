@@ -25,6 +25,11 @@ const sans = Instrument_Sans({
 
 const mono = Chivo_Mono({
   subsets: ['latin'],
+  // Every tabular reading in the app renders at the default weight — grepped
+  // for font-mono paired with a weight utility and found none — so pinning
+  // this avoids shipping Chivo Mono's full 100-900 variable axis for a
+  // single weight actually used.
+  weight: '400',
   variable: '--font-mono',
   display: 'swap',
 })
