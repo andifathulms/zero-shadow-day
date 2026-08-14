@@ -78,8 +78,22 @@ function civilDateFromDayOffset(year: number, offset: number): CivilDate {
  * solstice peak is not stepped over. This is the true latitude limit for the
  * year — the tropics are where they are because of this number, so it is
  * computed rather than assumed to be 23.44°.
+ *
+ * This is the single most expensive step in the search (roughly 7300 solar
+ * positions) and depends only on `year`, never on `place` — every place
+ * shares one year's limits. `zeroShadowDays` calls this once per invocation,
+ * so anything that calls it for many places in the same year (the sweep map,
+ * 38 cities) redoes this identical work on every call. A year-keyed cache
+ * removes that redundancy without changing the result: the function stays
+ * pure from the caller's perspective, same year always yields the same
+ * numbers, just not recomputed.
  */
+const limitsCache = new Map<number, { maxDeg: number; minDeg: number }>()
+
 export function declinationLimits(year: number): { maxDeg: number; minDeg: number } {
+  const cached = limitsCache.get(year)
+  if (cached) return cached
+
   const jdStart = julianDay({ year, month: 1, day: 1 })
   const jdEnd = julianDay({ year: year + 1, month: 1, day: 1 })
   let maxDeg = -Infinity
@@ -89,7 +103,9 @@ export function declinationLimits(year: number): { maxDeg: number; minDeg: numbe
     if (decDeg > maxDeg) maxDeg = decDeg
     if (decDeg < minDeg) minDeg = decDeg
   }
-  return { maxDeg, minDeg }
+  const limits = { maxDeg, minDeg }
+  limitsCache.set(year, limits)
+  return limits
 }
 
 /**
