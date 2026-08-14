@@ -3,8 +3,12 @@ import { DatesDetail } from '@/components/dates/DatesDetail'
 import { PlacePicker } from '@/components/place/PlacePicker'
 import { NoonAnywhere } from '@/components/readout/NoonAnywhere'
 import { ShareBar } from '@/components/share/ShareBar'
-import { type Locale, getDictionary } from '@/lib/i18n'
+import { type Locale, getDictionary, localeStaticParams } from '@/lib/i18n'
 import { pageMetadata } from '@/lib/site'
+
+export function generateStaticParams() {
+  return localeStaticParams()
+}
 
 export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
   const dictionary = getDictionary(params.locale)

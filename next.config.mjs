@@ -1,13 +1,20 @@
 /**
  * Static export for GitHub Pages. No backend, no runtime network.
  * basePath must match the repository name (PRD §12).
+ *
+ * `output: 'export'` is production-only. Next 14's dev server always reports
+ * an empty prerender manifest, so pairing 'export' with a dynamic App Router
+ * segment (`[locale]`) makes every route 500 under `next dev` regardless of
+ * `generateStaticParams` — a dev-server limitation, not a project bug.
+ * `next build` sets NODE_ENV=production itself, so the real export is
+ * unaffected; only local `next dev` skips the export output mode.
  */
 const isProd = process.env.NODE_ENV === 'production'
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '/zero-shadow-day'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  ...(isProd ? { output: 'export' } : {}),
   basePath: isProd ? basePath : '',
   assetPrefix: isProd ? basePath : '',
   trailingSlash: true,

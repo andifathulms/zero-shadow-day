@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
-import { type Locale, getDictionary } from '@/lib/i18n'
+import { type Locale, getDictionary, localeStaticParams } from '@/lib/i18n'
 import { pageMetadata } from '@/lib/site'
+
+export function generateStaticParams() {
+  return localeStaticParams()
+}
 
 export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
   const dictionary = getDictionary(params.locale)

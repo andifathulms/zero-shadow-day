@@ -2,10 +2,10 @@ import { notFound } from 'next/navigation'
 import { PlaceProvider } from '@/components/place/PlaceProvider'
 import { Footer } from '@/components/site/Footer'
 import { Nav } from '@/components/site/Nav'
-import { LOCALES, getDictionary, isLocale } from '@/lib/i18n'
+import { getDictionary, isLocale, localeStaticParams } from '@/lib/i18n'
 
 export function generateStaticParams() {
-  return LOCALES.map((locale) => ({ locale }))
+  return localeStaticParams()
 }
 
 export const dynamicParams = false
