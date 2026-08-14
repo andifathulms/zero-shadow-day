@@ -48,21 +48,18 @@ export default function HomePage({ params }: { params: { locale: Locale } }) {
 
       <section id="kenapa" className="scroll-mt-8">
         <h2 className="max-w-[20ch] font-display text-title">{dictionary.home.howHeading}</h2>
-        <ol className="mt-8 grid gap-6 md:grid-cols-3">
+        <ol className="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-3">
           {steps.map((step, index) => (
             <Reveal
               key={step.title}
               as="li"
               delayMs={index * 90}
-              className="h-full rounded-lg bg-chalk p-6 shadow-lift"
+              className="border-t border-shadow/15 pt-5"
             >
-              <span
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-sun font-mono text-sm text-shadow"
-                aria-hidden
-              >
-                {index + 1}
+              <span className="font-mono text-sm text-shadow/45" aria-hidden>
+                {String(index + 1).padStart(2, '0')}
               </span>
-              <h3 className="mt-4 font-display text-2xl">{step.title}</h3>
+              <h3 className="mt-3 font-display text-2xl">{step.title}</h3>
               <p className="mt-2 leading-relaxed text-shadow/80">{step.body}</p>
             </Reveal>
           ))}
@@ -87,12 +84,18 @@ export default function HomePage({ params }: { params: { locale: Locale } }) {
           {tools.map((tool, index) => (
             <Reveal key={tool.slug} as="li" delayMs={index * 70}>
               <Link
-                  href={`/${params.locale}/${tool.slug}`}
-                  className="group flex h-full flex-col rounded-lg border border-shadow/10 bg-chalk p-6 transition duration-300 hover:-translate-y-1 hover:border-shadow/30 hover:shadow-lift"
-                >
-                  <span className="font-display text-2xl transition group-hover:text-marker-ink">
-                    {tool.label}
+                href={`/${params.locale}/${tool.slug}`}
+                className="group flex h-full flex-col rounded-lg border border-shadow/10 bg-chalk p-6 transition duration-300 hover:-translate-y-1 hover:border-shadow/30 hover:shadow-lift"
+              >
+                <span className="flex items-baseline justify-between gap-3 font-display text-2xl transition group-hover:text-marker-ink">
+                  {tool.label}
+                  <span
+                    aria-hidden
+                    className="font-sans text-lg text-shadow/40 transition duration-300 group-hover:translate-x-1 group-hover:text-marker-ink"
+                  >
+                    →
                   </span>
+                </span>
                 <span className="mt-2 leading-relaxed text-shadow/80">{tool.body}</span>
               </Link>
             </Reveal>
