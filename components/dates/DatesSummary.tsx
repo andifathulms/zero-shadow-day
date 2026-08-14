@@ -36,8 +36,8 @@ export function DatesSummary({
 
   if (result.type === 'outside-tropics') {
     return (
-      <section className="panel border-marker/40 bg-marker/5">
-        <p className="font-display text-xl text-marker">{dictionary.dates.outsideTropics}</p>
+      <section className="panel">
+        <p className="font-display text-xl">{dictionary.dates.outsideTropics}</p>
         <p className="mt-2 max-w-prose text-sm leading-relaxed">
           {dictionary.dates.outsideExplain
             .replace('{gap}', result.minZenithDeg.toFixed(2))
