@@ -170,7 +170,7 @@ const id = {
   },
   sweep: {
     heading: 'Sapuan',
-    lede: 'Pita subsurya bergerak melintasi nusantara sepanjang tahun. Setiap tempat menandai harinya sendiri ketika pita itu lewat.',
+    lede: 'Pita subsurya bergerak melintasi nusantara sepanjang tahun — posisinya adalah deklinasi matahari hari itu. Sebuah kota menandai harinya sendiri tepat saat lintang pita ini menyamai lintang kotanya.',
     northward: 'Menuju utara',
     southward: 'Kembali ke selatan',
     day: 'Hari ke',
@@ -376,7 +376,7 @@ const en: Dictionary = {
   },
   sweep: {
     heading: 'The sweep',
-    lede: 'The subsolar band moves across the archipelago through the year. Each place marks its own day as the band passes.',
+    lede: 'The subsolar band moves across the archipelago through the year — its position is that day\'s solar declination. A city marks its own day exactly when the band\'s latitude matches its own.',
     northward: 'Heading north',
     southward: 'Returning south',
     day: 'Day',
