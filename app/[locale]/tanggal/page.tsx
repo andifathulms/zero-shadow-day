@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { DatesDetail } from '@/components/dates/DatesDetail'
-import { PlacePicker } from '@/components/place/PlacePicker'
+import { PageHeader } from '@/components/site/PageHeader'
 import { NoonAnywhere } from '@/components/readout/NoonAnywhere'
 import { ShareBar } from '@/components/share/ShareBar'
 import { type Locale, getDictionary, localeStaticParams } from '@/lib/i18n'
@@ -25,12 +25,7 @@ export default function DatesPage({ params }: { params: { locale: Locale } }) {
 
   return (
     <div className="space-y-10">
-      <header className="max-w-3xl">
-        <h1 className="font-display text-title">{dictionary.dates.heading}</h1>
-        <p className="mt-3 max-w-prose leading-relaxed">{dictionary.dates.lede}</p>
-      </header>
-
-      <PlacePicker dictionary={dictionary} locale={params.locale} />
+      <PageHeader title={dictionary.dates.heading} lede={dictionary.dates.lede} />
       <DatesDetail dictionary={dictionary} />
       <NoonAnywhere dictionary={dictionary} />
       <ShareBar dictionary={dictionary} />

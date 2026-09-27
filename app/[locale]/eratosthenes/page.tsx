@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { EratosthenesLab } from '@/components/eratosthenes/EratosthenesLab'
-import { PlacePicker } from '@/components/place/PlacePicker'
+import { PageHeader } from '@/components/site/PageHeader'
 import { type Locale, getDictionary, localeStaticParams } from '@/lib/i18n'
 import { pageMetadata } from '@/lib/site'
 
@@ -23,12 +23,11 @@ export default function EratosthenesPage({ params }: { params: { locale: Locale 
 
   return (
     <div className="space-y-10">
-      <header className="max-w-3xl">
-        <h1 className="font-display text-title">{dictionary.eratosthenes.heading}</h1>
-        <p className="mt-3 max-w-prose leading-relaxed">{dictionary.eratosthenes.lede}</p>
-      </header>
-
-      <PlacePicker dictionary={dictionary} locale={params.locale} />
+      <PageHeader
+        eyebrow={dictionary.eratosthenes.kicker}
+        title={dictionary.eratosthenes.heading}
+        lede={dictionary.eratosthenes.lede}
+      />
       <EratosthenesLab dictionary={dictionary} />
     </div>
   )

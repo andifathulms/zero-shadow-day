@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { DatesSummary } from '@/components/dates/DatesSummary'
 import { Hero } from '@/components/home/Hero'
 import { Reveal } from '@/components/motion/Reveal'
-import { PlacePicker } from '@/components/place/PlacePicker'
 import { type Locale, getDictionary, localeStaticParams } from '@/lib/i18n'
 import { pageMetadata } from '@/lib/site'
 
@@ -74,7 +73,6 @@ export default function HomePage({ params }: { params: { locale: Locale } }) {
         id="tempat"
         className="scroll-mt-8 grid gap-8 lg:grid-cols-[22rem_minmax(0,1fr)] lg:items-start"
       >
-        <PlacePicker dictionary={dictionary} locale={params.locale} />
         <DatesSummary
           dictionary={dictionary}
           locale={params.locale}

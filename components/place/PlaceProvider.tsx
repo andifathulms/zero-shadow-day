@@ -32,12 +32,19 @@ interface PlaceContextValue {
   setCity: (city: City) => void
   setCoordinates: (latDeg: number, lonDeg: number, offsetHours?: number) => void
   setFromDevice: (latDeg: number, lonDeg: number) => void
+  /** Whether the place sheet is open. One sheet serves every page. */
+  pickerOpen: boolean
+  openPicker: () => void
+  closePicker: () => void
 }
 
 const PlaceContext = createContext<PlaceContextValue | null>(null)
 
 export function PlaceProvider({ children }: { children: React.ReactNode }) {
   const [place, setPlace] = useState<NamedPlace>(initial)
+  const [pickerOpen, setPickerOpen] = useState(false)
+  const openPicker = useCallback(() => setPickerOpen(true), [])
+  const closePicker = useCallback(() => setPickerOpen(false), [])
 
   useEffect(() => {
     // A shared link wins over the remembered place: the reader followed it to
@@ -102,8 +109,16 @@ export function PlaceProvider({ children }: { children: React.ReactNode }) {
   )
 
   const value = useMemo(
-    () => ({ place, setCity, setCoordinates, setFromDevice }),
-    [place, setCity, setCoordinates, setFromDevice],
+    () => ({
+      place,
+      setCity,
+      setCoordinates,
+      setFromDevice,
+      pickerOpen,
+      openPicker,
+      closePicker,
+    }),
+    [place, setCity, setCoordinates, setFromDevice, pickerOpen, openPicker, closePicker],
   )
 
   return <PlaceContext.Provider value={value}>{children}</PlaceContext.Provider>

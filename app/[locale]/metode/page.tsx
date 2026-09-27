@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { PageHeader } from '@/components/site/PageHeader'
 import { type Locale, getDictionary, localeStaticParams } from '@/lib/i18n'
 import { pageMetadata } from '@/lib/site'
 
@@ -38,13 +39,11 @@ export default function MethodPage({ params }: { params: { locale: Locale } }) {
 
   return (
     <div className="max-w-3xl space-y-10">
-      <header>
-        <h1 className="font-display text-title">{dictionary.method.heading}</h1>
-      </header>
+      <PageHeader title={dictionary.method.heading} />
 
       {sections.map((section) => (
         <section key={section.heading}>
-          <h2 className="font-display text-2xl">{section.heading}</h2>
+          <h2 className="text-2xl">{section.heading}</h2>
           <p className="mt-2 max-w-prose leading-relaxed text-shadow-2">{section.body}</p>
         </section>
       ))}

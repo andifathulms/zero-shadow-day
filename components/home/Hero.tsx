@@ -26,7 +26,7 @@ const LOOP_SECONDS = 16
  * that matters anyway.
  */
 export function Hero({ dictionary, locale }: { dictionary: Dictionary; locale: Locale }) {
-  const { place } = usePlace()
+  const { place, openPicker } = usePlace()
   const reducedMotion = useReducedMotion()
   const [date, setDate] = useState<CivilDate | null>(null)
   const [hours, setHours] = useState(12)
@@ -137,12 +137,13 @@ export function Hero({ dictionary, locale }: { dictionary: Dictionary; locale: L
             <p className="max-w-prose text-sm text-chalk/85">{dictionary.dates.outsideTropics}</p>
           ) : null}
           {next ? (
-            <Link
-              href={`/${locale}#tempat`}
+            <button
+              type="button"
+              onClick={openPicker}
               className="text-sm text-chalk/80 underline decoration-chalk/40 underline-offset-4 hover:text-chalk"
             >
               {dictionary.home.changeLocation}
-            </Link>
+            </button>
           ) : null}
         </div>
 

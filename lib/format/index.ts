@@ -72,9 +72,9 @@ export function formatDuration(seconds: number, dictionary: Dictionary): string 
 }
 
 /** Latitude as 6.21° S, longitude as 106.85° E — the reading a chart uses. */
-export function formatLatitude(latDeg: number, locale: 'id' | 'en'): string {
+export function formatLatitude(latDeg: number, locale: 'id' | 'en', digits = 4): string {
   const hemisphere = latDeg >= 0 ? (locale === 'id' ? 'LU' : 'N') : locale === 'id' ? 'LS' : 'S'
-  return `${Math.abs(latDeg).toFixed(4)}° ${hemisphere}`
+  return `${Math.abs(latDeg).toFixed(digits)}° ${hemisphere}`
 }
 
 export function formatLongitude(lonDeg: number, locale: 'id' | 'en'): string {
