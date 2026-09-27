@@ -26,7 +26,7 @@ export default function DatesPage({ params }: { params: { locale: Locale } }) {
   return (
     <div className="space-y-10">
       <PageHeader title={dictionary.dates.heading} lede={dictionary.dates.lede} />
-      <DatesDetail dictionary={dictionary} />
+      <DatesDetail dictionary={dictionary} locale={params.locale} />
       <NoonAnywhere dictionary={dictionary} />
       <ShareBar dictionary={dictionary} />
     </div>

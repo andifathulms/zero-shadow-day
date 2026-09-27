@@ -22,8 +22,10 @@ export interface NextZeroShadowDay {
 
 export type NextZeroShadowResult = NextZeroShadowDay | OutsideTropics
 
-const daysBetween = (from: CivilDate, to: CivilDate): number =>
-  Math.round(julianDay(to) - julianDay(from))
+/** Whole days from one civil date to another; negative when `to` is earlier. */
+export function daysBetween(from: CivilDate, to: CivilDate): number {
+  return Math.round(julianDay(to) - julianDay(from))
+}
 
 /** The first zero shadow day on or after `today`, looking into next year if both have passed. */
 export function nextZeroShadowDay(place: Place, today: CivilDate): NextZeroShadowResult {
