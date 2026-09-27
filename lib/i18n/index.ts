@@ -357,7 +357,7 @@ const en: Dictionary = {
     noonOffset: 'Solar noon is not 12:00. WIB is anchored to 105°E while Banda Aceh sits near 95°E — nearly ten degrees west, so its solar noon runs roughly forty minutes later than the clock implies.',
     enter: 'See the shadow',
     yourDates: 'Your two dates',
-    daysLeft: '{n} days to go',
+    daysLeft: 'In {n} days',
     today: 'Today',
     tomorrow: 'Tomorrow',
     culminationAt: 'Culmination {time} {zone}',
