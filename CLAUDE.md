@@ -102,7 +102,7 @@ tests/
 
 12. **Vermilion marks the zero shadow day and nothing else. Sun ochre is the sun's own path.** The shadow tone is the darkest thing on the page because it is the subject.
 
-    **PRD §9's flat bleached-concrete palette is superseded** by owner decision: the site now carries a real sky — deep blue through sunrise orange to night — with a hero that plays a whole day, and a hand-rolled 3D scene. The two rules above survived that change because they carry meaning rather than taste, and both are asserted in `tests/a11y/`. `sun-ink` and `marker-ink` exist because ochre at 2.4:1 cannot carry a data line.
+    **PRD §9's palette is superseded** by owner decision. The 2026 redesign is "tropical noon" (see `DESIGN.md`): a cool bleached ground, blue-black shadow ink, and `sky-deep` as the single interactive colour. The two rules above survived because they carry meaning rather than taste, and both are asserted in `tests/a11y/`: contrast in `contrast.test.ts`, and `marker-reserved.test.ts` fails on any vermilion hover, focus or control accent. `sun-ink` and `marker-ink` exist because the base hues cannot carry a data line.
 
 13. **Zero network requests at runtime.** No font CDN, no analytics, no geocoding service.
 
@@ -129,7 +129,8 @@ tests/
 - Comments cite the algorithm and the published table any constant comes from.
 - Indonesian first in UI copy; astronomical terms in their standard Indonesian form where one exists — *deklinasi*, *kulminasi*, *perata waktu*.
 - Tabular numerals on every angle, time, and ratio readout.
-- Tailwind utilities inline; semantic tokens in `tailwind.config.ts` — `bleached`, `concrete`, `shadow`, `sun`, `marker`, `sky`. Never raw hex in components.
+- Tailwind utilities inline; semantic tokens in `tailwind.config.ts` — `bleached`, `concrete`, `chalk`, `shadow`, `shadow-2`, `sun`, `marker`, `sky`, `sky-deep`, `palm`. Never raw hex in components. Secondary text is `text-shadow-2`, not an opacity mix.
+- Shared component classes in `app/globals.css`: `.btn`, `.btn-primary`, `.toggle`, `.link`, `.field`, `.range`, `.panel`, `.label`, `.eyebrow`.
 
 ## Testing rules
 
@@ -153,7 +154,9 @@ The site states plainly that it is a personal educational project, gives the alg
 
 ## Current state
 
-M0–M5 built, M6 partly. 130 tests pass; `pnpm test:solar` passes.
+M0–M5 built, M6 partly, plus the 2026 redesign. 235 tests pass; `pnpm test:solar` passes.
+
+**The 2026 redesign** (see `DESIGN.md`): tropical-noon palette; Bricolage Grotesque, Plus Jakarta Sans and JetBrains Mono; four destinations (Tanggal, Bayangan, Jelajahi, Ukur Bumi) with Cara Kerja in the footer, and routes unchanged; a place chip in the sticky header that opens one place sheet (`components/place/PlaceSheet.tsx`); a phone tab bar; a home page that leads with the countdown, then the year ribbon and "Hari ini di Nusantara"; the gnomon as an instrument with a control dock, snap-to-day and Space/Z shortcuts; Ukur Bumi as a four-step flow with classroom mode and a printable worksheet. The countdown and the archipelago list come from `nextZeroShadowDay` / `upcomingZeroShadowDays` in `lib/zsd` and `subsolarOn` in `lib/day`. A dark theme is deferred.
 
 - **M0** `lib/solar` — NOAA/Meeus ch. 25 position, Equation of Time, solar noon, altitude and azimuth. Asserted against published equinox and solstice instants, the EoT's extrema and zero crossings, and Meeus' worked Julian Day examples.
 - **M1** `lib/shadow` written independently of `lib/solar`, with a test asserting the absence of any solar import; `lib/zsd` finds the days by minimising the culmination shadow, reports a window derived from the sun's semi-diameter, and refuses outside the tropics.
@@ -167,7 +170,7 @@ Additions to the layout above: `lib/day/` composes solar and shadow into the tra
 
 **Two accent tones were added to the PRD palette.** Sun ochre is 2.4:1 on bleached ground, below the 3:1 a meaningful graphic needs, so `sun-ink` and `marker-ink` carry data lines and small text while the originals keep the washes, fills and display sizes.
 
-`data/cities/indonesia.ts` carries city-centre coordinates to about a kilometre.
+`data/cities/indonesia.ts` carries 86 cities (provincial capitals and larger cities), sorted west to east, at city-centre coordinates to about a kilometre (two for the smaller towns).
 
 **The ZSD fixtures are BMKG's own tables**, transcribed in `tests/zsd/fixtures/bmkg.ts`: Kulminasi Utama I 2026 and Kulminasi Utama II 2025, 38 provincial capitals each, at BMKG's coordinates and with culmination times to the second. 75 of the 76 dates match exactly and all 76 are within a day; the times match under five seconds.
 
