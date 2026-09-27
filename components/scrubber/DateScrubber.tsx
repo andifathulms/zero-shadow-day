@@ -19,6 +19,7 @@ export function DateScrubber({
   year,
   dayIndex,
   onChange,
+  onCommit,
   noonTrack,
   markedDays,
   date,
@@ -27,6 +28,8 @@ export function DateScrubber({
   year: number
   dayIndex: number
   onChange: (dayIndex: number) => void
+  /** Called when a drag ends, so the caller can snap to a nearby zero shadow day. */
+  onCommit?: (dayIndex: number) => void
   noonTrack: readonly NoonOfYear[]
   /** Day-of-year indices (0-based) of the zero shadow days. */
   markedDays: readonly number[]
@@ -56,10 +59,18 @@ export function DateScrubber({
 
   return (
     <div>
-      <div className="relative">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <label htmlFor={inputId} className="label">
+          {dictionary.gnomon.dateTrack}
+        </label>
+        <output htmlFor={inputId} className="font-mono text-lg tabular">
+          {formatDate(date, dictionary)}
+        </output>
+      </div>
+      <div className="relative mt-2">
         <svg
           viewBox={`0 0 ${width} ${height}`}
-          className="h-24 w-full"
+          className="h-auto w-full"
           role="img"
           aria-label={dictionary.gnomon.curveCaption}
         >
@@ -99,16 +110,13 @@ export function DateScrubber({
             y1={0}
             x2={(dayIndex / (total - 1)) * width}
             y2={height}
-            className="stroke-shadow/70"
+            className="stroke-sky-deep"
             strokeWidth={1}
             strokeDasharray="3 3"
           />
         </svg>
       </div>
 
-      <label htmlFor={inputId} className="sr-only">
-        {dictionary.gnomon.scrubDate}
-      </label>
       <input
         id={inputId}
         type="range"
@@ -117,10 +125,11 @@ export function DateScrubber({
         step={1}
         value={dayIndex}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="w-full accent-sky-deep"
+        onPointerUp={(event) => onCommit?.(Number(event.currentTarget.value))}
+        className="range"
         aria-valuetext={formatDate(date, dictionary)}
       />
-      <div className="mt-1 flex justify-between font-mono tabular text-[11px] text-shadow-2">
+      <div className="flex justify-between font-mono tabular text-[11px] text-shadow-2">
         {monthTicks(year).map((tick) => (
           // min-w-0 lets a flex item shrink past its content size: without it,
           // 12 unwrapped labels floor the row wider than a 320px viewport.

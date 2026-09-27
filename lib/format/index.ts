@@ -93,3 +93,9 @@ export function formatZone(offsetHours: number): string {
   if (offsetHours === 9) return 'WIT'
   return `UTC${offsetHours >= 0 ? '+' : '−'}${Math.abs(offsetHours)}`
 }
+
+/** The eight-point compass abbreviation for a bearing, in the reader's language. */
+export function formatCompassPoint(bearingDeg: number, dictionary: Dictionary): string {
+  const index = Math.round((((bearingDeg % 360) + 360) % 360) / 45) % 8
+  return dictionary.compassPoints[index] ?? ''
+}

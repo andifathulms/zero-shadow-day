@@ -153,6 +153,13 @@ const id = {
     curveCaption: 'Garis ini adalah panjang bayangan tengah hari Anda sepanjang tahun, positif ke utara dan negatif ke selatan. Titik ia menyeberangi nol — itulah kedua tanggal Anda.',
     reducedMotion: 'Gerak dikurangi: waktu melangkah per jam.',
     drag: 'Seret untuk memutar pandangan — atau gunakan tombol panah.',
+    moreValues: '{n} nilai lainnya',
+    onDay: 'Hari ini hari tanpa bayangan. Sekitar pukul {time} bayangan tinggal selebar piringan matahari.',
+    gap: 'Lintang Anda {lat}, matahari {dec}. Selisih {gap}°.',
+    shortcuts: 'Pintasan: Spasi menjalankan hari, Z melompat ke hari tanpa bayangan berikutnya.',
+    jumpToDay: 'Ke hari tanpa bayangan',
+    time: 'Jam',
+    dateTrack: 'Tanggal · panjang bayangan tengah hari',
   },
   dates: {
     heading: 'Dua tanggal Anda',
@@ -259,6 +266,7 @@ const id = {
     note: 'Berkas dibuat di peramban Anda. Tidak ada yang diunggah.',
   },
   compass: { north: 'U', east: 'T', south: 'S', west: 'B' },
+  compassPoints: ['U', 'TL', 'T', 'TG', 'S', 'BD', 'B', 'BL'],
   units: {
     minutes: 'menit',
     seconds: 'detik',
@@ -402,6 +410,13 @@ const en: Dictionary = {
     curveCaption: 'This line is your noon shadow\'s length through the year, positive northward and negative southward. Where it crosses zero — that\'s your two dates.',
     reducedMotion: 'Reduced motion: time steps by the hour.',
     drag: 'Drag to turn the view — or use the arrow keys.',
+    moreValues: '{n} more values',
+    onDay: 'Today is a zero shadow day. Around {time} the shadow is no wider than the sun’s disc.',
+    gap: 'Your latitude {lat}, the sun’s {dec}. A gap of {gap}°.',
+    shortcuts: 'Shortcuts: Space plays the day, Z jumps to the next zero shadow day.',
+    jumpToDay: 'Go to the zero shadow day',
+    time: 'Time',
+    dateTrack: 'Date · noon shadow length',
   },
   dates: {
     heading: 'Your two dates',
@@ -508,6 +523,7 @@ const en: Dictionary = {
     note: 'Files are generated in your browser. Nothing is uploaded.',
   },
   compass: { north: 'N', east: 'E', south: 'S', west: 'W' },
+  compassPoints: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
   units: {
     minutes: 'minutes',
     seconds: 'seconds',
