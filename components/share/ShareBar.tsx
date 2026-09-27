@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 import { usePlace } from '@/components/place/PlaceProvider'
 import { currentYearIn } from '@/lib/clock'
 import { noonOfYear } from '@/lib/day'
-import { buildIcs, buildNoonCsv, downloadText } from '@/lib/export'
+import { buildNoonCsv, downloadText } from '@/lib/export'
 import type { Dictionary } from '@/lib/i18n'
 import { encodeView } from '@/lib/share'
 import type { CivilDate } from '@/lib/solar/julian'
-import { zeroShadowDays } from '@/lib/zsd'
+import { slug, useCalendarDownload } from './useCalendarDownload'
 
 /**
  * Share and export. Everything is generated here in the tab: the link is the
@@ -57,24 +57,9 @@ export function ShareBar({
     }
   }
 
+  const calendar = useCalendarDownload(dictionary)
   const downloadCalendar = () => {
-    const target = exportYear
-    if (target === undefined) return
-    const result = zeroShadowDays(place, target)
-    if (result.type !== 'zero-shadow-days') return
-    downloadText(
-      `hari-tanpa-bayangan-${slug(place.label)}-${target}.ics`,
-      buildIcs({
-        placeLabel: place.label,
-        offsetHours: place.offsetHours,
-        days: result.days,
-        stamp: icsStamp(new Date()),
-        title: dictionary.meta.title,
-        windowNote: dictionary.dates.windowNote,
-        siteUrl: window.location.href.split('?')[0],
-      }),
-      'text/calendar',
-    )
+    if (exportYear !== undefined) calendar(exportYear)
   }
 
   const downloadCsv = () => {
@@ -111,19 +96,3 @@ export function ShareBar({
 
 const buttonClass =
   'btn'
-
-/** DTSTAMP in iCalendar's basic UTC format. A wall-clock reading, so it lives here. */
-function icsStamp(now: Date): string {
-  const pad = (value: number) => String(value).padStart(2, '0')
-  return (
-    `${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}` +
-    `T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}Z`
-  )
-}
-
-function slug(label: string): string {
-  return label
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-}

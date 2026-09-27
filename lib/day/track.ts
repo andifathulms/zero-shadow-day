@@ -210,3 +210,25 @@ export function civilDateFromOffset(year: number, offset: number): CivilDate {
   }
   return { year, month: 12, day: 31 }
 }
+
+export interface Subsolar {
+  /** Latitude where the sun stands overhead at local noon on the date: the declination. */
+  readonly latDeg: number
+  /** Which way the band is moving. */
+  readonly heading: 'north' | 'south'
+  /** How far it moves in a day, degrees. Fastest near the equinoxes, near zero at the solstices. */
+  readonly degPerDay: number
+}
+
+/** Where the sun is overhead on a date, and which way it is going. */
+export function subsolarOn(date: CivilDate, offsetHours: number): Subsolar {
+  // Local noon, as a day fraction of UT.
+  const fraction = (12 - offsetHours) / 24
+  const today = solarPosition(julianDay(date, fraction)).decDeg
+  const tomorrow = solarPosition(julianDay(date, fraction) + 1).decDeg
+  return {
+    latDeg: today,
+    heading: tomorrow >= today ? 'north' : 'south',
+    degPerDay: Math.abs(tomorrow - today),
+  }
+}

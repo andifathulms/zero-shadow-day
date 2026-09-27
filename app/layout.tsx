@@ -94,15 +94,6 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
-      <head>
-        {/* Scroll-reveal starts hidden and is shown by an observer. Without
-            scripting nothing would ever show it, so the pending state is
-            cancelled outright. */}
-        <noscript>
-          {/* eslint-disable-next-line react/no-danger */}
-          <style dangerouslySetInnerHTML={{ __html: '.reveal-pending{opacity:1!important}' }} />
-        </noscript>
-      </head>
       <body>{children}</body>
     </html>
   )

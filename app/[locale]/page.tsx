@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { DatesSummary } from '@/components/dates/DatesSummary'
 import { Hero } from '@/components/home/Hero'
-import { Reveal } from '@/components/motion/Reveal'
+import { TodayNusantara } from '@/components/home/TodayNusantara'
+import { ToolCards } from '@/components/home/ToolCards'
+import { YearRibbon } from '@/components/home/YearRibbon'
 import { type Locale, getDictionary, localeStaticParams } from '@/lib/i18n'
 import { pageMetadata } from '@/lib/site'
 
@@ -22,100 +22,53 @@ export function generateMetadata({ params }: { params: { locale: Locale } }): Me
   })
 }
 
+/**
+ * Answer first, then the reason, then a reason to come back, then the tools.
+ */
 export default function HomePage({ params }: { params: { locale: Locale } }) {
   const dictionary = getDictionary(params.locale)
 
-  // Plain language first: what is happening, in three steps, before any
-  // astronomy vocabulary appears anywhere on the page.
+  // Plain language: what is happening, in three steps, behind a disclosure
+  // under the chart that already shows it.
   const steps = [
     { title: dictionary.home.how1Title, body: dictionary.home.how1 },
     { title: dictionary.home.how2Title, body: dictionary.home.how2 },
     { title: dictionary.home.how3Title, body: dictionary.home.how3 },
   ]
 
-  const tools = [
-    { slug: 'bayangan', label: dictionary.nav.gnomon, body: dictionary.home.exploreGnomon },
-    { slug: 'tanggal', label: dictionary.nav.dates, body: dictionary.home.exploreDates },
-    { slug: 'kurva', label: dictionary.nav.curves, body: dictionary.home.exploreCurves },
-    {
-      slug: 'eratosthenes',
-      label: dictionary.nav.eratosthenes,
-      body: dictionary.home.exploreEratosthenes,
-    },
-    { slug: 'sapuan', label: dictionary.nav.sweep, body: dictionary.home.exploreSweep },
-  ]
-
   return (
-    <div className="space-y-16">
+    <div className="space-y-16 sm:space-y-20">
       <Hero dictionary={dictionary} locale={params.locale} />
 
-      <section id="kenapa" className="scroll-mt-8">
-        <h2 className="max-w-[20ch] font-display text-title">{dictionary.home.howHeading}</h2>
-        <ol className="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-3">
-          {steps.map((step, index) => (
-            <Reveal
-              key={step.title}
-              as="li"
-              delayMs={index * 90}
-              className="border-t border-shadow/15 pt-5"
-            >
-              <span className="font-mono text-sm text-shadow-2" aria-hidden>
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <h3 className="mt-3 font-display text-2xl">{step.title}</h3>
-              <p className="mt-2 leading-relaxed text-shadow-2">{step.body}</p>
-            </Reveal>
-          ))}
-        </ol>
-      </section>
-
-      <section
-        id="tempat"
-        className="scroll-mt-8 grid gap-8 lg:grid-cols-[22rem_minmax(0,1fr)] lg:items-start"
-      >
-        <DatesSummary
-          dictionary={dictionary}
-          locale={params.locale}
-          href={`/${params.locale}/tanggal`}
-        />
-      </section>
-
-      <section>
-        <h2 className="font-display text-title">{dictionary.home.exploreHeading}</h2>
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {tools.map((tool, index) => (
-            <Reveal key={tool.slug} as="li" delayMs={index * 70}>
-              <Link
-                href={`/${params.locale}/${tool.slug}`}
-                className="group flex h-full flex-col rounded-lg border border-shadow/10 bg-chalk p-6 transition duration-300 hover:-translate-y-1 hover:border-shadow/30 hover:shadow-lift"
-              >
-                <span className="flex items-baseline justify-between gap-3 font-display text-2xl transition group-hover:text-sky-deep">
-                  {tool.label}
-                  <span
-                    aria-hidden
-                    className="font-sans text-lg text-shadow-2 transition duration-300 group-hover:translate-x-1 group-hover:text-sky-deep"
-                  >
-                    →
-                  </span>
+      <div className="space-y-4">
+        <YearRibbon dictionary={dictionary} locale={params.locale} />
+        <details id="kenapa" className="group panel scroll-mt-24 open:pb-6">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-sky-deep">
+            {dictionary.home.howHeading} · {dictionary.home.learnMore}
+            <span aria-hidden className="transition group-open:rotate-45">+</span>
+          </summary>
+          <ol className="mt-6 grid gap-6 sm:grid-cols-3">
+            {steps.map((step, index) => (
+              <li key={step.title} className="border-t border-shadow/10 pt-4">
+                <span className="font-mono text-sm text-shadow-2" aria-hidden>
+                  {index + 1}
                 </span>
-                <span className="mt-2 leading-relaxed text-shadow-2">{tool.body}</span>
-              </Link>
-            </Reveal>
-          ))}
-        </ul>
-      </section>
+                <h3 className="mt-2 text-xl">{step.title}</h3>
+                <p className="mt-2 leading-relaxed text-shadow-2">{step.body}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-8 max-w-3xl space-y-4">
+            <p className="leading-relaxed text-shadow-2">{dictionary.home.body}</p>
+            <p className="border-l-2 border-sun pl-4 leading-relaxed">{dictionary.home.flip}</p>
+            <p className="border-l-2 border-sun pl-4 leading-relaxed">{dictionary.home.noonOffset}</p>
+          </div>
+        </details>
+      </div>
 
-      <section className="max-w-3xl">
-        <p className="max-w-prose leading-relaxed text-shadow-2">{dictionary.home.body}</p>
-        <ul className="mt-6 space-y-4">
-          <li className="border-l-2 border-sun pl-4">
-            <p className="max-w-prose leading-relaxed">{dictionary.home.flip}</p>
-          </li>
-          <li className="border-l-2 border-sun pl-4">
-            <p className="max-w-prose leading-relaxed">{dictionary.home.noonOffset}</p>
-          </li>
-        </ul>
-      </section>
+      <TodayNusantara dictionary={dictionary} locale={params.locale} />
+
+      <ToolCards dictionary={dictionary} locale={params.locale} />
     </div>
   )
 }

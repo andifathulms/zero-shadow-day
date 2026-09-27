@@ -85,3 +85,11 @@ export function formatLongitude(lonDeg: number, locale: 'id' | 'en'): string {
 function pad(value: number): string {
   return String(value).padStart(2, '0')
 }
+
+/** Indonesia's zone names by offset; anything else as a plain UTC offset. */
+export function formatZone(offsetHours: number): string {
+  if (offsetHours === 7) return 'WIB'
+  if (offsetHours === 8) return 'WITA'
+  if (offsetHours === 9) return 'WIT'
+  return `UTC${offsetHours >= 0 ? '+' : '−'}${Math.abs(offsetHours)}`
+}
