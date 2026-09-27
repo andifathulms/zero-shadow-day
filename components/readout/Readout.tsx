@@ -66,9 +66,9 @@ export function Readout({
           value={`${formatMinutes(eotMinutes)} ${dictionary.units.minutes}`}
         />
       </dl>
-      <p className="mt-3 text-xs leading-relaxed text-shadow/70">{dictionary.readout.convergeHint}</p>
+      <p className="mt-3 text-xs leading-relaxed text-shadow-2">{dictionary.readout.convergeHint}</p>
       {shadow.type === 'no-shadow' ? (
-        <p className="mt-1 text-xs text-shadow/70">{dictionary.readout.noShadow}</p>
+        <p className="mt-1 text-xs text-shadow-2">{dictionary.readout.noShadow}</p>
       ) : null}
     </div>
   )

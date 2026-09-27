@@ -61,8 +61,8 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
               aria-pressed={option === year}
               className={`rounded-full border px-4 py-1.5 font-mono tabular text-sm transition ${
                 option === year
-                  ? 'border-shadow bg-shadow text-chalk'
-                  : 'border-shadow/30 hover:border-shadow'
+                  ? 'border-sky-deep bg-sky-deep text-chalk'
+                  : 'border-shadow/15 bg-chalk hover:border-sky-deep/50 hover:text-sky-deep'
               }`}
             >
               {option}
@@ -71,7 +71,7 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
         </div>
       </div>
 
-      <p className="max-w-prose text-sm leading-relaxed text-shadow/70">{dictionary.dates.howFound}</p>
+      <p className="max-w-prose text-sm leading-relaxed text-shadow-2">{dictionary.dates.howFound}</p>
 
       {result.type === 'outside-tropics' ? (
         <section className="panel">
@@ -81,7 +81,7 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
               .replace('{gap}', result.minZenithDeg.toFixed(2))
               .replace('{limit}', Math.abs(result.limitDeg).toFixed(2))}
           </p>
-          <p className="mt-2 max-w-prose text-sm leading-relaxed text-shadow/80">
+          <p className="mt-2 max-w-prose text-sm leading-relaxed text-shadow-2">
             {dictionary.dates.bestDay
               .replace('{date}', formatDate(result.bestDate, dictionary))
               .replace('{time}', formatClock(result.bestLocalNoonHours))}
@@ -108,7 +108,7 @@ export function DatesDetail({ dictionary }: { dictionary: Dictionary }) {
         </div>
       )}
 
-      <p className="max-w-prose text-sm leading-relaxed text-shadow/70">
+      <p className="max-w-prose text-sm leading-relaxed text-shadow-2">
         {dictionary.dates.windowNote}
       </p>
 
@@ -132,7 +132,7 @@ function LongestShadowCard({
     <article className="panel">
       <p className="label">{dictionary.dates.longestHeading}</p>
       <h2 className="mt-1 font-display text-2xl">{formatDate(day.date, dictionary)}</h2>
-      <p className="mt-1 max-w-prose text-sm leading-relaxed text-shadow/70">
+      <p className="mt-1 max-w-prose text-sm leading-relaxed text-shadow-2">
         {dictionary.dates.longestLede}
       </p>
       <dl className="mt-4">
@@ -158,7 +158,7 @@ function DirectionTimeline({
   return (
     <section className="panel">
       <h2 className="label">{dictionary.dates.directionHeading}</h2>
-      <p className="mt-1 max-w-prose text-sm leading-relaxed text-shadow/70">
+      <p className="mt-1 max-w-prose text-sm leading-relaxed text-shadow-2">
         {segments.length > 1 ? dictionary.dates.directionLede : dictionary.dates.directionLedeOutside}
       </p>
       <ul className="mt-4 space-y-2">
@@ -177,7 +177,7 @@ function DirectionTimeline({
               {formatDateShort(segment.startDate, dictionary)} –{' '}
               {formatDateShort(segment.endDate, dictionary)}
             </span>
-            <span className="text-shadow/80">
+            <span className="text-shadow-2">
               {dictionary.dates.pointsTo.replace(
                 '{direction}',
                 segment.direction === 'north' ? dictionary.dates.north : dictionary.dates.south,

@@ -132,7 +132,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
           {[0].map((lat) => (
             <g key={lat}>
               <line x1={0} y1={y(lat)} x2={width} y2={y(lat)} className="stroke-shadow/25" strokeDasharray="4 4" />
-              <text x={6} y={y(lat) - 5} className="fill-shadow/70 font-mono text-[11px]">
+              <text x={6} y={y(lat) - 5} className="fill-shadow-2 font-mono text-[11px]">
                 0°
               </text>
             </g>
@@ -200,7 +200,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
                   cx={x(city.lonDeg)}
                   cy={y(city.latDeg)}
                   r={today ? 6 : 3}
-                  className={today ? 'fill-marker' : near ? 'fill-shadow/70' : 'fill-shadow/35'}
+                  className={today ? 'fill-marker' : near ? 'fill-shadow-2' : 'fill-shadow/35'}
                 />
                 {today ? (
                   <text
@@ -224,7 +224,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
               type="button"
               onClick={() => setPlaying((value) => !value)}
               aria-pressed={playing}
-              className="rounded-full border border-shadow/40 px-4 py-2 text-sm transition hover:bg-shadow hover:text-chalk"
+              className="btn"
             >
               {playing ? dictionary.gnomon.pause : dictionary.sweep.play}
             </button>
@@ -240,7 +240,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
           max={total - 1}
           value={dayIndex}
           onChange={(event) => setDayIndex(Number(event.target.value))}
-          className="mt-2 w-full accent-sun"
+          className="mt-2 w-full accent-sky-deep"
           aria-label={dictionary.sweep.day}
           aria-valuetext={formatDate(date, dictionary)}
         />
@@ -256,7 +256,7 @@ export function SweepMap({ dictionary }: { dictionary: Dictionary }) {
               className="rule flex items-baseline justify-between gap-3 py-1 text-sm"
             >
               <span>{city.name}</span>
-              <span className="font-mono tabular text-xs text-shadow/70">
+              <span className="font-mono tabular text-xs text-shadow-2">
                 {days
                   .map((day) => `${day.date.day}/${day.date.month}`)
                   .join(' · ')}

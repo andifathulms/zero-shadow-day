@@ -21,7 +21,7 @@ export default function RootPage() {
       </head>
       <div className="mx-auto max-w-2xl px-5 py-24">
         <h1 className="font-display text-title">{dictionary.meta.title}</h1>
-        <p className="mt-1 font-display text-2xl text-shadow/70">{dictionary.meta.localName}</p>
+        <p className="mt-1 font-display text-2xl text-shadow-2">{dictionary.meta.localName}</p>
         <p className="mt-4 max-w-prose leading-relaxed">{dictionary.meta.tagline}</p>
         <ul className="mt-8 flex gap-6">
           {LOCALES.map((locale) => (

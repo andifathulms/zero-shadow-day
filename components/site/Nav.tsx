@@ -40,10 +40,10 @@ export function Nav({ locale, dictionary }: { locale: Locale; dictionary: Dictio
           className="group flex items-center gap-2.5 text-shadow"
           aria-label={dictionary.meta.title}
         >
-          <Mark size={34} className="shrink-0 transition group-hover:text-marker-ink" />
+          <Mark size={34} className="shrink-0 transition group-hover:text-sky-deep" />
           <span className="flex flex-col leading-none">
             <span className="font-display text-xl leading-none">{primaryName}</span>
-            <span className="mt-0.5 hidden text-[0.6875rem] tracking-[0.08em] text-shadow/70 sm:block">
+            <span className="mt-0.5 hidden text-[0.6875rem] tracking-[0.08em] text-shadow-2 sm:block">
               {secondaryName}
             </span>
           </span>

@@ -104,13 +104,13 @@ export function ShareBar({
       <button type="button" onClick={downloadCsv} className={buttonClass}>
         {dictionary.share.spreadsheet}
       </button>
-      <p className="text-xs text-shadow/70">{dictionary.share.note}</p>
+      <p className="text-xs text-shadow-2">{dictionary.share.note}</p>
     </div>
   )
 }
 
 const buttonClass =
-  'rounded-full border border-shadow/40 px-4 py-2 text-sm transition hover:bg-shadow hover:text-chalk'
+  'btn'
 
 /** DTSTAMP in iCalendar's basic UTC format. A wall-clock reading, so it lives here. */
 function icsStamp(now: Date): string {

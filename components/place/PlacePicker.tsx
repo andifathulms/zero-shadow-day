@@ -72,7 +72,7 @@ export function PlacePicker({
           </label>
           <select
             id={cityId}
-            className="mt-1 w-full rounded-md border border-shadow/25 bg-bleached px-2 py-2 font-sans text-sm"
+            className="mt-1 w-full rounded-md border border-shadow/15 bg-chalk px-2 py-2 font-sans text-sm"
             value={place.fromDevice ? '' : place.label}
             onChange={(event) => {
               const city = INDONESIAN_CITIES.find((entry) => entry.name === event.target.value)
@@ -138,7 +138,7 @@ export function PlacePicker({
         <button
           type="button"
           onClick={locate}
-          className="rounded-full border border-shadow/40 px-4 py-2 text-sm transition hover:bg-shadow hover:text-chalk"
+          className="btn"
         >
           {status === 'locating' ? dictionary.place.locating : dictionary.place.locate}
         </button>
@@ -164,7 +164,7 @@ export function PlacePicker({
         </p>
       ) : null}
 
-      <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow/70">
+      <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow-2">
         {dictionary.place.privacy}
       </p>
     </section>

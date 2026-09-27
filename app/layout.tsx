@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Chivo_Mono, Instrument_Sans, Instrument_Serif } from 'next/font/google'
+import { Bricolage_Grotesque, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google'
 import { BASE_PATH, SITE_ORIGIN, SITE_URL } from '@/lib/site'
 import './globals.css'
 
@@ -7,30 +7,30 @@ import './globals.css'
  * Fonts are self-hosted through next/font: no CDN, no request at runtime
  * (CLAUDE.md invariant 13).
  *
- * Instrument Serif for display — the register of an observatory notice.
- * Instrument Sans for controls and prose. Chivo Mono, tabular, for every time,
- * angle and ratio (PRD §9).
+ * Bricolage Grotesque for display: a grotesque with an optical-size axis, tight
+ * and confident at hero sizes, still friendly to a student.
+ * Plus Jakarta Sans for prose and controls: drawn by Tokotype, a Jakarta
+ * foundry, for the city's own identity.
+ * JetBrains Mono, tabular, for every time, angle and ratio: an unambiguous zero
+ * and figures that do not reflow as the date is dragged.
  */
-const display = Instrument_Serif({
+const display = Bricolage_Grotesque({
   subsets: ['latin'],
-  weight: '400',
+  weight: ['600', '700', '800'],
   variable: '--font-display',
   display: 'swap',
 })
 
-const sans = Instrument_Sans({
+const sans = Plus_Jakarta_Sans({
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-sans',
   display: 'swap',
 })
 
-const mono = Chivo_Mono({
+const mono = JetBrains_Mono({
   subsets: ['latin'],
-  // Every tabular reading in the app renders at the default weight — grepped
-  // for font-mono paired with a weight utility and found none — so pinning
-  // this avoids shipping Chivo Mono's full 100-900 variable axis for a
-  // single weight actually used.
-  weight: '400',
+  weight: ['400', '500'],
   variable: '--font-mono',
   display: 'swap',
 })
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#FBF4E4',
+  themeColor: '#F3F5F4',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

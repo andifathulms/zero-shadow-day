@@ -117,10 +117,10 @@ export function DateScrubber({
         step={1}
         value={dayIndex}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="w-full accent-marker"
+        className="w-full accent-sky-deep"
         aria-valuetext={formatDate(date, dictionary)}
       />
-      <div className="mt-1 flex justify-between font-mono tabular text-[11px] text-shadow/70">
+      <div className="mt-1 flex justify-between font-mono tabular text-[11px] text-shadow-2">
         {monthTicks(year).map((tick) => (
           // min-w-0 lets a flex item shrink past its content size: without it,
           // 12 unwrapped labels floor the row wider than a 320px viewport.

@@ -25,15 +25,18 @@
   h1,
   h2,
   h3 {
-    @apply font-display font-normal;
+    @apply font-display font-bold tracking-[-0.025em];
+    text-wrap: balance;
   }
 
   ::selection {
     @apply bg-sun/30;
   }
 
+  /* Focus takes the interactive colour. Vermilion is never used here: it marks
+     the zero shadow day and nothing else. */
   :focus-visible {
-    @apply outline outline-2 outline-offset-2 outline-shadow;
+    @apply outline outline-2 outline-offset-2 outline-sky-deep;
   }
 }
 
@@ -44,16 +47,50 @@
     @apply border-t border-shadow/10;
   }
 
-  /* A raised surface: the page's ground is warm paper, panels sit above it. */
+  /* A raised surface: white panels sit on the bleached ground. The border does
+     the separating; the shadow is kept faint so the gnomon's is the one that
+     reads. */
   .panel {
-    @apply rounded-lg border border-shadow/10 bg-chalk p-5 shadow-lift sm:p-6;
+    @apply rounded-2xl border border-shadow/10 bg-chalk p-5 sm:p-6;
   }
 
-  /* 70% of the shadow tone on bleached ground is 4.9:1, and 4.7:1 on the
-     concrete surfaces — above the 4.5:1 that 11px uppercase text needs.
-     Anything lighter fails: 55% measured 3.25:1. */
+  /* shadow-2 is a solid tone, 6.8:1 on bleached ground and asserted on every
+     surface in tests/a11y — above the 4.5:1 that 11px uppercase text needs. */
   .label {
-    @apply text-[0.6875rem] uppercase tracking-[0.14em] text-shadow/70;
+    @apply text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-shadow-2;
+  }
+
+  /* A small heading over a page title: where you are, in plain words. */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-shadow-2;
+  }
+
+  /* Buttons. Sky is the one interactive colour; hover never turns vermilion. */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-shadow/15 bg-chalk px-4 py-2.5 text-sm font-semibold text-shadow transition duration-200 hover:border-sky-deep/50 hover:text-sky-deep disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-sky-deep px-5 py-3 text-sm font-semibold text-chalk transition duration-200 hover:shadow-press hover:brightness-110;
+  }
+
+  /* A toggle in a set: selected is filled sky, the rest are outlined. */
+  .toggle {
+    @apply rounded-full border border-shadow/15 bg-chalk px-4 py-1.5 text-sm transition hover:border-sky-deep/50 hover:text-sky-deep aria-pressed:border-sky-deep aria-pressed:bg-sky-deep aria-pressed:text-chalk;
+  }
+
+  .link {
+    @apply font-medium text-sky-deep underline decoration-sky-deep/30 underline-offset-4 transition hover:decoration-sky-deep;
+  }
+
+  .field {
+    @apply rounded-xl border border-shadow/15 bg-chalk px-3 py-2.5 text-sm transition focus:border-sky-deep;
+  }
+
+  /* Range inputs: a sky thumb on a quiet track, so every draggable thing
+     looks alike. */
+  .range {
+    @apply w-full cursor-pointer accent-sky-deep;
   }
 
   .value {

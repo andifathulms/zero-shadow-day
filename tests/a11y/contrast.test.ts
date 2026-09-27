@@ -72,6 +72,19 @@ describe('body and readout text', () => {
     expect(contrast(over(shadow, bleached, 0.55), bleached)).toBeLessThan(4.5)
   })
 
+  it('shadow-2, the solid secondary tone, clears 4.5:1 on every surface', () => {
+    const shadow2 = hex(colors['shadow-2']!)
+    for (const [name, background] of [
+      ['bleached', bleached],
+      ['concrete/20', concrete20],
+      ['concrete/25', concrete25],
+      ['chalk', chalk],
+      ['sky/40', sky40],
+    ] as const) {
+      expect(contrast(shadow2, background), name).toBeGreaterThanOrEqual(4.5)
+    }
+  })
+
   it('reversed out of the shadow tone, bleached text is legible', () => {
     expect(contrast(bleached, shadow)).toBeGreaterThanOrEqual(4.5)
   })
@@ -108,6 +121,20 @@ describe('the two accents', () => {
   })
 })
 
+describe('the interactive colour', () => {
+  it('deep sky carries link and button text on every light surface', () => {
+    const skyDeep = hex(colors['sky-deep']!)
+    for (const [name, background] of [
+      ['bleached', bleached],
+      ['chalk', chalk],
+      ['concrete/25', concrete25],
+      ['sky', hex(colors.sky!)],
+    ] as const) {
+      expect(contrast(skyDeep, background), name).toBeGreaterThanOrEqual(4.5)
+    }
+  })
+})
+
 describe('the sky tones', () => {
   it('deep sky and palm carry white text, for gradient overlays', () => {
     expect(contrast(hex(colors['sky-deep']!), hex(colors.chalk!))).toBeGreaterThanOrEqual(4.5)
@@ -123,7 +150,7 @@ describe('the shadow is the darkest thing on the page', () => {
   it('nothing in the palette is darker than the shadow tone', () => {
     const tones = [
       'bleached', 'concrete', 'chalk', 'sun', 'marker', 'sky', 'sky-deep',
-      'sun-ink', 'marker-ink', 'palm',
+      'sun-ink', 'marker-ink', 'palm', 'shadow-2',
     ]
     for (const tone of tones) {
       expect(luminance(hex(colors[tone]!)), tone).toBeGreaterThan(luminance(shadow))

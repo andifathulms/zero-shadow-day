@@ -117,12 +117,12 @@ export function ShadowTipCurves({ dictionary }: { dictionary: Dictionary }) {
         ))}
 
         <circle cx={centre} cy={centre} r={4} className="fill-shadow" />
-        <text x={centre} y={16} textAnchor="middle" className="fill-shadow/70 font-mono text-[11px]">
+        <text x={centre} y={16} textAnchor="middle" className="fill-shadow-2 font-mono text-[11px]">
           U
         </text>
       </svg>
 
-      <figcaption className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-xs text-shadow/70">
+      <figcaption className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-xs text-shadow-2">
         <span className="flex items-center gap-2">
           <span className="inline-block h-0.5 w-6 bg-shadow" />
           {dictionary.curves.equinox}

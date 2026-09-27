@@ -28,13 +28,13 @@ export function MakerSignature({ className = '' }: { className?: string }) {
 
   return (
     <div className={`flex flex-col gap-2 sm:items-end ${className}`}>
-      <p className="text-xs text-shadow/70">
+      <p className="text-xs text-shadow-2">
         Designed &amp; built by{' '}
         <a
           href={MAKER.portfolio}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-shadow underline decoration-shadow/30 underline-offset-2 transition hover:text-marker-ink hover:decoration-marker-ink"
+          className="text-shadow underline decoration-shadow/30 underline-offset-2 transition hover:text-sky-deep hover:decoration-sky-deep"
         >
           {MAKER.name}
         </a>{' '}
@@ -49,7 +49,7 @@ export function MakerSignature({ className = '' }: { className?: string }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="block rounded-md p-1.5 text-shadow/70 transition hover:bg-shadow/5 hover:text-shadow"
+              className="block rounded-md p-1.5 text-shadow-2 transition hover:bg-shadow/5 hover:text-shadow"
             >
               <Icon />
             </a>

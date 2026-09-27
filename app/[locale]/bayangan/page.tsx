@@ -28,11 +28,11 @@ export default function GnomonPage({ params }: { params: { locale: Locale } }) {
         <h1 className="font-display text-title">{dictionary.gnomon.heading}</h1>
         <p className="mt-3 max-w-prose leading-relaxed">{dictionary.gnomon.lede}</p>
         {/* The window caveat, and the method behind it, linked here rather than buried. */}
-        <p className="mt-3 max-w-prose text-sm leading-relaxed text-shadow/70">
+        <p className="mt-3 max-w-prose text-sm leading-relaxed text-shadow-2">
           {dictionary.dates.windowNote}{' '}
           <Link
             href={`/${params.locale}/metode`}
-            className="underline underline-offset-2 hover:text-marker"
+            className="underline underline-offset-2 hover:text-sky-deep"
           >
             {dictionary.nav.method}
           </Link>

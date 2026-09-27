@@ -64,7 +64,7 @@ const DAY_HORIZON = rgb(186, 226, 243)
 
 const NIGHT_GROUND = rgb(24, 28, 38)
 const DAWN_GROUND = rgb(150, 108, 84)
-const DAY_GROUND = rgb(214, 202, 178)
+const DAY_GROUND = rgb(214, 216, 208)
 
 const SUN_LOW = rgb(255, 138, 61)
 const SUN_HIGH = rgb(255, 246, 214)

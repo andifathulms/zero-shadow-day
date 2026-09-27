@@ -45,7 +45,7 @@ export default function MethodPage({ params }: { params: { locale: Locale } }) {
       {sections.map((section) => (
         <section key={section.heading}>
           <h2 className="font-display text-2xl">{section.heading}</h2>
-          <p className="mt-2 max-w-prose leading-relaxed text-shadow/85">{section.body}</p>
+          <p className="mt-2 max-w-prose leading-relaxed text-shadow-2">{section.body}</p>
         </section>
       ))}
 
@@ -61,7 +61,7 @@ export default function MethodPage({ params }: { params: { locale: Locale } }) {
           <li>outside tropics · structured no-result, both hemispheres</li>
           <li>Eratosthenes · round trip recovers the generating radius</li>
         </ul>
-        <p className="mt-4 max-w-prose text-xs leading-relaxed text-shadow/70">
+        <p className="mt-4 max-w-prose text-xs leading-relaxed text-shadow-2">
           {dictionary.method.disclaimer}
         </p>
       </section>

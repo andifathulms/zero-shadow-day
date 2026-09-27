@@ -43,7 +43,7 @@ export function DatesSummary({
             .replace('{gap}', result.minZenithDeg.toFixed(2))
             .replace('{limit}', Math.abs(result.limitDeg).toFixed(2))}
         </p>
-        <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow/70">
+        <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow-2">
           {dictionary.dates.bestDay
             .replace('{date}', formatDate(result.bestDate, dictionary))
             .replace('{time}', formatClock(result.bestLocalNoonHours))}
@@ -87,13 +87,13 @@ export function DatesSummary({
           </li>
         ))}
       </ul>
-      <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow/70">
+      <p className="mt-3 max-w-prose text-xs leading-relaxed text-shadow-2">
         {dictionary.dates.windowNote}
       </p>
       {href ? (
         <Link
           href={href}
-          className="mt-4 inline-block border-b border-shadow pb-0.5 text-sm hover:border-marker hover:text-marker"
+          className="mt-4 inline-block border-b border-shadow pb-0.5 text-sm hover:border-sky-deep hover:text-sky-deep"
         >
           {dictionary.dates.heading} →
         </Link>

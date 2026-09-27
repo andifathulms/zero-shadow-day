@@ -42,7 +42,7 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
     return (
       <div>
         <ClockControl dictionary={dictionary} value={clockHours} onChange={setClockHours} />
-        <p className="mt-6 text-sm text-shadow/70">
+        <p className="mt-6 text-sm text-shadow-2">
           {dictionary.readout.noShadow} — {formatClock(clockHours)}
         </p>
       </div>
@@ -102,7 +102,7 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
                 <text
                   x={centre + 4}
                   y={centre - ring * radius - 3}
-                  className="fill-shadow/70 font-mono text-[11px]"
+                  className="fill-shadow-2 font-mono text-[11px]"
                 >
                   {ring}°
                 </text>
@@ -129,7 +129,7 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
             return (
               <g key={point.date.month}>
                 <circle cx={x} cy={y} r={4} className="fill-shadow" />
-                <text x={x + 8} y={y + 4} className="fill-shadow/70 font-mono text-[11px]">
+                <text x={x + 8} y={y + 4} className="fill-shadow-2 font-mono text-[11px]">
                   {dictionary.months[point.date.month - 1]}
                 </text>
               </g>
@@ -140,13 +140,13 @@ export function Analemma({ dictionary }: { dictionary: Dictionary }) {
             x={centre}
             y={14}
             textAnchor="middle"
-            className="fill-shadow/70 font-mono text-[11px]"
+            className="fill-shadow-2 font-mono text-[11px]"
           >
             {dictionary.compass.north}
           </text>
         </svg>
 
-        <figcaption className="mt-3 space-y-1 text-xs leading-relaxed text-shadow/70">
+        <figcaption className="mt-3 space-y-1 text-xs leading-relaxed text-shadow-2">
           <p className="font-mono tabular">
             {dictionary.readout.eot}: {formatMinutes(Math.min(...eot))} …{' '}
             {formatMinutes(Math.max(...eot))} {dictionary.units.minutes}
@@ -182,7 +182,7 @@ function ClockControl({
         step={0.5}
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="w-56 accent-sun-ink"
+        className="w-56 accent-sky-deep"
       />
       <output className="font-mono tabular text-lg">{formatClock(value)}</output>
     </div>

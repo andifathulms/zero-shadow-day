@@ -126,7 +126,7 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
             height={480}
             className="rounded-lg shadow-lift"
           />
-          <p id={dragHintId} className="mt-2 text-xs text-shadow/70">
+          <p id={dragHintId} className="mt-2 text-xs text-shadow-2">
             {dictionary.gnomon.drag}
           </p>
           <p className="mt-3 font-display text-2xl">
@@ -171,7 +171,7 @@ export function GnomonView({ dictionary }: { dictionary: Dictionary }) {
           markedDays={markedDays}
           date={date}
         />
-        <p className="mt-2 text-xs leading-relaxed text-shadow/70">{dictionary.gnomon.curveCaption}</p>
+        <p className="mt-2 text-xs leading-relaxed text-shadow-2">{dictionary.gnomon.curveCaption}</p>
       </div>
 
       {/* A link that reproduces exactly this place, date and time. */}

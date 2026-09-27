@@ -44,7 +44,7 @@ export function buildManifest(basePath: string): WebManifest {
     display: 'standalone',
     // The ink tile the icons are cut from, so the splash matches them.
     background_color: '#1C1A15',
-    theme_color: '#FBF4E4',
+    theme_color: '#F3F5F4',
     lang: 'id',
     categories: ['education', 'utilities'],
     icons: [

@@ -61,7 +61,7 @@ export function NoonAnywhere({ dictionary }: { dictionary: Dictionary }) {
           onChange={(event) => setIso(event.target.value)}
           min="1800-01-01"
           max="2100-12-31"
-          className="rounded-md border border-shadow/25 bg-bleached px-3 py-2 font-mono tabular text-sm"
+          className="rounded-md border border-shadow/15 bg-chalk px-3 py-2 font-mono tabular text-sm"
           aria-label={dictionary.readout.date}
         />
       </div>

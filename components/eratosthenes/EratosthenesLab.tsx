@@ -96,10 +96,10 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
     <div className="space-y-10">
       <section>
         <h2 className="font-display text-2xl">{dictionary.eratosthenes.partner}</h2>
-        <p className="mt-2 max-w-prose text-sm leading-relaxed text-shadow/70">
+        <p className="mt-2 max-w-prose text-sm leading-relaxed text-shadow-2">
           {dictionary.eratosthenes.partnerNote}
         </p>
-        <p className="mt-1 max-w-prose text-xs leading-relaxed text-shadow/60">
+        <p className="mt-1 max-w-prose text-xs leading-relaxed text-shadow-2">
           {dictionary.eratosthenes.partnerLegend}
         </p>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -111,8 +111,8 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
                 aria-pressed={partner?.name === city.name}
                 className={`w-full rounded-lg border p-3 text-left transition ${
                   partner?.name === city.name
-                    ? 'border-shadow bg-shadow text-chalk'
-                    : 'border-shadow/25 hover:border-shadow'
+                    ? 'border-sky-deep bg-sky-deep text-chalk'
+                    : 'border-shadow/15 bg-chalk hover:border-sky-deep/50 hover:text-sky-deep'
                 }`}
               >
                 <span className="block text-sm">{city.name}</span>
@@ -155,7 +155,7 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
             </div>
           ) : null}
         </dl>
-        <p className="mt-2 font-mono tabular text-xs text-shadow/70">
+        <p className="mt-2 font-mono tabular text-xs text-shadow-2">
           {formatDate(date, dictionary)}
         </p>
       </section>
@@ -186,10 +186,10 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
           inputMode="decimal"
           value={distanceKm}
           onChange={(event) => setDistanceKm(event.target.value)}
-          className="mt-1 w-48 rounded-md border border-shadow/25 bg-bleached px-3 py-2 font-mono tabular"
+          className="mt-1 w-48 rounded-md border border-shadow/15 bg-chalk px-3 py-2 font-mono tabular"
         />
         {/* Stated plainly: the pre-filled distance already assumes the answer. */}
-        <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow/70">
+        <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow-2">
           {dictionary.eratosthenes.distanceNote}
         </p>
       </section>
@@ -262,8 +262,8 @@ function ObservationCard({
               aria-pressed={entry.pointsNorth === north}
               className={`rounded-full border px-4 py-2 text-sm transition ${
                 entry.pointsNorth === north
-                  ? 'border-shadow bg-shadow text-chalk'
-                  : 'border-shadow/25 hover:border-shadow'
+                  ? 'border-sky-deep bg-sky-deep text-chalk'
+                  : 'border-shadow/15 bg-chalk hover:border-sky-deep/50 hover:text-sky-deep'
               }`}
             >
               {north ? `↑ ${dictionary.dates.north}` : `↓ ${dictionary.dates.south}`}
@@ -348,7 +348,7 @@ function ResultPanel({
       <p className="mt-2 font-mono tabular text-4xl text-marker">
         {result.circumferenceKm.toFixed(0)} {dictionary.units.km}
       </p>
-      <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow/70">
+      <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow-2">
         {dictionary.eratosthenes.formula}
       </p>
 
@@ -385,7 +385,7 @@ function ResultPanel({
             {dictionary.eratosthenes.sameMeridian.replace('{gap}', result.lonGapDeg.toFixed(1))}
           </li>
         ) : null}
-        <li className="text-shadow/70">{dictionary.eratosthenes.errorNote}</li>
+        <li className="text-shadow-2">{dictionary.eratosthenes.errorNote}</li>
       </ul>
     </section>
   )

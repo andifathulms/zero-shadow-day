@@ -60,11 +60,11 @@ export default function HomePage({ params }: { params: { locale: Locale } }) {
               delayMs={index * 90}
               className="border-t border-shadow/15 pt-5"
             >
-              <span className="font-mono text-sm text-shadow/45" aria-hidden>
+              <span className="font-mono text-sm text-shadow-2" aria-hidden>
                 {String(index + 1).padStart(2, '0')}
               </span>
               <h3 className="mt-3 font-display text-2xl">{step.title}</h3>
-              <p className="mt-2 leading-relaxed text-shadow/80">{step.body}</p>
+              <p className="mt-2 leading-relaxed text-shadow-2">{step.body}</p>
             </Reveal>
           ))}
         </ol>
@@ -91,16 +91,16 @@ export default function HomePage({ params }: { params: { locale: Locale } }) {
                 href={`/${params.locale}/${tool.slug}`}
                 className="group flex h-full flex-col rounded-lg border border-shadow/10 bg-chalk p-6 transition duration-300 hover:-translate-y-1 hover:border-shadow/30 hover:shadow-lift"
               >
-                <span className="flex items-baseline justify-between gap-3 font-display text-2xl transition group-hover:text-marker-ink">
+                <span className="flex items-baseline justify-between gap-3 font-display text-2xl transition group-hover:text-sky-deep">
                   {tool.label}
                   <span
                     aria-hidden
-                    className="font-sans text-lg text-shadow/40 transition duration-300 group-hover:translate-x-1 group-hover:text-marker-ink"
+                    className="font-sans text-lg text-shadow-2 transition duration-300 group-hover:translate-x-1 group-hover:text-sky-deep"
                   >
                     →
                   </span>
                 </span>
-                <span className="mt-2 leading-relaxed text-shadow/80">{tool.body}</span>
+                <span className="mt-2 leading-relaxed text-shadow-2">{tool.body}</span>
               </Link>
             </Reveal>
           ))}
@@ -108,7 +108,7 @@ export default function HomePage({ params }: { params: { locale: Locale } }) {
       </section>
 
       <section className="max-w-3xl">
-        <p className="max-w-prose leading-relaxed text-shadow/80">{dictionary.home.body}</p>
+        <p className="max-w-prose leading-relaxed text-shadow-2">{dictionary.home.body}</p>
         <ul className="mt-6 space-y-4">
           <li className="border-l-2 border-sun pl-4">
             <p className="max-w-prose leading-relaxed">{dictionary.home.flip}</p>

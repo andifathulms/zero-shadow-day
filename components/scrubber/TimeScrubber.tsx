@@ -38,7 +38,7 @@ export function TimeScrubber({
         <button
           type="button"
           onClick={onTogglePlay}
-          className="rounded-full border border-shadow/40 px-4 py-2 text-sm transition hover:bg-shadow hover:text-chalk"
+          className="btn"
           aria-pressed={playing}
         >
           {playing ? dictionary.gnomon.pause : dictionary.gnomon.play}
@@ -75,10 +75,10 @@ export function TimeScrubber({
         step={reducedMotion ? 60 : 1}
         value={Math.round(localHours * 60)}
         onChange={(event) => onChange(Number(event.target.value) / 60)}
-        className="w-full accent-shadow"
+        className="w-full accent-sky-deep"
         aria-valuetext={formatClock(localHours)}
       />
-      <div className="flex justify-between font-mono tabular text-[11px] text-shadow/70">
+      <div className="flex justify-between font-mono tabular text-[11px] text-shadow-2">
         <span>00:00</span>
         <span>{sunriseHours === null ? '—' : formatClock(sunriseHours)}</span>
         <span className="text-sun-ink">{formatClock(noonLocalHours)}</span>
@@ -86,7 +86,7 @@ export function TimeScrubber({
         <span>24:00</span>
       </div>
       {reducedMotion ? (
-        <p className="mt-2 text-xs text-shadow/70">{dictionary.gnomon.reducedMotion}</p>
+        <p className="mt-2 text-xs text-shadow-2">{dictionary.gnomon.reducedMotion}</p>
       ) : null}
     </div>
   )
