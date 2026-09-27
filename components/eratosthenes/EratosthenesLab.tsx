@@ -33,6 +33,19 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
   // Six ranked candidates is more than a reader should weigh at once; the top
   // three cover almost every case, and the rest stay a tap away.
   const [showAllPartners, setShowAllPartners] = useState(false)
+  const [step, setStep] = useState(0)
+  const [classroom, setClassroom] = useState(false)
+
+  // Classroom mode: large type for a projector, the site's menus hidden. Set
+  // on the document so the header and tab bar outside this component follow.
+  useEffect(() => {
+    const root = document.documentElement
+    if (classroom) root.dataset.classroom = 'on'
+    else delete root.dataset.classroom
+    return () => {
+      delete root.dataset.classroom
+    }
+  }, [classroom])
 
   useEffect(() => setDate(todayIn(place.offsetHours)), [place.offsetHours])
 
@@ -92,10 +105,61 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
     ? solarNoon(julianDay(date), partner.lonDeg, partner.offsetHours)
     : null
 
+  const titles = dictionary.eratosthenes.steps
+  const last = titles.length - 1
+  // Every step is rendered; only the current one shows on screen, and all of
+  // them print, which turns the printout into a worksheet.
+  const stepClass = (index: number) => (index === step ? 'space-y-4' : 'hidden space-y-4 print:block')
+
   return (
-    <div className="space-y-10">
-      <section>
-        <h2 className="font-display text-2xl">{dictionary.eratosthenes.partner}</h2>
+    <div className="space-y-6">
+      <div className="no-print flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-shadow-2">
+          {dictionary.eratosthenes.stepOf.replace('{n}', String(step + 1)).replace('{total}', String(titles.length))}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setClassroom((value) => !value)}
+            aria-pressed={classroom}
+            title={dictionary.eratosthenes.classroomHint}
+            className="toggle"
+          >
+            {dictionary.eratosthenes.classroom}
+          </button>
+          <button type="button" onClick={() => window.print()} className="btn py-1.5">
+            {dictionary.eratosthenes.print}
+          </button>
+        </div>
+      </div>
+
+      <ol className="no-print grid grid-cols-4 gap-2">
+        {titles.map((title, index) => (
+          <li key={title}>
+            <button
+              type="button"
+              onClick={() => setStep(index)}
+              aria-current={index === step ? 'step' : undefined}
+              className="group flex w-full flex-col gap-2 text-left"
+            >
+              <span
+                className={`block h-1.5 rounded-full transition ${index <= step ? 'bg-sky-deep' : 'bg-concrete group-hover:bg-sky'}`}
+                aria-hidden
+              />
+              <span className={`text-xs font-semibold sm:text-sm ${index === step ? 'text-sky-deep' : 'text-shadow-2'}`}>
+                <span className="font-mono tabular">{index + 1}</span>
+                <span className="hidden sm:inline"> · {title}</span>
+                <span className="sr-only sm:hidden"> · {title}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ol>
+
+      <section className={`panel ${stepClass(0)}`} aria-labelledby="langkah-1">
+        <h2 id="langkah-1" className="text-2xl">
+          {titles[0]}
+        </h2>
         <p className="mt-2 max-w-prose text-sm leading-relaxed text-shadow-2">
           {dictionary.eratosthenes.partnerNote}
         </p>
@@ -135,8 +199,10 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
         ) : null}
       </section>
 
-      <section>
-        <h2 className="font-display text-2xl">{dictionary.eratosthenes.instructions}</h2>
+      <section className={`panel ${stepClass(1)}`} aria-labelledby="langkah-2">
+        <h2 id="langkah-2" className="text-2xl">
+          {titles[1]}
+        </h2>
         <ol className="mt-3 max-w-prose list-decimal space-y-2 pl-5 leading-relaxed">
           <li>{dictionary.eratosthenes.step1}</li>
           <li>{dictionary.eratosthenes.step2}</li>
@@ -160,41 +226,61 @@ export function EratosthenesLab({ dictionary }: { dictionary: Dictionary }) {
         </p>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-2">
-        <ObservationCard
-          dictionary={dictionary}
-          heading={`${dictionary.eratosthenes.observationA} — ${place.label}`}
-          entry={entries.a}
-          onChange={(next) => setEntries({ ...entries, a: next })}
-        />
-        {partner ? (
+      <section className={stepClass(2)} aria-labelledby="langkah-3">
+        <h2 id="langkah-3" className="text-2xl">
+          {titles[2]}
+        </h2>
+        <div className="grid gap-6 lg:grid-cols-2">
           <ObservationCard
             dictionary={dictionary}
-            heading={`${dictionary.eratosthenes.observationB} — ${partner.name}`}
-            entry={entries.b}
-            onChange={(next) => setEntries({ ...entries, b: next })}
+            heading={`${dictionary.eratosthenes.observationA} — ${place.label}`}
+            entry={entries.a}
+            onChange={(next) => setEntries({ ...entries, a: next })}
           />
+          {partner ? (
+            <ObservationCard
+              dictionary={dictionary}
+              heading={`${dictionary.eratosthenes.observationB} — ${partner.name}`}
+              entry={entries.b}
+              onChange={(next) => setEntries({ ...entries, b: next })}
+            />
+          ) : null}
+        </div>
+        <div className="panel">
+          <label className="label block" htmlFor="distance">
+            {dictionary.eratosthenes.distance} ({dictionary.units.km})
+          </label>
+          <input
+            id="distance"
+            inputMode="decimal"
+            value={distanceKm}
+            onChange={(event) => setDistanceKm(event.target.value)}
+            className="mt-1 w-48 rounded-md border border-shadow/15 bg-chalk px-3 py-2 font-mono tabular"
+          />
+          {/* Stated plainly: the pre-filled distance already assumes the answer. */}
+          <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow-2">
+            {dictionary.eratosthenes.distanceNote}
+          </p>
+        </div>
+      </section>
+
+      <section className={stepClass(3)} aria-labelledby="langkah-4">
+        <h2 id="langkah-4" className="text-2xl">
+          {titles[3]}
+        </h2>
+        {result ? <ResultPanel dictionary={dictionary} result={result} /> : null}
+      </section>
+
+      <div className="no-print flex justify-between gap-3">
+        <button type="button" onClick={() => setStep((value) => Math.max(0, value - 1))} disabled={step === 0} className="btn">
+          ← {dictionary.eratosthenes.back}
+        </button>
+        {step < last ? (
+          <button type="button" onClick={() => setStep((value) => Math.min(last, value + 1))} className="btn-primary">
+            {dictionary.eratosthenes.next}: {titles[step + 1]} →
+          </button>
         ) : null}
-      </section>
-
-      <section>
-        <label className="label block" htmlFor="distance">
-          {dictionary.eratosthenes.distance} ({dictionary.units.km})
-        </label>
-        <input
-          id="distance"
-          inputMode="decimal"
-          value={distanceKm}
-          onChange={(event) => setDistanceKm(event.target.value)}
-          className="mt-1 w-48 rounded-md border border-shadow/15 bg-chalk px-3 py-2 font-mono tabular"
-        />
-        {/* Stated plainly: the pre-filled distance already assumes the answer. */}
-        <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow-2">
-          {dictionary.eratosthenes.distanceNote}
-        </p>
-      </section>
-
-      {result ? <ResultPanel dictionary={dictionary} result={result} /> : null}
+      </div>
     </div>
   )
 }
@@ -310,11 +396,12 @@ function Field({
         aria-invalid={invalid}
         aria-describedby={showError ? errorId : undefined}
         className={`mt-1 w-full rounded-md border bg-bleached px-3 py-2 font-mono tabular ${
-          invalid ? 'border-marker-ink' : 'border-shadow/25'
+          invalid ? 'border-2 border-shadow' : 'border-shadow/15 bg-chalk'
         }`}
       />
       {showError ? (
-        <span id={errorId} className="mt-1 block text-xs text-marker-ink">
+        <span id={errorId} className="mt-1 block text-xs font-semibold text-shadow">
+          <span aria-hidden>⚠ </span>
           {invalidMessage}
         </span>
       ) : null}
@@ -343,14 +430,16 @@ function ResultPanel({
   }
 
   return (
-    <section className="panel border-l-4 border-l-marker">
+    <section className="panel">
       <h2 className="font-display text-2xl">{dictionary.eratosthenes.circumference}</h2>
-      <p className="mt-2 font-mono tabular text-4xl text-marker">
+      <p className="mt-2 font-mono tabular text-5xl tracking-[-0.03em] text-sky-deep">
         {result.circumferenceKm.toFixed(0)} {dictionary.units.km}
       </p>
       <p className="mt-2 max-w-prose text-xs leading-relaxed text-shadow-2">
         {dictionary.eratosthenes.formula}
       </p>
+
+      <ErrorScale dictionary={dictionary} errorPercent={result.errorPercent} />
 
       <dl className="mt-5 grid gap-x-8 sm:grid-cols-2">
         <ReadoutRow label={dictionary.eratosthenes.zenithAngle + ' A'} value={formatDeg(result.signedADeg, 3)} />
@@ -381,12 +470,46 @@ function ResultPanel({
           <span className="font-mono tabular">{formatDeg(result.angleErrorDeg, 4)}</span>
         </li>
         {result.lonGapDeg > 0.5 ? (
-          <li className="text-marker">
+          <li className="font-semibold">
             {dictionary.eratosthenes.sameMeridian.replace('{gap}', result.lonGapDeg.toFixed(1))}
           </li>
         ) : null}
         <li className="text-shadow-2">{dictionary.eratosthenes.errorNote}</li>
       </ul>
     </section>
+  )
+}
+
+/**
+ * The measurement against the accepted circumference, on a ±10 % scale. The
+ * gap is the lesson (PRD §4), so it is drawn, not only printed.
+ */
+function ErrorScale({ dictionary, errorPercent }: { dictionary: Dictionary; errorPercent: number }) {
+  const range = 10
+  const clamped = Math.max(-range, Math.min(range, errorPercent))
+  const at = (percent: number) => `${50 + (percent / range) * 50}%`
+  return (
+    <figure className="mt-6">
+      <figcaption className="label">{dictionary.eratosthenes.scaleLabel}</figcaption>
+      <div className="relative mt-6 h-2 rounded-full bg-concrete" aria-hidden>
+        <div className="absolute -top-1.5 h-5 w-0.5 -translate-x-1/2 bg-shadow" style={{ left: at(0) }} />
+        <div
+          className="absolute -top-2 h-6 w-6 -translate-x-1/2 rounded-full border-4 border-chalk bg-sky-deep shadow-lift"
+          style={{ left: at(clamped), top: '-0.5rem' }}
+        />
+        <span
+          className="absolute -top-7 -translate-x-1/2 whitespace-nowrap text-xs font-semibold text-sky-deep"
+          style={{ left: at(clamped) }}
+        >
+          {dictionary.eratosthenes.measured} {errorPercent >= 0 ? '+' : '−'}
+          {Math.abs(errorPercent).toFixed(1)} %
+        </span>
+      </div>
+      <div className="mt-2 flex justify-between font-mono text-[11px] text-shadow-2 tabular">
+        <span>−{range} %</span>
+        <span>{dictionary.eratosthenes.accepted}</span>
+        <span>+{range} %</span>
+      </div>
+    </figure>
   )
 }

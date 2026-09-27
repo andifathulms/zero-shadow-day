@@ -149,6 +149,37 @@
   }
 }
 
+/* Classroom mode (Ukur Bumi): large type for a projector, no site menus. */
+[data-classroom] .site-nav,
+[data-classroom] .tabbar,
+[data-classroom] .site-footer {
+  display: none;
+}
+
+[data-classroom] main {
+  max-width: none;
+  font-size: 1.2rem;
+}
+
+/* The printed worksheet: content only. */
+@media print {
+  .site-nav,
+  .tabbar,
+  .site-footer,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .panel {
+    break-inside: avoid;
+    border-color: #999;
+  }
+}
+
 @keyframes skeleton-sweep {
   from {
     transform: translateX(-100%);
