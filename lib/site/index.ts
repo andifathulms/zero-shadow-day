@@ -36,6 +36,19 @@ export function pageUrl(locale: Locale, slug = ''): string {
 const OG_LOCALE: Record<Locale, string> = { id: 'id_ID', en: 'en_US' }
 
 /**
+ * `app/opengraph-image.png` (Indonesian copy) is picked up by file convention
+ * for the root route only — Next does not vary a convention-based image by
+ * the value of a dynamic segment like `[locale]`, so every `/id/...` and
+ * `/en/...` page needs its `images` set explicitly here or it inherits
+ * nothing at all. The English copy is a plain public/ asset for the same
+ * reason a per-locale file can't live in the route tree.
+ */
+const OG_IMAGE: Record<Locale, { url: string; width: number; height: number }> = {
+  id: { url: `${SITE_ORIGIN}${BASE_PATH}/opengraph-image.png`, width: 1200, height: 630 },
+  en: { url: `${SITE_ORIGIN}${BASE_PATH}/brand/opengraph-en.png`, width: 1200, height: 630 },
+}
+
+/**
  * Metadata for one route in one locale, built from the title and description
  * the caller already has from the dictionary — never hand-authored copy that
  * can drift from what the page actually shows. Fills in the canonical link,
@@ -77,11 +90,13 @@ export function pageMetadata({
       description,
       locale: OG_LOCALE[locale],
       alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => OG_LOCALE[l]),
+      images: [OG_IMAGE[locale]],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: [OG_IMAGE[locale].url],
     },
   }
 }
