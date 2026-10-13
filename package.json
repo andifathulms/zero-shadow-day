@@ -4,8 +4,8 @@
   "private": true,
   "packageManager": "pnpm@9.15.9",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build && node scripts/postbuild.mjs",
+    "dev": "node scripts/copy-carousel-fonts.mjs && next dev",
+    "build": "node scripts/copy-carousel-fonts.mjs && next build && node scripts/postbuild.mjs",
     "preview": "node scripts/preview.mjs",
     "test": "vitest",
     "test:run": "vitest run",
@@ -16,6 +16,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "carousel-core": "github:andifathulms/carousel-press#core-v1.0.0",
     "next": "14.2.15",
     "react": "18.3.1",
     "react-dom": "18.3.1"

@@ -9,3 +9,7 @@ next-env.d.ts
 # Brand design source-of-truth, kept out of the repo. The subset the app
 # actually serves is copied into app/ and public/brand/ and is committed.
 exports/
+
+# carousel-core fonts, copied from node_modules on every dev and build
+# (scripts/copy-carousel-fonts.mjs).
+public/carousel-core/
