@@ -69,6 +69,17 @@ export function relativeDays(days: number): string {
   return `${days} hari lagi`
 }
 
+/**
+ * When a day is, as a headline says it: "Hari ini", "Besok", "Lusa", "Kamis
+ * ini" within the week, and the date itself beyond that — "143 hari lagi"
+ * makes a countdown, not a headline.
+ */
+export function whenPhrase(daysUntil: number, date: CivilDate): string {
+  if (daysUntil <= 2) return capitalise(relativeDays(daysUntil))
+  if (daysUntil <= 6) return `${WEEKDAYS[weekday(date)]} ini`
+  return dateLong(date)
+}
+
 export function capitalise(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
@@ -158,7 +169,14 @@ export function tableSlides(
 export function writeDeck(title: string, slides: readonly SlideSpec[]): string {
   const header = [`template: ${TEMPLATE_ID}`, 'lang: id', `title: ${title.replace(/\s+/g, ' ')}`]
   const blocks = slides.map((spec) => {
-    const attrs = [spec.type, `surface=${spec.surface}`, ...(spec.numberOff ? ['number=off'] : [])]
+    // Editorial picks a decorative icon for every card (heart, key, music…).
+    // Nothing on these cards is decoration pretending to be data: none.
+    const attrs = [
+      spec.type,
+      `surface=${spec.surface}`,
+      ...(spec.type === 'card' ? ['icon=none'] : []),
+      ...(spec.numberOff ? ['number=off'] : []),
+    ]
     return [`[${attrs.join(' ')}]`, ...spec.lines].join('\n')
   })
   return [header.join('\n'), ...blocks].join('\n---\n') + '\n'

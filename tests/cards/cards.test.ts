@@ -315,6 +315,14 @@ describe('the deck grammar holds', () => {
     expect(deck.text).toContain('(2/')
   })
 
+  it('draws no decorative icon on a card', () => {
+    for (const { deck } of decks) {
+      for (const s of parseDeck(deck.text).deck.slides) {
+        if (s.type === 'card') expect(s.attrs.icon).toBe('none')
+      }
+    }
+  })
+
   it('puts no cta on table or compare slides; every deck ends on [end]', () => {
     for (const { deck } of decks) {
       const parsed = parseDeck(deck.text).deck

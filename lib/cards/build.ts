@@ -48,6 +48,7 @@ import {
   relativeDays,
   slide,
   tableSlides,
+  whenPhrase,
   writeDeck,
   zsdAccent,
 } from './text'
@@ -270,16 +271,21 @@ function clusterHariIni(city: City, today: CivilDate): Story {
   const next = nextFor(city, today)
   const cluster = zsdEvents(INDONESIAN_CITIES, next.day.date, 0)
   const featured = cluster.find((e) => e.city.name === city.name) ?? { city, day: next.day }
-  const when = capitalise(relativeDays(next.daysUntil))
+  const when = whenPhrase(next.daysUntil, next.day.date)
   const where = cluster.length > 1 ? `di ${cluster.length} kota` : `di ${city.name}`
 
   return {
-    title: `${when}: bayangan nyaris hilang ${where} (${dateShort(next.day.date)})`,
+    title:
+      next.daysUntil <= 6
+        ? `${when}: bayangan nyaris hilang ${where} (${dateShort(next.day.date)})`
+        : `${when}: bayangan nyaris hilang ${where}`,
     slides: [
       slide('cover', 'siang', [
-        `${when}, bayangan | nyaris hilang ${where}`,
+        `Bayangan nyaris hilang | ${where}`,
         zsdAccent(dateLong(next.day.date)),
-        'Tepat saat kulminasi di kota masing-masing.',
+        next.daysUntil <= 6
+          ? `${when}, tepat saat kulminasi di kota masing-masing.`
+          : 'Tepat saat kulminasi di kota masing-masing.',
       ]),
       ...tableSlides(
         'kapur',
