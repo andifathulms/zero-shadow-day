@@ -66,6 +66,7 @@ lib/
   scene/                    # 3D projection + a sky driven by solar altitude. No engine, no dependency.
   zsd/                      # search: minimise noon shadow over the year
   eratosthenes/             # circumference derivation + error analysis
+  cards/                    # TikTok deck builders over the engine + the carousel variant
 data/
   cities/                   # Indonesian city coordinates (replaceable by typed input)
 tests/
@@ -154,7 +155,7 @@ The site states plainly that it is a personal educational project, gives the alg
 
 ## Current state
 
-M0–M5 built, M6 partly, plus the 2026 redesign. 235 tests pass; `pnpm test:solar` passes.
+M0–M5 built, M6 partly, plus the 2026 redesign and the TikTok card tool. 383 tests pass; `pnpm test:solar` passes.
 
 **The 2026 redesign** (see `DESIGN.md`): tropical-noon palette; Bricolage Grotesque, Plus Jakarta Sans and JetBrains Mono; four destinations (Tanggal, Bayangan, Jelajahi, Ukur Bumi) with Cara Kerja in the footer, and routes unchanged; a place chip in the sticky header that opens one place sheet (`components/place/PlaceSheet.tsx`); a phone tab bar; a home page that leads with the countdown, then the year ribbon and "Hari ini di Nusantara"; the gnomon as an instrument with a control dock, snap-to-day and Space/Z shortcuts; Ukur Bumi as a four-step flow with classroom mode and a printable worksheet. The countdown and the archipelago list come from `nextZeroShadowDay` / `upcomingZeroShadowDays` in `lib/zsd` and `subsolarOn` in `lib/day`. A dark theme is deferred.
 
@@ -165,6 +166,15 @@ M0–M5 built, M6 partly, plus the 2026 redesign. 235 tests pass; `pnpm test:sol
 - **M4** `lib/eratosthenes` with the round trip, plus the partner finder, measurement flow and error breakdown.
 - **M5** the sweep across the archipelago.
 - **M6** the method page, solar noon anywhere, the Pages deployment, shareable links, calendar and spreadsheet export, and the accessibility pass. Contrast ratios are asserted in `tests/a11y/`, so a lightened tone fails the suite.
+
+**TikTok cards** (`/[locale]/kartu`, see `docs/RECON_CARDS.md`): an operator tool, not linked from the nav, tab bar or sitemap, and `noindex`.
+- `lib/cards/` builds carousel-core deck text from `lib/zsd`, `lib/day` and `lib/eratosthenes`, never from typed numbers. Seven stories. It is pure: no React, no DOM.
+- `tests/cards/` rebuilds every number a deck may hold straight from the engine, by unit, and fails on any other. It also parses each deck with carousel-core's own parser.
+- Decks name a listed city and never print a coordinate. A geolocated place becomes `nearestCity()`.
+- Every deck ends with the ±1 day / ±1 minute caveat. Decks that send people outside carry the eye-safety line.
+- `carousel-core` (`github:andifathulms/carousel-press#core-v1.0.0`) is loaded by dynamic import on that page only. Its fonts are copied into `public/carousel-core/fonts/` by `scripts/copy-carousel-fonts.mjs` on every dev and build, and that folder is git-ignored.
+- The variant `editorial/tengah-hari` (`lib/cards/variant.ts`) reads its colours from `tailwind.config.ts`. It uses the app's own variable woff2 files, found in the page's stylesheet by `components/kartu/appFonts.ts`.
+- carousel-core paints kickers and table headers in the accent colour. So vermilion is the accent of one surface, `siang`, which builders use only for a zero shadow day's date or time. Tables and other slides sit on `kapur`, `langit` or `deep`, and builders use no kickers.
 
 Additions to the layout above: `lib/day/` composes solar and shadow into the tracks the views read, so nothing is computed in a component; `lib/clock/` is the only place a `Date` is allowed, and the numerical core never sees it; `lib/share/` and `lib/export/` build links and files in the browser.
 

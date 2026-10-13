@@ -359,6 +359,8 @@ Everything else above is text and table only.
 
 ## 6. Integration — a "Buat kartu TikTok" page
 
+> **Status, 13 Oct 2026: Phase B is built.** `core-v1.0.0` exists (tag `c6915e7`). The page is `app/[locale]/kartu/`, the builders are `lib/cards/`, and the tests are `tests/cards/`. The text below is the recon as written, before the package shipped.
+
 ### What exists today
 
 | Item | Status |
@@ -401,6 +403,12 @@ Per the PORTING plan, **verify the tag first**.
 ---
 
 ## 7. Own variant — "Tengah Hari" (proposal)
+
+> **Status: built as `lib/cards/variant.ts`, with two changes from this proposal.**
+> - **Four surfaces.** carousel-core 1.0.0 paints kickers and table header rows in the accent colour. So vermilion became the accent of one surface, `siang`, which is used only for the zero shadow day's date or time. Tables and other slides moved to `kapur` (chalk, sky-deep accent), `langit` (sky-deep) and `deep` (shadow). Sun ochre is unused.
+> - **Glow and dotGrid are inert.** They are set, but in 1.0.0 only the `dev` family draws them.
+>
+> The fonts are the app's own variable Bricolage Grotesque and Plus Jakarta Sans files, passed through `configureFonts({ faces })`, so no Instrument Sans stand-in was needed.
 
 This proposal keeps the app's meaning-carrying rules: **vermilion marks the zero shadow day and nothing else**, **sun ochre is the sun**, and the shadow tone is the darkest thing on the page.
 
